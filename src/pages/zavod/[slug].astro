@@ -41,7 +41,6 @@ const priceText =
       : 'Zdarma';
 
 const completeness = getCompleteness(race);
-
 ---
 
 <BaseLayout
@@ -158,6 +157,88 @@ const completeness = getCompleteness(race);
       )}
     </div>
 
+    <!-- Growth Loop: "Běžím!" -->
+    <div class="mt-8 border border-border"
+      id="growth-section"
+      data-race-id={race.id}
+      data-race-name={race.name}
+      data-race-slug={race.slug}
+    >
+      <!-- "Běžím!" main CTA -->
+      <div class="flex items-center justify-between border-b border-border px-6 py-5">
+        <div class="flex items-center gap-4">
+          <button
+            type="button"
+            id="bezim-btn"
+            class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-primary-light"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.841m2.699-11.592L3.75 21.75" />
+            </svg>
+            <span id="bezim-label">Přidat do mých závodů</span>
+          </button>
+        </div>
+        <!-- Copy link -->
+        <button
+          type="button"
+          id="copy-link-btn"
+          class="hidden items-center gap-2 font-mono text-xs text-text-secondary transition-colors duration-150 hover:text-accent sm:inline-flex"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+          </svg>
+          <span id="copy-link-label">Kopírovat odkaz</span>
+        </button>
+      </div>
+
+      <!-- Share options (revealed after "Běžím!" click) -->
+      <div id="share-row" class="hidden border-t border-border px-6 py-4">
+        <p class="mb-3 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary">Dej vědět kamarádům</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            id="share-whatsapp"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-text transition-colors duration-150 hover:border-primary hover:text-primary"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a
+            id="share-facebook"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-text transition-colors duration-150 hover:border-primary hover:text-primary"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a
+            id="share-twitter"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-text transition-colors duration-150 hover:border-primary hover:text-primary"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X
+          </a>
+          <button
+            type="button"
+            id="copy-link-btn-mobile"
+            class="inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-text transition-colors duration-150 hover:border-primary hover:text-primary sm:hidden"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+            </svg>
+            <span id="copy-link-label-mobile">Odkaz</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Organizer -->
     {race.organizer && (
       <div class="mt-12 border border-border p-6">
@@ -270,10 +351,12 @@ const completeness = getCompleteness(race);
   </article>
 
   <script>
-    import { createClient } from '@supabase/supabase-js';
+    import { getClient } from '../../lib/auth';
+    import { getUser, registerInterest, hasInterest, recordReferral } from '../../lib/auth';
 
+    // --- Report modal ---
     const COOLDOWN_KEY = 'report_last_submitted';
-    const COOLDOWN_MS = 60_000; // 1 minute between reports
+    const COOLDOWN_MS = 60_000;
 
     const btn = document.getElementById('report-btn');
     const modal = document.getElementById('report-modal') as HTMLElement;
@@ -321,11 +404,7 @@ const completeness = getCompleteness(race);
       }
 
       try {
-        const supabase = createClient(
-          import.meta.env.PUBLIC_SUPABASE_URL,
-          import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-        );
-
+        const supabase = getClient();
         const { error } = await supabase.from('race_reports').insert({
           race_id: raceId,
           reasons: reasons,
@@ -344,6 +423,157 @@ const completeness = getCompleteness(race);
         statusEl.className = 'font-mono text-xs text-error';
         statusEl.classList.remove('hidden');
       }
+    });
+
+    // --- Growth loop: "Běžím!" (auth-gated) ---
+    const growthSection = document.getElementById('growth-section') as HTMLElement;
+    const raceName = growthSection?.dataset.raceName ?? '';
+    const raceSlug = growthSection?.dataset.raceSlug ?? '';
+    const growthRaceId = growthSection?.dataset.raceId ?? '';
+    let currentCount = Number(growthSection?.dataset.interestCount ?? 0);
+
+    const baseRaceUrl = `https://zavodyvcr.cz/zavod/${raceSlug}`;
+
+    const bezimBtn = document.getElementById('bezim-btn') as HTMLButtonElement;
+    const bezimLabel = document.getElementById('bezim-label') as HTMLElement;
+    const shareRow = document.getElementById('share-row') as HTMLElement;
+    // Store referral parameter from URL for later use
+    const urlRef = new URLSearchParams(window.location.search).get('ref');
+    if (urlRef) {
+      sessionStorage.setItem('race_ref', urlRef);
+    }
+
+    // Get share URL with referral param if user is logged in
+    async function getShareUrl(): Promise<string> {
+      const user = await getUser();
+      if (user) {
+        return `${baseRaceUrl}?ref=${user.id}`;
+      }
+      return baseRaceUrl;
+    }
+
+    // Build share text dynamically with count
+    function getShareText(): string {
+      if (currentCount > 1) {
+        return `Běžím ${raceName}! Už nás je ${currentCount}. Přidej se!`;
+      }
+      return `Běžím ${raceName}! Přidej se!`;
+    }
+
+    // Pre-fill social links
+    async function updateShareLinks() {
+      const raceUrl = await getShareUrl();
+      const text = getShareText();
+      const twitter = document.getElementById('share-twitter') as HTMLAnchorElement;
+      const facebook = document.getElementById('share-facebook') as HTMLAnchorElement;
+      const whatsapp = document.getElementById('share-whatsapp') as HTMLAnchorElement;
+
+      twitter.href = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(raceUrl)}`;
+      facebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(raceUrl)}`;
+      whatsapp.href = `https://wa.me/?text=${encodeURIComponent(`${text} ${raceUrl}`)}`;
+    }
+    updateShareLinks();
+
+    // Check if user already registered interest and show confirmed state
+    async function checkExistingInterest() {
+      const alreadyInterested = await hasInterest(growthRaceId);
+      if (alreadyInterested) {
+        showConfirmedState();
+      }
+    }
+    checkExistingInterest();
+
+    function showConfirmedState() {
+      bezimLabel.textContent = 'Běžím!';
+      bezimBtn.classList.remove('bg-primary', 'hover:bg-primary-light');
+      bezimBtn.classList.add('bg-accent', 'hover:bg-[#D4552F]');
+      shareRow.classList.remove('hidden');
+      updateShareLinks();
+    }
+
+    // "Běžím!" click handler — requires auth
+    bezimBtn?.addEventListener('click', async () => {
+      const user = await getUser();
+
+      if (!user) {
+        // Not logged in — open auth modal with "bezim" intent
+        document.dispatchEvent(new CustomEvent('open-auth-modal', {
+          detail: { intent: 'bezim', raceId: growthRaceId }
+        }));
+        return;
+      }
+
+      // User is authenticated — register interest
+      const alreadyInterested = await hasInterest(growthRaceId);
+      if (!alreadyInterested) {
+        try {
+          const ref = sessionStorage.getItem('race_ref') || null;
+          await registerInterest(growthRaceId, ref);
+          currentCount++;
+
+          // Record referral if applicable
+          if (ref) {
+            await recordReferral(ref, growthRaceId);
+            sessionStorage.removeItem('race_ref');
+          }
+        } catch {
+          // Silently fail — still show share options
+        }
+      }
+
+      showConfirmedState();
+
+      // Try native share on mobile
+      if (navigator.share) {
+        const raceUrl = await getShareUrl();
+        try {
+          await navigator.share({ title: raceName, text: getShareText(), url: raceUrl });
+          return;
+        } catch {
+          // User cancelled — show fallback row
+        }
+      }
+    });
+
+    // Listen for auth-state-changed (after login via auth modal with "bezim" intent)
+    document.addEventListener('auth-state-changed', async () => {
+      // Re-check interest state after auth
+      const user = await getUser();
+      if (user) {
+        const alreadyInterested = await hasInterest(growthRaceId);
+        if (alreadyInterested) {
+          // Interest was registered by the auth modal's post-auth handler
+          currentCount = Number(growthSection?.dataset.interestCount ?? 0) + 1;
+          showConfirmedState();
+        }
+      }
+      updateShareLinks();
+    });
+
+    // Copy link (desktop)
+    async function copyToClipboard(labelEl: HTMLElement | null, resetText: string) {
+      const raceUrl = await getShareUrl();
+      try {
+        await navigator.clipboard.writeText(raceUrl);
+      } catch {
+        const input = document.createElement('input');
+        input.value = raceUrl;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+      }
+      if (labelEl) {
+        labelEl.textContent = 'Zkopírováno!';
+        setTimeout(() => { labelEl.textContent = resetText; }, 2000);
+      }
+    }
+
+    document.getElementById('copy-link-btn')?.addEventListener('click', () => {
+      copyToClipboard(document.getElementById('copy-link-label'), 'Kopírovat odkaz');
+    });
+    document.getElementById('copy-link-btn-mobile')?.addEventListener('click', () => {
+      copyToClipboard(document.getElementById('copy-link-label-mobile'), 'Odkaz');
     });
   </script>
 </BaseLayout>

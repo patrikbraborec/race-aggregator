@@ -3,29 +3,12 @@
     "name": "actor-dedup",
     "title": "Race Deduplicator",
     "description": "Fetches all races from Supabase, detects duplicates by date + name similarity or matching URL, and removes them — keeping the most complete record.",
-    "version": "1.0.0",
-    "meta": {
-        "generatedBy": "Claude Code with Claude Opus 4.6"
-    },
+    "version": "1.0",
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
-    "storages": {
-        "dataset": {
-            "actorSpecification": 1,
-            "title": "Deduplication Report",
-            "description": "Report of duplicate groups found — which records were kept and which were removed."
-        }
-    },
     "buildTag": "latest",
-    "environmentVariables": [
-        {
-            "name": "SUPABASE_URL",
-            "isSecret": false
-        },
-        {
-            "name": "SUPABASE_SERVICE_ROLE_KEY",
-            "isSecret": true
-        }
-    ],
-    "usesStandbyMode": false
+    "environmentVariables": {
+        "SUPABASE_URL": "@supabaseUrl",
+        "SUPABASE_SERVICE_ROLE_KEY": "@supabaseServiceRoleKey"
+    }
 }

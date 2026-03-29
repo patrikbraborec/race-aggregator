@@ -3,6 +3,7 @@ export const prerender = false;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RaceCard from '../../components/RaceCard.astro';
+import TypewriterSearch from '../../components/TypewriterSearch.astro';
 import { terrainLabels, validTerrains } from '../../lib/types';
 import { getRaces, getRegions } from '../../lib/supabase';
 
@@ -10,15 +11,17 @@ const rawTerrain = Astro.url.searchParams.get('teren');
 const terrainParam = rawTerrain && validTerrains.has(rawTerrain) ? rawTerrain : null;
 const regionParam = Astro.url.searchParams.get('kraj');
 const query = Astro.url.searchParams.get('q') ?? undefined;
+const rawKm = Astro.url.searchParams.get('km');
+const kmParam = rawKm ? parseFloat(rawKm) : undefined;
 
 const [filtered, regions] = await Promise.all([
-  getRaces({ terrain: terrainParam ?? undefined, region: regionParam ?? undefined, query }),
+  getRaces({ terrain: terrainParam ?? undefined, region: regionParam ?? undefined, query, km: kmParam }),
   getRegions(),
 ]);
 
 const terrainTypes = Object.entries(terrainLabels);
 
-const hasFilters = !!(terrainParam || regionParam || query);
+const hasFilters = !!(terrainParam || regionParam || query || kmParam);
 ---
 
 <BaseLayout
@@ -46,19 +49,26 @@ const hasFilters = !!(terrainParam || regionParam || query);
 
     <hr class="mt-8 border-border" />
 
-    <!-- Filters -->
-    <form method="get" class="mt-8 grid grid-cols-[1fr_1fr_1fr_auto_auto] items-end gap-4 max-md:grid-cols-1">
-      <div>
-        <label for="q" class="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary mb-2">Hledat</label>
-        <input
-          type="text"
+    <!-- AI Search -->
+    <form action="/api/search" method="get" class="mt-8">
+      <div class="flex border border-border max-md:flex-col">
+        <TypewriterSearch
           name="q"
           id="q"
           value={query ?? ''}
-          placeholder="Název, město..."
-          class="w-full border border-border bg-surface px-4 py-3 font-mono text-sm text-text placeholder:text-text-secondary/50 focus:outline-none focus:border-accent transition duration-150"
+          class="flex-1 bg-surface px-5 py-3.5 font-mono text-sm text-text placeholder:text-text-secondary/50 focus:outline-none"
         />
+        <button
+          type="submit"
+          class="bg-accent px-8 py-3.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F] max-md:w-full"
+        >
+          Hledat &rarr;
+        </button>
       </div>
+    </form>
+
+    <!-- Structured Filters -->
+    <form method="get" class="mt-4 grid grid-cols-[1fr_1fr_1fr_auto] items-end gap-4 max-md:grid-cols-1">
       <div>
         <label for="teren" class="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary mb-2">Terén</label>
         <select
@@ -89,9 +99,23 @@ const hasFilters = !!(terrainParam || regionParam || query);
           ))}
         </select>
       </div>
+      <div>
+        <label for="km" class="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary mb-2">Vzdálenost</label>
+        <select
+          name="km"
+          id="km"
+          class="w-full border border-border bg-surface px-4 py-3 font-mono text-sm text-text focus:outline-none focus:border-accent transition duration-150 appearance-none"
+        >
+          <option value="">Všechny</option>
+          <option value="5" selected={kmParam === 5}>5 km</option>
+          <option value="10" selected={kmParam === 10}>10 km</option>
+          <option value="21" selected={kmParam === 21}>Půlmaraton</option>
+          <option value="42" selected={kmParam === 42}>Maraton</option>
+        </select>
+      </div>
       <button
         type="submit"
-        class="bg-accent px-8 py-3 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+        class="border border-border px-8 py-3 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-text transition-colors duration-150 hover:border-accent hover:text-accent"
       >
         Filtrovat &rarr;
       </button>

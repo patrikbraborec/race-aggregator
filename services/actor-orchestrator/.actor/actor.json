@@ -3,25 +3,11 @@
     "name": "actor-orchestrator",
     "title": "Race Pipeline Orchestrator",
     "description": "Runs the full race aggregation pipeline in order: all scrapers (parallel) -> dedup -> enricher. Schedule this actor daily instead of individual actors.",
-    "version": "1.0.0",
-    "meta": {
-        "generatedBy": "Claude Code with Claude Opus 4.6"
-    },
+    "version": "1.0",
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
-    "storages": {
-        "dataset": {
-            "actorSpecification": 1,
-            "title": "Pipeline Run Report",
-            "description": "Summary of each pipeline stage: which actors ran, their status, and timing."
-        }
-    },
     "buildTag": "latest",
-    "environmentVariables": [
-        {
-            "name": "APIFY_TOKEN",
-            "isSecret": true
-        }
-    ],
-    "usesStandbyMode": false
+    "environmentVariables": {
+        "APIFY_TOKEN": "@apifyToken"
+    }
 }

@@ -1,0 +1,256 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Moje závody" description="Závody, které plánuješ běžet.">
+  <div class="mx-auto max-w-[960px] px-8 py-16 max-md:px-4">
+    <h1 class="font-serif text-[2.5rem] text-primary leading-tight max-md:text-[2rem]">
+      Moje závody
+    </h1>
+    <p class="mt-4 font-mono text-sm text-text-secondary" id="races-subtitle">
+      Načítání...
+    </p>
+
+    <!-- Loading skeleton -->
+    <div id="races-loading" class="mt-8 border border-border">
+      <div class="animate-pulse border-b border-border px-6 py-5">
+        <div class="h-4 w-48 bg-border/50"></div>
+        <div class="mt-2 h-3 w-32 bg-border/30"></div>
+      </div>
+      <div class="animate-pulse border-b border-border px-6 py-5">
+        <div class="h-4 w-56 bg-border/50"></div>
+        <div class="mt-2 h-3 w-40 bg-border/30"></div>
+      </div>
+      <div class="animate-pulse px-6 py-5">
+        <div class="h-4 w-44 bg-border/50"></div>
+        <div class="mt-2 h-3 w-28 bg-border/30"></div>
+      </div>
+    </div>
+
+    <!-- Empty state (hidden by default) -->
+    <div id="races-empty" class="mt-8 hidden border border-border p-12 text-center">
+      <p class="font-mono text-sm text-text-secondary">Zatím žádné závody.</p>
+      <a
+        href="/zavody"
+        class="mt-4 inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-accent hover:text-[#D4552F] transition-colors duration-150"
+      >
+        Prozkoumat závody
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Not authenticated state (hidden by default) -->
+    <div id="races-auth" class="mt-8 hidden border border-border p-12 text-center">
+      <p class="font-mono text-sm text-text-secondary">Pro zobrazení závodů se musíte přihlásit.</p>
+      <button
+        type="button"
+        id="my-races-login-btn"
+        class="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+      >
+        Přihlásit se
+      </button>
+    </div>
+
+    <!-- Race list (populated by script) -->
+    <div id="races-list" class="mt-8 hidden border border-border"></div>
+  </div>
+
+  <script>
+    import { getUser, getUserRaces } from '../lib/auth';
+
+    const subtitle = document.getElementById('races-subtitle') as HTMLElement;
+    const loading = document.getElementById('races-loading') as HTMLElement;
+    const empty = document.getElementById('races-empty') as HTMLElement;
+    const authPrompt = document.getElementById('races-auth') as HTMLElement;
+    const list = document.getElementById('races-list') as HTMLElement;
+    const loginBtn = document.getElementById('my-races-login-btn');
+
+    const terrainDotColors: Record<string, string> = {
+      road: 'bg-[#6B7280]',
+      trail: 'bg-[#3A7D5C]',
+      ultra: 'bg-[#7C3AED]',
+      cross: 'bg-[#D97706]',
+      obstacle: 'bg-[#DC2626]',
+      mixed: 'bg-[#1B3A2D]',
+    };
+
+    const terrainLabels: Record<string, string> = {
+      road: 'Silnice',
+      trail: 'Trail',
+      ultra: 'Ultra',
+      cross: 'Cross',
+      obstacle: 'Překážky',
+      mixed: 'Mix',
+    };
+
+    loginBtn?.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { intent: 'login' } }));
+    });
+
+    // Listen for auth changes to reload
+    document.addEventListener('auth-state-changed', () => {
+      loadRaces();
+    });
+
+    async function loadRaces() {
+      loading.classList.remove('hidden');
+      empty.classList.add('hidden');
+      authPrompt.classList.add('hidden');
+      list.classList.add('hidden');
+      list.innerHTML = '';
+
+      const user = await getUser();
+
+      if (!user) {
+        loading.classList.add('hidden');
+        authPrompt.classList.remove('hidden');
+        subtitle.textContent = 'Přihlas se a uvidíš své závody.';
+        return;
+      }
+
+      try {
+        const data = await getUserRaces();
+        loading.classList.add('hidden');
+
+        if (!data || data.length === 0) {
+          empty.classList.remove('hidden');
+          subtitle.textContent = 'Zatím nemáš žádné závody.';
+          return;
+        }
+
+        const count = data.length;
+        subtitle.textContent = `${count} ${count === 1 ? 'závod' : count < 5 ? 'závody' : 'závodů'} v plánu`;
+
+        // Render race cards
+        for (const item of data) {
+          const race = item.races as any;
+          if (!race) continue;
+
+          const date = new Date(race.date_start).toLocaleDateString('cs-CZ', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          });
+
+          const distances = (race.distances || [])
+            .map((d: any) => (d.km >= 1 ? `${d.km} km` : `${d.km * 1000} m`))
+            .join(' / ');
+
+          const terrain = race.terrain || 'mixed';
+          const dotClass = terrainDotColors[terrain] ?? terrainDotColors.mixed;
+          const terrainLabel = terrainLabels[terrain] ?? terrain;
+
+          const shareUrl = `https://zavodyvcr.cz/zavod/${race.slug}?ref=${user.id}`;
+          const shareText = `Běžím ${race.name}! Přidej se!`;
+
+          const card = document.createElement('div');
+          card.className = 'border-b border-border last:border-b-0';
+          card.innerHTML = `
+            <div class="flex items-center gap-6 px-6 py-5 max-md:flex-col max-md:items-start max-md:gap-3 max-md:px-4">
+              <!-- Race info -->
+              <a href="/zavod/${race.slug}" class="flex min-w-0 flex-1 items-center gap-3 group">
+                <span class="h-2 w-2 shrink-0 rounded-full ${dotClass}"></span>
+                <h3 class="truncate text-base font-semibold text-text group-hover:text-accent transition-colors duration-150">
+                  ${race.name}
+                </h3>
+              </a>
+
+              <div class="flex items-center gap-6 max-md:ml-5">
+                <span class="font-mono text-xs font-medium uppercase tracking-wide text-text-secondary">
+                  ${date}
+                </span>
+                <span class="font-mono text-xs text-text-secondary">
+                  ${race.city || ''}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-4 max-md:ml-5">
+                <span class="font-mono text-xs font-semibold text-text">
+                  ${distances}
+                </span>
+                <span class="font-mono text-[11px] uppercase tracking-[0.06em] text-text-secondary">
+                  ${terrainLabel}
+                </span>
+              </div>
+            </div>
+
+            <!-- Share row -->
+            <div class="flex flex-wrap items-center gap-3 border-t border-border/50 px-6 py-3 max-md:px-4">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary">Sdílet</span>
+              <a
+                href="https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
+              >
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
+              >
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook
+              </a>
+              <a
+                href="https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
+              >
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X
+              </a>
+              <button
+                type="button"
+                class="copy-link-btn inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-accent transition-colors duration-150"
+                data-url="${shareUrl}"
+              >
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                </svg>
+                <span>Odkaz</span>
+              </button>
+            </div>
+          `;
+
+          list.appendChild(card);
+        }
+
+        // Attach copy-link handlers
+        list.querySelectorAll('.copy-link-btn').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            const url = (btn as HTMLElement).dataset.url!;
+            const label = btn.querySelector('span')!;
+            try {
+              await navigator.clipboard.writeText(url);
+            } catch {
+              const input = document.createElement('input');
+              input.value = url;
+              document.body.appendChild(input);
+              input.select();
+              document.execCommand('copy');
+              document.body.removeChild(input);
+            }
+            label.textContent = 'Zkopírováno!';
+            setTimeout(() => { label.textContent = 'Odkaz'; }, 2000);
+          });
+        });
+
+        list.classList.remove('hidden');
+      } catch (err) {
+        loading.classList.add('hidden');
+        subtitle.textContent = 'Chyba při načítání závodů.';
+      }
+    }
+
+    loadRaces();
+  </script>
+</BaseLayout>

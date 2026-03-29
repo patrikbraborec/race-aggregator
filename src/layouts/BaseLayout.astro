@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  noScroll?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = 'Najdi běžecké závody v České republice. Mapa, ceny, termíny a recenze na jednom místě.',
   canonical,
   ogImage,
+  noScroll = false,
 } = Astro.props;
 
 const siteTitle = title === 'Domů' ? 'Závody v ČR — Běžecké závody na jednom místě' : `${title} | Závody v ČR`;
@@ -42,7 +44,7 @@ const siteTitle = title === 'Domů' ? 'Závody v ČR — Běžecké závody na j
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
-  <body class="min-h-screen flex flex-col bg-bg text-text font-sans antialiased">
+  <body class:list={["flex flex-col bg-bg text-text font-sans antialiased", noScroll ? "h-screen overflow-hidden" : "min-h-screen"]}>
     <Header />
     <main class="flex-1">
       <slot />

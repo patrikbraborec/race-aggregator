@@ -43,6 +43,7 @@ export async function getRaces(filters: {
   terrain?: string;
   region?: string;
   query?: string;
+  km?: number;
 }): Promise<Race[]> {
   let q = supabase
     .from('races')
@@ -60,15 +61,41 @@ export async function getRaces(filters: {
   if (filters.query) {
     const sanitized = filters.query.replace(/[%_(),.*\\]/g, '');
     if (sanitized.length > 0) {
-      q = q.or(
-        `name.ilike.%${sanitized}%,city.ilike.%${sanitized}%,tags.cs.{${sanitized}}`
-      );
+      // Split query into words and create prefix-based search conditions
+      // to handle Czech declension (e.g., "Beskydech" → "Beskyd" matches "Beskydská")
+      const words = sanitized.split(/\s+/).filter((w) => w.length >= 3);
+      if (words.length > 0) {
+        const conditions = words.flatMap((w) => {
+          // Truncate to ~60% of length (min 3 chars) to strip Czech suffixes
+          const prefixLen = Math.max(3, Math.floor(w.length * 0.6));
+          const prefix = w.slice(0, prefixLen);
+          return [`name.ilike.%${prefix}%`, `city.ilike.%${prefix}%`];
+        });
+        // Also try the full query as-is for exact-ish matches and tag search
+        conditions.push(`name.ilike.%${sanitized}%`);
+        conditions.push(`tags.cs.{${sanitized}}`);
+        q = q.or(conditions.join(','));
+      }
     }
   }
 
   const { data, error } = await q;
   if (error) throw error;
-  return data as Race[];
+
+  let results = data as Race[];
+
+  // Filter by distance client-side (distances is a JSONB array)
+  if (filters.km) {
+    const targetKm = filters.km;
+    const tolerance = targetKm * 0.15; // 15% tolerance
+    results = results.filter((race) =>
+      race.distances?.some(
+        (d) => Math.abs(d.km - targetKm) <= tolerance
+      )
+    );
+  }
+
+  return results;
 }
 
 /** Get all distinct regions. */
@@ -84,6 +111,17 @@ export async function getRegions(): Promise<string[]> {
 
   const unique = [...new Set(data.map((r) => r.region as string))].sort();
   return unique;
+}
+
+/** Get count of "I'm running this" interest for a race. */
+export async function getRaceInterestCount(raceId: string): Promise<number> {
+  const { count, error } = await supabase
+    .from('race_interest')
+    .select('*', { count: 'exact', head: true })
+    .eq('race_id', raceId);
+
+  if (error) return 0;
+  return count ?? 0;
 }
 
 /** Fetch a single race by slug. */

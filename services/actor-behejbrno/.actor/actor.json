@@ -1,20 +1,14 @@
 {
-  "actorSpecification": 1,
-  "name": "actor-behejbrno",
-  "title": "Czech Race Aggregator - BehejBrno",
-  "description": "Scrapes running race listings from behejbrno.com and uploads them to Supabase.",
-  "version": "1.0.0",
-  "meta": {
-    "generatedBy": "Claude Code with Claude Opus 4.6"
-  },
-  "input": "./input_schema.json",
-  "buildTag": "latest",
-  "environmentVariables": [],
-  "dockerfile": "./Dockerfile",
-  "storages": {
-    "dataset": {}
-  },
-  "build": {
-    "baseImage": "apify/actor-node:22"
-  }
+    "actorSpecification": 1,
+    "name": "actor-behejbrno",
+    "title": "Czech Race Aggregator - BehejBrno",
+    "description": "Scrapes running race listings from behejbrno.com and uploads them to Supabase.",
+    "version": "1.0",
+    "input": "./input_schema.json",
+    "buildTag": "latest",
+    "dockerfile": "./Dockerfile",
+    "environmentVariables": {
+        "SUPABASE_URL": "@supabaseUrl",
+        "SUPABASE_SERVICE_ROLE_KEY": "@supabaseServiceRoleKey"
+    }
 }

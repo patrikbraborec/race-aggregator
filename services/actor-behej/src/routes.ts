@@ -3,12 +3,16 @@ import type { CheerioCrawlingContext } from 'crawlee';
 import {
     generateSlug,
     parseDistances,
+    parseTime,
     mapTerrain,
     getRegion,
     type RaceInput,
 } from '@race-aggregator/shared';
 
 export const collectedRaces: RaceInput[] = [];
+
+/** Map from source_id to index in collectedRaces for detail enrichment. */
+const raceIndexBySourceId = new Map<string, number>();
 
 export const router = createCheerioRouter();
 
@@ -30,7 +34,7 @@ interface BehejRace {
 
 // ── API response handler ────────────────────────────────────────────────────
 
-router.addHandler('API', async ({ body }: CheerioCrawlingContext) => {
+router.addHandler('API', async ({ body, crawler }: CheerioCrawlingContext) => {
     log.info('Processing behej.com API response...');
 
     let races: BehejRace[];
@@ -124,6 +128,7 @@ router.addHandler('API', async ({ body }: CheerioCrawlingContext) => {
                 tags,
             };
 
+            raceIndexBySourceId.set(raw.id_races_list, collectedRaces.length);
             collectedRaces.push(race);
         } catch (err) {
             log.warning(`Error processing race "${raw.name}": ${String(err)}`);
@@ -131,6 +136,131 @@ router.addHandler('API', async ({ body }: CheerioCrawlingContext) => {
     }
 
     log.info(`Collected ${collectedRaces.length} valid races from behej.com API.`);
+
+    // Enqueue detail pages to scrape rich data (time, prices, description, etc.)
+    const detailRequests = collectedRaces.map((race) => ({
+        url: `https://www.behej.com/zavod/${race.source_id}`,
+        label: 'DETAIL',
+        userData: { sourceId: race.source_id },
+    }));
+
+    if (detailRequests.length > 0) {
+        await crawler.addRequests(detailRequests);
+        log.info(`Enqueued ${detailRequests.length} detail pages for enrichment.`);
+    }
+});
+
+// ── DETAIL page handler — enrich race with data from behej.com detail page ──
+
+router.addHandler('DETAIL', async ({ $, request }: CheerioCrawlingContext) => {
+    const sourceId = request.userData?.sourceId as string;
+    const idx = raceIndexBySourceId.get(sourceId);
+    if (idx === undefined) {
+        log.warning(`No race found for source_id="${sourceId}". Skipping detail.`);
+        return;
+    }
+
+    const race = collectedRaces[idx];
+
+    // Parse table.race rows into a key→value map
+    const info = new Map<string, string>();
+    $('table.race tr').each((_i, tr) => {
+        const tds = $(tr).find('td');
+        if (tds.length < 2) return;
+        const label = $(tds[0]).text().replace(/:\s*$/, '').trim();
+        const value = $(tds[1]).text().trim();
+        if (label && value) info.set(label, value);
+    });
+
+    // Extract links separately (website, facebook)
+    const links = new Map<string, string>();
+    $('table.race tr').each((_i, tr) => {
+        const tds = $(tr).find('td');
+        if (tds.length < 2) return;
+        const label = $(tds[0]).text().replace(/:\s*$/, '').trim();
+        const anchor = $(tds[1]).find('a').first();
+        if (anchor.length && anchor.attr('href')) {
+            links.set(label, anchor.attr('href')!);
+        }
+    });
+
+    let enriched = false;
+
+    // Start time
+    const timeStartRaw = info.get('Čas startu');
+    if (timeStartRaw) {
+        const parsed = parseTime(timeStartRaw);
+        if (parsed) { race.time_start = parsed; enriched = true; }
+    }
+
+    // Prices (in CZK)
+    const priceAdvanceRaw = info.get('Startovné předem');
+    if (priceAdvanceRaw) {
+        const match = priceAdvanceRaw.match(/(\d+)/);
+        if (match) { race.price_from = parseInt(match[1], 10); enriched = true; }
+    }
+
+    const priceOnSiteRaw = info.get('Startovné na místě');
+    if (priceOnSiteRaw) {
+        const match = priceOnSiteRaw.match(/(\d+)/);
+        if (match) { race.price_to = parseInt(match[1], 10); enriched = true; }
+    }
+
+    // Handle "Zdarma" (free) — if the text says free but no number was extracted
+    if (!race.price_from && !race.price_to) {
+        const allPriceText = [priceAdvanceRaw, priceOnSiteRaw].join(' ').toLowerCase();
+        if (allPriceText.includes('zdarma')) {
+            race.price_from = 0;
+            race.price_to = 0;
+            enriched = true;
+        }
+    }
+
+    // Description from track description
+    const description = info.get('Popis trati');
+    if (description) {
+        race.description = description.replace(/\s+/g, ' ').trim();
+        enriched = true;
+    }
+
+    // Venue from registration place
+    const venue = info.get('Místo prezentace');
+    if (venue) { race.venue = venue; enriched = true; }
+
+    // Organizer from contact name
+    const contactRaw = info.get('Kontakty');
+    if (contactRaw) {
+        // The text content of the contacts cell contains just the name
+        race.organizer = contactRaw;
+        enriched = true;
+    }
+
+    // Website — prefer the actual race website over the behej.com URL
+    const raceWebsite = links.get('Webové stránky');
+    if (raceWebsite) {
+        race.organizer_url = raceWebsite; // actual race website
+        enriched = true;
+    }
+
+    // Terrain — refine from explicit "Povrch" field on detail page
+    const surfaceRaw = info.get('Povrch');
+    if (surfaceRaw) {
+        race.terrain = mapTerrain(surfaceRaw);
+        enriched = true;
+    }
+
+    // Distances — supplement from detail page if the API gave us nothing useful
+    const mainDistanceRaw = info.get('Délka hlavní tratě pro muže a ženy')
+        ?? info.get('Délka hlavní tratě');
+    if (mainDistanceRaw && (race.distances.length === 0 ||
+        (race.distances.length === 1 && race.distances[0].km === 0))) {
+        const parsed = parseDistances(mainDistanceRaw);
+        if (parsed.length > 0) { race.distances = parsed; enriched = true; }
+    }
+
+    if (enriched) {
+        log.debug(`Enriched race "${race.name}" (${sourceId}) from detail page.`);
+    }
 });
 
 // ── DEFAULT handler (fallback) ──────────────────────────────────────────────

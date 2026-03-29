@@ -1,4 +1,6 @@
 ---
+import AuthModal from './AuthModal.astro';
+
 const navItems = [
   { label: 'Závody', href: '/zavody' },
 ];
@@ -15,7 +17,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
       <span class="font-serif text-2xl leading-none text-primary translate-y-[1px]">Závody</span>
       <span class="font-mono text-xs font-medium uppercase leading-none tracking-[0.08em] text-accent">v ČR</span>
     </a>
-    <ul class="flex items-center gap-8">
+    <ul class="flex items-center gap-8 max-md:gap-4">
       {navItems.map((item) => {
         const isActive = currentPath.startsWith(item.href);
         return (
@@ -38,13 +40,56 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
         <button
           type="button"
           id="missing-race-btn"
-          class="inline-flex items-center gap-2 leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] text-accent transition-colors duration-150 hover:text-[#D4552F]"
+          class="inline-flex items-center gap-2 leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] text-accent transition-colors duration-150 hover:text-[#D4552F] max-md:hidden"
         >
           <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
           Chybí ti závod?
         </button>
+      </li>
+
+      <!-- Auth nav (client-side controlled) -->
+      <li id="auth-nav" class="flex items-center opacity-0 transition-opacity duration-200">
+        <!-- Logged out state (default) -->
+        <button
+          type="button"
+          id="header-login-btn"
+          class="inline-flex items-center gap-2 leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] text-text-secondary hover:text-primary transition-colors duration-150"
+        >
+          <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+          <span class="max-md:hidden">Přihlásit se</span>
+        </button>
+        <!-- Logged in state (hidden by default) -->
+        <div id="user-nav" class="hidden items-center gap-6 max-md:gap-4">
+          <a
+            href="/moje-zavody"
+            id="header-my-races"
+            class:list={[
+              'inline-flex items-center gap-2 leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] transition-colors duration-150',
+              currentPath === '/moje-zavody'
+                ? 'text-primary underline underline-offset-4 decoration-accent decoration-2'
+                : 'text-text-secondary hover:text-primary',
+            ]}
+          >
+            <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.841m2.699-11.592L3.75 21.75" />
+            </svg>
+            <span class="max-md:hidden">Moje závody</span>
+          </a>
+          <button
+            type="button"
+            id="header-logout-btn"
+            class="inline-flex items-center leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] text-text-secondary hover:text-primary transition-colors duration-150"
+          >
+            <span class="max-md:hidden">Odhlásit se</span>
+            <svg class="h-3.5 w-3.5 shrink-0 md:hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+            </svg>
+          </button>
+        </div>
       </li>
     </ul>
   </nav>
@@ -110,7 +155,57 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
   </div>
 </div>
 
+<!-- Auth modal (global, available on every page) -->
+<AuthModal />
+
 <script>
+  import { getUser, signOut } from '../lib/auth';
+
+  // --- Auth nav state ---
+  const authNav = document.getElementById('auth-nav') as HTMLElement;
+  const loginBtn = document.getElementById('header-login-btn') as HTMLElement;
+  const userNav = document.getElementById('user-nav') as HTMLElement;
+  const logoutBtn = document.getElementById('header-logout-btn');
+
+  async function updateAuthNav() {
+    const user = await getUser();
+    if (user) {
+      loginBtn.classList.add('hidden');
+      userNav.classList.remove('hidden');
+      userNav.classList.add('flex');
+    } else {
+      loginBtn.classList.remove('hidden');
+      userNav.classList.add('hidden');
+      userNav.classList.remove('flex');
+    }
+    // Fade in after check
+    authNav.classList.remove('opacity-0');
+    authNav.classList.add('opacity-100');
+  }
+
+  updateAuthNav();
+
+  // Listen for auth state changes from AuthModal
+  document.addEventListener('auth-state-changed', () => {
+    updateAuthNav();
+  });
+
+  // Login button opens auth modal
+  loginBtn?.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { intent: 'login' } }));
+  });
+
+  // Logout
+  logoutBtn?.addEventListener('click', async () => {
+    await signOut();
+    document.dispatchEvent(new CustomEvent('auth-state-changed', { detail: { user: null } }));
+    // Redirect to home if on a protected page
+    if (window.location.pathname === '/moje-zavody') {
+      window.location.href = '/zavody';
+    }
+  });
+
+  // --- Missing race modal (unchanged logic) ---
   const btn = document.getElementById('missing-race-btn');
   const modal = document.getElementById('missing-race-modal') as HTMLElement;
   const cancel = document.getElementById('missing-race-cancel');

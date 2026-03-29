@@ -3,29 +3,12 @@
     "name": "actor-runczech",
     "title": "RunCzech Race Scraper",
     "description": "Scrapes Czech running races from runczech.com and uploads them to Supabase.",
-    "version": "1.0.0",
-    "meta": {
-        "generatedBy": "Claude Code with Claude Opus 4.6"
-    },
+    "version": "1.0",
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
-    "storages": {
-        "dataset": {
-            "actorSpecification": 1,
-            "title": "RunCzech Races",
-            "description": "Scraped race data from runczech.com"
-        }
-    },
     "buildTag": "latest",
-    "environmentVariables": [
-        {
-            "name": "SUPABASE_URL",
-            "isSecret": false
-        },
-        {
-            "name": "SUPABASE_SERVICE_ROLE_KEY",
-            "isSecret": true
-        }
-    ],
-    "usesStandbyMode": false
+    "environmentVariables": {
+        "SUPABASE_URL": "@supabaseUrl",
+        "SUPABASE_SERVICE_ROLE_KEY": "@supabaseServiceRoleKey"
+    }
 }

@@ -6,4 +6,4 @@ RUN npm install --omit=dev --include=optional
 
 COPY . ./
 
-CMD ["node", "--loader", "tsx/esm", "src/main.ts"]
+CMD ["node", "--import", "tsx", "src/main.ts"]

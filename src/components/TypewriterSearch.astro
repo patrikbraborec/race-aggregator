@@ -1,0 +1,109 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  value?: string;
+  class?: string;
+  phrases?: string[];
+}
+
+const {
+  name = 'q',
+  id,
+  value = '',
+  class: className = '',
+  phrases = [
+    'Trail v Praze',
+    'Půlmaraton v Brně',
+    '10 km závod',
+    'Maraton na jaře',
+    'Ultra trail v Beskydech',
+    'Běh na 5 km',
+  ],
+} = Astro.props;
+---
+
+<div class="typewriter-search contents" data-phrases={JSON.stringify(phrases)}>
+  <input
+    type="text"
+    name={name}
+    id={id}
+    value={value}
+    placeholder=""
+    class={className}
+  />
+</div>
+
+<script>
+  function initTypewriter(container: HTMLElement) {
+    const input = container.querySelector('input') as HTMLInputElement;
+    const phrases: string[] = JSON.parse(container.dataset.phrases || '[]');
+    if (!phrases.length || !input) return;
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let isPaused = false;
+    let animationId: number;
+
+    const TYPE_SPEED = 80;
+    const DELETE_SPEED = 40;
+    const PAUSE_AFTER_TYPE = 2000;
+    const PAUSE_AFTER_DELETE = 400;
+
+    function tick() {
+      // Stop animation when user focuses or types
+      if (document.activeElement === input) return;
+
+      const currentPhrase = phrases[phraseIndex];
+
+      if (!isDeleting && !isPaused) {
+        // Typing
+        charIndex++;
+        input.placeholder = currentPhrase.slice(0, charIndex);
+
+        if (charIndex === currentPhrase.length) {
+          isPaused = true;
+          setTimeout(() => {
+            isPaused = false;
+            isDeleting = true;
+            animationId = window.setTimeout(tick, DELETE_SPEED);
+          }, PAUSE_AFTER_TYPE);
+          return;
+        }
+        animationId = window.setTimeout(tick, TYPE_SPEED);
+      } else if (isDeleting) {
+        // Deleting
+        charIndex--;
+        input.placeholder = currentPhrase.slice(0, charIndex);
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          animationId = window.setTimeout(tick, PAUSE_AFTER_DELETE);
+          return;
+        }
+        animationId = window.setTimeout(tick, DELETE_SPEED);
+      }
+    }
+
+    // Start the typewriter
+    animationId = window.setTimeout(tick, PAUSE_AFTER_DELETE);
+
+    // Pause on focus, resume on blur
+    input.addEventListener('focus', () => {
+      clearTimeout(animationId);
+      if (!input.value) {
+        input.placeholder = phrases[phraseIndex];
+      }
+    });
+
+    input.addEventListener('blur', () => {
+      if (!input.value) {
+        animationId = window.setTimeout(tick, PAUSE_AFTER_DELETE);
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.typewriter-search').forEach(initTypewriter);
+</script>

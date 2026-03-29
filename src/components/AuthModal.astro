@@ -1,0 +1,282 @@
+<!-- Auth modal: login / register with tabs -->
+<div
+  id="auth-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40"
+>
+  <div class="mx-4 w-full max-w-md border border-border bg-surface p-8">
+    <h3 class="font-mono text-sm font-semibold uppercase tracking-[0.06em] text-primary">
+      Přihlásit se / Registrovat
+    </h3>
+    <p class="mt-2 text-sm text-text-secondary" id="auth-subtitle">
+      Přihlas se a sleduj své závody.
+    </p>
+
+    <!-- Tabs -->
+    <div class="mt-6 flex gap-6 border-b border-border">
+      <button
+        type="button"
+        id="auth-tab-login"
+        class="pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] text-primary underline underline-offset-4 decoration-accent decoration-2 transition-colors duration-150"
+      >
+        Přihlásit se
+      </button>
+      <button
+        type="button"
+        id="auth-tab-register"
+        class="pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] text-text-secondary hover:text-primary transition-colors duration-150"
+      >
+        Registrace
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form id="auth-form" class="mt-6 space-y-4">
+      <div>
+        <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="auth-email">
+          Email
+        </label>
+        <input
+          type="email"
+          id="auth-email"
+          name="email"
+          required
+          autocomplete="email"
+          class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
+          placeholder="vas@email.cz"
+        />
+      </div>
+
+      <div id="auth-password-field">
+        <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="auth-password">
+          Heslo
+        </label>
+        <input
+          type="password"
+          id="auth-password"
+          name="password"
+          minlength="6"
+          autocomplete="current-password"
+          class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
+          placeholder="Alespoň 6 znaků"
+        />
+      </div>
+
+      <div id="auth-password-confirm-field" class="hidden">
+        <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="auth-password-confirm">
+          Heslo znovu
+        </label>
+        <input
+          type="password"
+          id="auth-password-confirm"
+          name="password_confirm"
+          minlength="6"
+          autocomplete="new-password"
+          class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
+          placeholder="Zopakujte heslo"
+        />
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="submit"
+          id="auth-submit"
+          class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F] disabled:opacity-50"
+        >
+          Přihlásit se
+        </button>
+        <button
+          type="button"
+          id="auth-cancel"
+          class="font-mono text-xs text-text-secondary hover:text-text transition-colors duration-150"
+        >
+          Zrušit
+        </button>
+      </div>
+
+      <p id="auth-status" class="hidden font-mono text-xs"></p>
+    </form>
+
+    <!-- Magic link option -->
+    <div class="mt-4 border-t border-border pt-4">
+      <button
+        type="button"
+        id="auth-magic-link"
+        class="font-mono text-xs text-text-secondary hover:text-accent transition-colors duration-150"
+      >
+        Přihlásit se odkazem v emailu
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { signIn, signUp, signInWithMagicLink, getUser, registerInterest, recordReferral } from '../lib/auth';
+
+  const modal = document.getElementById('auth-modal') as HTMLElement;
+  const form = document.getElementById('auth-form') as HTMLFormElement;
+  const statusEl = document.getElementById('auth-status') as HTMLElement;
+  const submitBtn = document.getElementById('auth-submit') as HTMLButtonElement;
+  const cancelBtn = document.getElementById('auth-cancel');
+  const magicLinkBtn = document.getElementById('auth-magic-link');
+
+  const tabLogin = document.getElementById('auth-tab-login') as HTMLElement;
+  const tabRegister = document.getElementById('auth-tab-register') as HTMLElement;
+  const passwordConfirmField = document.getElementById('auth-password-confirm-field') as HTMLElement;
+  const passwordInput = document.getElementById('auth-password') as HTMLInputElement;
+  const passwordConfirmInput = document.getElementById('auth-password-confirm') as HTMLInputElement;
+  const subtitle = document.getElementById('auth-subtitle') as HTMLElement;
+
+  const activeTabClasses = 'text-primary underline underline-offset-4 decoration-accent decoration-2';
+  const inactiveTabClasses = 'text-text-secondary hover:text-primary';
+
+  let currentTab: 'login' | 'register' = 'login';
+  let pendingIntent: { intent: string; raceId?: string } | null = null;
+
+  function setTab(tab: 'login' | 'register') {
+    currentTab = tab;
+    statusEl.classList.add('hidden');
+
+    if (tab === 'login') {
+      tabLogin.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${activeTabClasses} transition-colors duration-150`;
+      tabRegister.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${inactiveTabClasses} transition-colors duration-150`;
+      passwordConfirmField.classList.add('hidden');
+      passwordConfirmInput.required = false;
+      passwordInput.autocomplete = 'current-password';
+      submitBtn.textContent = 'Přihlásit se';
+      subtitle.textContent = 'Přihlas se a sleduj své závody.';
+    } else {
+      tabRegister.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${activeTabClasses} transition-colors duration-150`;
+      tabLogin.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${inactiveTabClasses} transition-colors duration-150`;
+      passwordConfirmField.classList.remove('hidden');
+      passwordConfirmInput.required = true;
+      passwordInput.autocomplete = 'new-password';
+      submitBtn.textContent = 'Registrovat';
+      subtitle.textContent = 'Vytvoř si účet a sleduj své závody.';
+    }
+  }
+
+  tabLogin.addEventListener('click', () => setTab('login'));
+  tabRegister.addEventListener('click', () => setTab('register'));
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    form.reset();
+    statusEl.classList.add('hidden');
+    setTab('login');
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    pendingIntent = null;
+  }
+
+  cancelBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Listen for open-auth-modal custom event
+  document.addEventListener('open-auth-modal', ((e: CustomEvent) => {
+    pendingIntent = e.detail || null;
+    openModal();
+    if (pendingIntent?.intent === 'bezim') {
+      subtitle.textContent = 'Přihlas se a označ, že běžíš tento závod.';
+    }
+  }) as EventListener);
+
+  function showStatus(message: string, type: 'error' | 'success') {
+    statusEl.textContent = message;
+    statusEl.className = `font-mono text-xs ${type === 'error' ? 'text-error' : 'text-success'}`;
+    statusEl.classList.remove('hidden');
+  }
+
+  // Handle post-auth actions (e.g., auto-save "Běžím" interest)
+  async function handlePostAuth() {
+    if (pendingIntent?.intent === 'bezim' && pendingIntent.raceId) {
+      try {
+        const ref = sessionStorage.getItem('race_ref') || null;
+        await registerInterest(pendingIntent.raceId, ref);
+
+        // Record referral if applicable
+        if (ref) {
+          await recordReferral(ref, pendingIntent.raceId);
+          sessionStorage.removeItem('race_ref');
+        }
+      } catch {
+        // Non-critical: interest may already exist
+      }
+    }
+
+    // Dispatch auth-state-changed event
+    const user = await getUser();
+    document.dispatchEvent(new CustomEvent('auth-state-changed', { detail: { user } }));
+    closeModal();
+  }
+
+  // Form submission
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+
+    try {
+      if (currentTab === 'login') {
+        await signIn(email, password);
+        showStatus('Přihlášení úspěšné!', 'success');
+        await handlePostAuth();
+      } else {
+        const confirmPassword = (form.elements.namedItem('password_confirm') as HTMLInputElement).value;
+        if (password !== confirmPassword) {
+          showStatus('Hesla se neshodují.', 'error');
+          submitBtn.disabled = false;
+          return;
+        }
+        await signUp(email, password);
+        showStatus('Registrace úspěšná! Zkontrolujte svůj email.', 'success');
+        // For signUp, Supabase may require email confirmation.
+        // Try to sign in immediately (works if email confirmation is disabled).
+        try {
+          await signIn(email, password);
+          await handlePostAuth();
+        } catch {
+          // Email confirmation required — close modal after delay
+          setTimeout(closeModal, 2000);
+        }
+      }
+    } catch (err: any) {
+      const message = err?.message || 'Něco se pokazilo.';
+      if (message.includes('Invalid login credentials')) {
+        showStatus('Nesprávný email nebo heslo.', 'error');
+      } else if (message.includes('already registered') || message.includes('already been registered')) {
+        showStatus('Tento email je již registrován. Přihlaste se.', 'error');
+        setTab('login');
+      } else {
+        showStatus(message, 'error');
+      }
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Magic link
+  magicLinkBtn?.addEventListener('click', async () => {
+    const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+    const email = emailInput.value;
+    if (!email) {
+      showStatus('Zadejte svůj email.', 'error');
+      emailInput.focus();
+      return;
+    }
+
+    try {
+      await signInWithMagicLink(email);
+      showStatus('Odkaz odeslán! Zkontrolujte svůj email.', 'success');
+    } catch (err: any) {
+      showStatus(err?.message || 'Chyba při odesílání odkazu.', 'error');
+    }
+  });
+</script>

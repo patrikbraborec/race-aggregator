@@ -29,8 +29,9 @@ const proxyConfiguration = await Actor.createProxyConfiguration(input?.proxyConf
 const crawler = new CheerioCrawler({
     requestHandler: router,
     proxyConfiguration,
-    maxConcurrency: 1,
+    maxConcurrency: 5,
     additionalMimeTypes: ['application/json'],
+    maxRequestRetries: 2,
 });
 
 const apiUrl = `https://www.behej.com/races/index/testraces?filter=${filter}&sport=1`;
