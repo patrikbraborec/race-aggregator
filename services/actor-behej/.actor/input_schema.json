@@ -1,0 +1,36 @@
+{
+    "title": "Behej.com Scraper Input",
+    "description": "Configuration for the behej.com race scraper actor.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "supabaseUrl": {
+            "title": "Supabase URL",
+            "type": "string",
+            "description": "The URL of your Supabase project (e.g. https://xyz.supabase.co).",
+            "editor": "textfield"
+        },
+        "supabaseServiceKey": {
+            "title": "Supabase Service Role Key",
+            "type": "string",
+            "description": "The service role key for your Supabase project.",
+            "editor": "textfield",
+            "isSecret": true
+        },
+        "filter": {
+            "title": "Time Filter",
+            "type": "string",
+            "description": "Time range filter for the API (e.g. '12-months', '6-months').",
+            "default": "12-months",
+            "editor": "textfield"
+        },
+        "proxyConfig": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Select proxies to be used by this actor.",
+            "editor": "proxy",
+            "prefill": { "useApifyProxy": true },
+            "default": { "useApifyProxy": true }
+        }
+    }
+}

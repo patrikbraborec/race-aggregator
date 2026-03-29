@@ -1,0 +1,17 @@
+{
+    "actorSpecification": 1,
+    "name": "actor-bezeckyzavod",
+    "title": "Bezeckyzavod.cz Scraper",
+    "description": "Scrapes Czech running races from bezeckyzavod.cz",
+    "version": "0.1.0",
+    "meta": {
+        "generatedBy": "Claude Code with Claude Opus 4.6"
+    },
+    "buildTag": "latest",
+    "environmentVariables": [],
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
+}

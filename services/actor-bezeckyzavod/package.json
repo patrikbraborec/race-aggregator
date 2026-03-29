@@ -1,0 +1,20 @@
+{
+    "name": "actor-bezeckyzavod",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Apify actor that scrapes Czech running races from bezeckyzavod.cz",
+    "scripts": {
+        "build": "tsc",
+        "start": "tsx src/main.ts"
+    },
+    "dependencies": {
+        "apify": "^3.2.0",
+        "crawlee": "^3.11.0",
+        "tsx": "^4.19.0",
+        "@race-aggregator/shared": "file:../shared"
+    },
+    "devDependencies": {
+        "typescript": "^5.5.0",
+        "@types/node": "^22.0.0"
+    }
+}

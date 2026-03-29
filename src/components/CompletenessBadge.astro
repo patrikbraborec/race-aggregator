@@ -1,0 +1,25 @@
+---
+import type { Race } from '../lib/types';
+import { getCompleteness } from '../lib/completeness';
+
+interface Props {
+  race: Race;
+  showLabel?: boolean;
+}
+
+const { race, showLabel = false } = Astro.props;
+const { score, level, label } = getCompleteness(race);
+
+const dotColor: Record<string, string> = {
+  high: 'bg-success',
+  medium: 'bg-[#D97706]',
+  low: 'bg-text-secondary/40',
+};
+---
+
+<span class="inline-flex items-center gap-1.5" title={`${label} (${score} %)`}>
+  <span class={`h-1.5 w-1.5 rounded-full ${dotColor[level]}`}></span>
+  {showLabel && (
+    <span class="font-mono text-[11px] text-text-secondary">{label}</span>
+  )}
+</span>

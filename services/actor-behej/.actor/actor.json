@@ -1,0 +1,31 @@
+{
+    "actorSpecification": 1,
+    "name": "actor-behej",
+    "title": "Behej.com Race Scraper",
+    "description": "Fetches Czech running races from behej.com JSON API and uploads them to Supabase.",
+    "version": "1.0.0",
+    "meta": {
+        "generatedBy": "Claude Code with Claude Opus 4.6"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Behej.com Races",
+            "description": "Race data fetched from behej.com"
+        }
+    },
+    "buildTag": "latest",
+    "environmentVariables": [
+        {
+            "name": "SUPABASE_URL",
+            "isSecret": false
+        },
+        {
+            "name": "SUPABASE_SERVICE_ROLE_KEY",
+            "isSecret": true
+        }
+    ],
+    "usesStandbyMode": false
+}

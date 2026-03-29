@@ -1,0 +1,31 @@
+{
+    "actorSpecification": 1,
+    "name": "actor-svetbehu",
+    "title": "Svet Behu Race Scraper",
+    "description": "Scrapes Czech running races from svetbehu.cz/terminovka/ and uploads them to Supabase.",
+    "version": "1.0.0",
+    "meta": {
+        "generatedBy": "Claude Code with Claude Opus 4.6"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Svet Behu Races",
+            "description": "Scraped race data from svetbehu.cz"
+        }
+    },
+    "buildTag": "latest",
+    "environmentVariables": [
+        {
+            "name": "SUPABASE_URL",
+            "isSecret": false
+        },
+        {
+            "name": "SUPABASE_SERVICE_ROLE_KEY",
+            "isSecret": true
+        }
+    ],
+    "usesStandbyMode": false
+}

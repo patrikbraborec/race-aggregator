@@ -25,3 +25,15 @@ pnpm-debug.log*
 
 # wrangler local state
 .wrangler/
+
+# supabase local state
+supabase/.temp/
+
+# claude code
+.claude/
+
+# apify local storage & runtime state
+storage/
+key_value_stores/
+request_queues/
+datasets/

@@ -3,15 +3,19 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-border">
-  <div class="mx-auto max-w-[1200px] px-8 py-10 max-md:px-4">
+  <div class="mx-auto max-w-[1200px] px-8 py-8 max-md:px-4">
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <p class="text-sm text-text-secondary">
-        &copy; {year} ZávodyvČR. Všechna práva vyhrazena.
-      </p>
-      <div class="flex gap-6 text-sm text-text-secondary">
-        <a href="/o-nas" class="transition-colors duration-150 hover:text-text">O nás</a>
-        <a href="/kontakt" class="transition-colors duration-150 hover:text-text">Kontakt</a>
+      <div class="flex items-center gap-2">
+        <span class="font-serif text-lg text-primary">Závody</span>
+        <span class="font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-accent">v ČR</span>
       </div>
+      <div class="flex items-center gap-6">
+        <a href="/o-nas" class="font-mono text-xs uppercase tracking-[0.06em] text-text-secondary transition-colors duration-150 hover:text-primary">O nás</a>
+        <a href="/kontakt" class="font-mono text-xs uppercase tracking-[0.06em] text-text-secondary transition-colors duration-150 hover:text-primary">Kontakt</a>
+      </div>
+      <p class="font-mono text-xs text-text-secondary">
+        &copy; {year}
+      </p>
     </div>
   </div>
 </footer>

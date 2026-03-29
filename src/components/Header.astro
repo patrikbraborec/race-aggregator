@@ -1,30 +1,32 @@
 ---
 const navItems = [
   { label: 'Závody', href: '/zavody' },
-  { label: 'Trenéři', href: '/treneri' },
-  { label: 'Blog', href: '/blog' },
 ];
 
 const currentPath = Astro.url.pathname;
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 ---
 
-<header class="bg-surface">
-  <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-8 py-4 max-md:px-4">
-    <a href="/" class="text-xl font-bold tracking-[-0.01em] text-primary">
-      Závody<span class="text-accent">vČR</span>
+<header class="border-b border-border">
+  <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-8 py-5 max-md:px-4">
+    <a href="/" class="group flex items-center gap-2">
+      <span class="font-serif text-2xl leading-none text-primary translate-y-[1px]">Závody</span>
+      <span class="font-mono text-xs font-medium uppercase leading-none tracking-[0.08em] text-accent">v ČR</span>
     </a>
-    <ul class="flex items-center gap-1">
+    <ul class="flex items-center gap-8">
       {navItems.map((item) => {
         const isActive = currentPath.startsWith(item.href);
         return (
-          <li>
+          <li class="flex items-center">
             <a
               href={item.href}
               class:list={[
-                'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-150 ease-in-out',
+                'inline-flex items-center leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] transition-colors duration-150',
                 isActive
-                  ? 'bg-primary text-white'
-                  : 'text-text-secondary hover:bg-bg hover:text-text',
+                  ? 'text-primary underline underline-offset-4 decoration-accent decoration-2'
+                  : 'text-text-secondary hover:text-primary',
               ]}
             >
               {item.label}
@@ -32,6 +34,147 @@ const currentPath = Astro.url.pathname;
           </li>
         );
       })}
+      <li class="flex items-center">
+        <button
+          type="button"
+          id="missing-race-btn"
+          class="inline-flex items-center gap-2 leading-none font-mono text-xs font-medium uppercase tracking-[0.06em] text-accent transition-colors duration-150 hover:text-[#D4552F]"
+        >
+          <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          Chybí ti závod?
+        </button>
+      </li>
     </ul>
   </nav>
 </header>
+
+<!-- Missing race modal -->
+<div
+  id="missing-race-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40"
+  data-supabase-url={supabaseUrl}
+  data-supabase-key={supabaseKey}
+>
+  <div class="mx-4 w-full max-w-md border border-border bg-surface p-8">
+    <h3 class="font-mono text-sm font-semibold uppercase tracking-[0.06em] text-primary">Chybí ti závod?</h3>
+    <p class="mt-2 text-sm text-text-secondary">Pošli nám odkaz na závod, který v seznamu chybí.</p>
+
+    <form id="missing-race-form" class="mt-6 space-y-4">
+      <div>
+        <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="missing-race-url">
+          Odkaz na závod
+        </label>
+        <input
+          type="url"
+          id="missing-race-url"
+          name="url"
+          required
+          class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
+          placeholder="https://example.com/zavod"
+        />
+      </div>
+
+      <div>
+        <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="missing-race-message">
+          Zpráva (volitelné)
+        </label>
+        <textarea
+          id="missing-race-message"
+          name="message"
+          rows="3"
+          class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
+          placeholder="Případně doplň další informace..."
+        ></textarea>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="submit"
+          class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+        >
+          Odeslat
+        </button>
+        <button
+          type="button"
+          id="missing-race-cancel"
+          class="font-mono text-xs text-text-secondary hover:text-text transition-colors duration-150"
+        >
+          Zrušit
+        </button>
+      </div>
+
+      <p id="missing-race-status" class="hidden font-mono text-xs"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('missing-race-btn');
+  const modal = document.getElementById('missing-race-modal') as HTMLElement;
+  const cancel = document.getElementById('missing-race-cancel');
+  const form = document.getElementById('missing-race-form') as HTMLFormElement;
+  const statusEl = document.getElementById('missing-race-status') as HTMLElement;
+
+  const supabaseUrl = modal?.dataset.supabaseUrl;
+  const supabaseKey = modal?.dataset.supabaseKey;
+
+  btn?.addEventListener('click', () => {
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+  });
+
+  function closeModal() {
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+  }
+
+  cancel?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const url = formData.get('url') as string;
+    const message = formData.get('message') as string;
+
+    if (!url) {
+      statusEl.textContent = 'Zadej odkaz na závod.';
+      statusEl.className = 'font-mono text-xs text-error';
+      statusEl.classList.remove('hidden');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${supabaseUrl}/rest/v1/missing_race_reports`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey!,
+          'Authorization': `Bearer ${supabaseKey}`,
+        },
+        body: JSON.stringify({
+          url: url,
+          message: message || null,
+        }),
+      });
+
+      if (res.ok || res.status === 201) {
+        statusEl.textContent = 'Děkujeme! Závod prověříme.';
+        statusEl.className = 'font-mono text-xs text-success';
+        statusEl.classList.remove('hidden');
+        form.reset();
+        setTimeout(closeModal, 1500);
+      } else {
+        throw new Error('Failed');
+      }
+    } catch {
+      statusEl.textContent = 'Chyba při odesílání. Zkuste to znovu.';
+      statusEl.className = 'font-mono text-xs text-error';
+      statusEl.classList.remove('hidden');
+    }
+  });
+</script>

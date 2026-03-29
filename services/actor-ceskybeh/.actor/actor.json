@@ -1,0 +1,20 @@
+{
+  "actorSpecification": 1,
+  "name": "actor-ceskybeh",
+  "title": "Czech Race Aggregator - CeskyBeh",
+  "description": "Scrapes running race listings from ceskybeh.cz/terminovka/ and uploads them to Supabase.",
+  "version": "1.0.0",
+  "meta": {
+    "generatedBy": "Claude Code with Claude Opus 4.6"
+  },
+  "input": "./input_schema.json",
+  "buildTag": "latest",
+  "environmentVariables": [],
+  "dockerfile": "./Dockerfile",
+  "storages": {
+    "dataset": {}
+  },
+  "build": {
+    "baseImage": "apify/actor-node:22"
+  }
+}

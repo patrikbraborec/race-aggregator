@@ -68,3 +68,26 @@ export type RaceCard = Pick<
   | 'status'
   | 'tags'
 >;
+
+/** Terrain labels in Czech */
+export const terrainLabels: Record<string, string> = {
+  road: 'Silnice',
+  trail: 'Trail',
+  ultra: 'Ultra',
+  cross: 'Cross',
+  obstacle: 'Překážky',
+  mixed: 'Mix',
+};
+
+/** Terrain dot color classes for Tailwind */
+export const terrainDotColors: Record<string, string> = {
+  road: 'bg-[#6B7280]',
+  trail: 'bg-success',
+  ultra: 'bg-[#7C3AED]',
+  cross: 'bg-[#D97706]',
+  obstacle: 'bg-error',
+  mixed: 'bg-primary',
+};
+
+/** Valid terrain type keys */
+export const validTerrains = new Set<string>(Object.keys(terrainLabels));
