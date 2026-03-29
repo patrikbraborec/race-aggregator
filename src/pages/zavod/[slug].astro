@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getRaceBySlug, mockRaces, terrainLabels } from '../../lib/mock-data';
+
+export function getStaticPaths() {
+  return mockRaces.map((race) => ({ params: { slug: race.slug } }));
+}
+
+const { slug } = Astro.params;
+const race = getRaceBySlug(slug!);
+
+if (!race) {
+  return Astro.redirect('/zavody');
+}
+
+const dateFormatted = new Date(race.date_start).toLocaleDateString('cs-CZ', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const dateEndFormatted = race.date_end
+  ? new Date(race.date_end).toLocaleDateString('cs-CZ', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  : null;
+
+const priceText =
+  race.price_from && race.price_to
+    ? `${race.price_from}–${race.price_to} Kč`
+    : race.price_from
+      ? `od ${race.price_from} Kč`
+      : 'Zdarma';
+
+const terrainBadge: Record<string, string> = {
+  road: 'bg-bg text-text-secondary',
+  trail: 'bg-[#E8F5E9] text-success',
+  ultra: 'bg-[#F3E8FF] text-[#6B21A8]',
+  cross: 'bg-[#FEF3C7] text-accent',
+  obstacle: 'bg-[#FEE2E2] text-error',
+  mixed: 'bg-bg text-text-secondary',
+};
+---
+
+<BaseLayout
+  title={race.name}
+  description={race.description ?? `${race.name} — ${dateFormatted} v ${race.city}`}
+  canonical={`https://zavodyvcr.cz/zavod/${race.slug}`}
+>
+  <article class="mx-auto max-w-[860px] px-8 py-12 max-md:px-4">
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm text-text-secondary">
+      <a href="/zavody" class="hover:text-primary transition-colors duration-150">Závody</a>
+      <span class="mx-2 text-border">/</span>
+      <span class="text-text">{race.name}</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <h1 class="text-[1.75rem] font-bold tracking-[-0.01em] text-text sm:text-[2.25rem] leading-tight">
+          {race.name}
+        </h1>
+        <p class="mt-3 text-lg text-text-secondary">
+          {dateFormatted}
+          {dateEndFormatted && ` – ${dateEndFormatted}`}
+          {race.time_start && ` · Start ${race.time_start}`}
+        </p>
+        <p class="mt-1.5 text-text-secondary">
+          {race.city}{race.region && race.region !== race.city ? `, ${race.region}` : ''}
+          {race.venue && ` · ${race.venue}`}
+        </p>
+      </div>
+      <span class={`rounded-full px-3 py-1 text-sm font-medium ${terrainBadge[race.terrain] ?? terrainBadge.mixed}`}>
+        {terrainLabels[race.terrain] ?? race.terrain}
+      </span>
+    </div>
+
+    <!-- Key Info Grid -->
+    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div class="rounded-2xl bg-surface p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+        <p class="text-xs font-medium text-text-secondary uppercase tracking-wide">Vzdálenosti</p>
+        <div class="mt-2 space-y-1">
+          {race.distances.map((d) => (
+            <p class="text-sm font-semibold text-text">{d.label} ({d.km} km)</p>
+          ))}
+        </div>
+      </div>
+      <div class="rounded-2xl bg-surface p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+        <p class="text-xs font-medium text-text-secondary uppercase tracking-wide">Startovné</p>
+        <p class="mt-2 text-sm font-semibold text-text">{priceText}</p>
+      </div>
+      {race.elevation_gain && (
+        <div class="rounded-2xl bg-surface p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+          <p class="text-xs font-medium text-text-secondary uppercase tracking-wide">Převýšení</p>
+          <p class="mt-2 text-sm font-semibold text-text">{race.elevation_gain} m D+</p>
+        </div>
+      )}
+      {race.capacity && (
+        <div class="rounded-2xl bg-surface p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+          <p class="text-xs font-medium text-text-secondary uppercase tracking-wide">Kapacita</p>
+          <p class="mt-2 text-sm font-semibold text-text">{race.capacity.toLocaleString('cs-CZ')} míst</p>
+        </div>
+      )}
+    </div>
+
+    <!-- Description -->
+    {race.description && (
+      <div class="mt-10">
+        <h2 class="text-[1.125rem] font-semibold tracking-[-0.01em] text-text">O závodu</h2>
+        <p class="mt-4 text-text-secondary leading-relaxed">{race.description}</p>
+      </div>
+    )}
+
+    <!-- Action Buttons -->
+    <div class="mt-10 flex flex-wrap gap-3">
+      {race.registration_url && (
+        <a
+          href={race.registration_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center rounded-[10px] bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-light transition duration-150"
+        >
+          Registrace
+          <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>
+      )}
+      {race.website && (
+        <a
+          href={race.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center rounded-[10px] border border-border bg-surface px-6 py-3 text-sm font-semibold text-text hover:bg-bg transition duration-150"
+        >
+          Web závodu
+          <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>
+      )}
+    </div>
+
+    <!-- Organizer -->
+    {race.organizer && (
+      <div class="mt-10 rounded-2xl bg-surface p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+        <h2 class="text-sm font-semibold text-text">Pořadatel</h2>
+        <p class="mt-2 text-sm text-text-secondary">
+          {race.organizer_url ? (
+            <a href={race.organizer_url} target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary-light transition-colors duration-150">
+              {race.organizer}
+            </a>
+          ) : (
+            race.organizer
+          )}
+        </p>
+      </div>
+    )}
+
+    <!-- Tags -->
+    {race.tags.length > 0 && (
+      <div class="mt-8 flex flex-wrap gap-2">
+        {race.tags.map((tag) => (
+          <span class="rounded-full bg-bg px-3 py-1 text-xs font-medium text-text-secondary">
+            #{tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Back -->
+    <div class="mt-12 border-t border-border pt-8">
+      <a href="/zavody" class="text-sm font-medium text-primary hover:text-primary-light transition-colors duration-150">
+        &larr; Zpět na přehled závodů
+      </a>
+    </div>
+  </article>
+</BaseLayout>

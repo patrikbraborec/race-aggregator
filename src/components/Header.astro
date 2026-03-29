@@ -1,0 +1,37 @@
+---
+const navItems = [
+  { label: 'Závody', href: '/zavody' },
+  { label: 'Trenéři', href: '/treneri' },
+  { label: 'Blog', href: '/blog' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-surface">
+  <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-8 py-4 max-md:px-4">
+    <a href="/" class="text-xl font-bold tracking-[-0.01em] text-primary">
+      Závody<span class="text-accent">vČR</span>
+    </a>
+    <ul class="flex items-center gap-1">
+      {navItems.map((item) => {
+        const isActive = currentPath.startsWith(item.href);
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-150 ease-in-out',
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-text-secondary hover:bg-bg hover:text-text',
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</header>

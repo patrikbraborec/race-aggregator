@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RaceCard from '../../components/RaceCard.astro';
+import { racesByDate, terrainLabels } from '../../lib/mock-data';
+import type { TerrainType } from '../../lib/types';
+
+const terrainParam = Astro.url.searchParams.get('teren') as TerrainType | null;
+const regionParam = Astro.url.searchParams.get('kraj');
+const query = Astro.url.searchParams.get('q')?.toLowerCase();
+
+let filtered = racesByDate;
+
+if (terrainParam && terrainParam in terrainLabels) {
+  filtered = filtered.filter((r) => r.terrain === terrainParam);
+}
+if (regionParam) {
+  filtered = filtered.filter((r) => r.region === regionParam);
+}
+if (query) {
+  filtered = filtered.filter(
+    (r) =>
+      r.name.toLowerCase().includes(query) ||
+      r.city.toLowerCase().includes(query) ||
+      r.tags.some((t) => t.toLowerCase().includes(query))
+  );
+}
+
+const regions = [...new Set(racesByDate.map((r) => r.region).filter(Boolean))].sort() as string[];
+const terrainTypes = Object.entries(terrainLabels);
+---
+
+<BaseLayout
+  title="Závody"
+  description="Přehled všech běžeckých závodů v České republice. Filtruj podle termínu, terénu, kraje a vzdálenosti."
+>
+  <section class="mx-auto max-w-[1200px] px-8 py-12 max-md:px-4">
+    <h1 class="text-[1.75rem] font-bold tracking-[-0.01em] text-text">Běžecké závody</h1>
+    <p class="mt-2 text-text-secondary">
+      {filtered.length} {filtered.length === 1 ? 'závod' : filtered.length < 5 ? 'závody' : 'závodů'} v nabídce
+    </p>
+
+    <!-- Filters -->
+    <form method="get" class="mt-8 flex flex-wrap items-end gap-4">
+      <div>
+        <label for="q" class="block text-xs font-medium text-text-secondary mb-1.5">Hledat</label>
+        <input
+          type="text"
+          name="q"
+          id="q"
+          value={query ?? ''}
+          placeholder="Název, město, tag..."
+          class="rounded-[10px] bg-surface px-4 py-2.5 text-sm text-text shadow-[0_1px_3px_rgba(0,0,0,0.04)] placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition duration-150 w-52"
+        />
+      </div>
+      <div>
+        <label for="teren" class="block text-xs font-medium text-text-secondary mb-1.5">Terén</label>
+        <select
+          name="teren"
+          id="teren"
+          class="rounded-[10px] bg-surface px-4 py-2.5 text-sm text-text shadow-[0_1px_3px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-primary/20 transition duration-150"
+        >
+          <option value="">Všechny</option>
+          {terrainTypes.map(([value, label]) => (
+            <option value={value} selected={terrainParam === value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label for="kraj" class="block text-xs font-medium text-text-secondary mb-1.5">Kraj</label>
+        <select
+          name="kraj"
+          id="kraj"
+          class="rounded-[10px] bg-surface px-4 py-2.5 text-sm text-text shadow-[0_1px_3px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-primary/20 transition duration-150"
+        >
+          <option value="">Všechny</option>
+          {regions.map((r) => (
+            <option value={r} selected={regionParam === r}>
+              {r}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        type="submit"
+        class="rounded-[10px] bg-primary px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-light transition duration-150"
+      >
+        Filtrovat
+      </button>
+      {(terrainParam || regionParam || query) && (
+        <a
+          href="/zavody"
+          class="rounded-[10px] border border-border px-6 py-2.5 text-sm font-medium text-text-secondary hover:bg-surface hover:text-text transition duration-150"
+        >
+          Zrušit filtry
+        </a>
+      )}
+    </form>
+
+    <!-- Race List -->
+    <div class="mt-10 grid gap-4">
+      {filtered.length > 0 ? (
+        filtered.map((race) => <RaceCard race={race} />)
+      ) : (
+        <div class="rounded-2xl bg-surface py-16 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+          <p class="text-text-secondary">Žádné závody neodpovídají zvoleným filtrům.</p>
+          <a href="/zavody" class="mt-3 inline-block text-sm font-medium text-primary hover:text-primary-light transition duration-150">
+            Zobrazit všechny závody
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

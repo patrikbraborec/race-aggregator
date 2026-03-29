@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RaceCard from '../components/RaceCard.astro';
+import { racesByDate, terrainLabels } from '../lib/mock-data';
+
+const upcomingRaces = racesByDate.slice(0, 3);
+const terrainCounts = racesByDate.reduce<Record<string, number>>((acc, r) => {
+  acc[r.terrain] = (acc[r.terrain] ?? 0) + 1;
+  return acc;
+}, {});
+
+// Top 4 terrain categories by race count
+const topTerrains = Object.entries(terrainCounts)
+  .sort(([, a], [, b]) => b - a)
+  .slice(0, 4);
+---
+
+<BaseLayout title="Domů">
+  <!-- Hero — single clear action -->
+  <section class="mx-auto max-w-[1200px] px-8 pt-20 pb-20 max-md:px-4 max-md:pt-12 max-md:pb-14">
+    <h1 class="text-[2.75rem] font-bold tracking-[-0.02em] text-text leading-tight sm:text-5xl">
+      Najdi svůj další závod
+    </h1>
+    <p class="mt-5 max-w-xl text-lg text-text-secondary leading-relaxed">
+      Všechny běžecké závody v České republice na jednom místě.
+    </p>
+    <form action="/zavody" method="get" class="mt-10 max-w-2xl">
+      <div class="relative">
+        <input
+          type="text"
+          name="q"
+          placeholder="Název závodu, město nebo typ terénu..."
+          class="w-full rounded-2xl bg-surface px-6 py-4 pr-14 text-base text-text shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)] placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition duration-150"
+        />
+        <button
+          type="submit"
+          class="absolute right-3 top-1/2 -translate-y-1/2 rounded-[10px] bg-primary p-2.5 text-white shadow-sm hover:bg-primary-light transition duration-150"
+          aria-label="Hledat"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a href="/zavody?teren=trail" class="rounded-full bg-surface px-4 py-1.5 text-sm text-text-secondary shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:text-primary hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)] transition duration-150">Trail závod Beskydy</a>
+        <a href="/zavody?q=Praha" class="rounded-full bg-surface px-4 py-1.5 text-sm text-text-secondary shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:text-primary hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)] transition duration-150">Maraton v Praze</a>
+        <a href="/zavody?q=maraton" class="rounded-full bg-surface px-4 py-1.5 text-sm text-text-secondary shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:text-primary hover:shadow-[0_2px_6px_rgba(0,0,0,0.06)] transition duration-150">Půlmaraton Olomouc</a>
+      </div>
+    </form>
+  </section>
+
+  <!-- Stats — hero number with supporting context -->
+  <section class="mx-auto max-w-[1200px] px-8 max-md:px-4">
+    <div class="rounded-2xl bg-surface p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)]">
+      <div class="flex items-baseline gap-8 flex-wrap">
+        <div>
+          <p class="text-[2.5rem] font-bold tracking-[-0.01em] text-primary">{racesByDate.length}</p>
+          <p class="mt-1 text-sm font-medium text-text-secondary">závodů v databázi</p>
+        </div>
+        <div class="hidden sm:block w-px h-12 bg-border"></div>
+        <div class="flex gap-8 flex-wrap">
+          <div>
+            <p class="text-xl font-semibold text-text">{new Set(racesByDate.map((r) => r.city)).size}</p>
+            <p class="mt-0.5 text-sm text-text-secondary">měst</p>
+          </div>
+          <div>
+            <p class="text-xl font-semibold text-text">{new Set(racesByDate.map((r) => r.region)).size}</p>
+            <p class="mt-0.5 text-sm text-text-secondary">krajů</p>
+          </div>
+          <div>
+            <p class="text-xl font-semibold text-text">{Object.keys(terrainCounts).length}</p>
+            <p class="mt-0.5 text-sm text-text-secondary">typů terénu</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terrain Categories — limited to top 4 -->
+  <section class="mx-auto max-w-[1200px] px-8 pt-16 max-md:px-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-[1.125rem] font-semibold tracking-[-0.01em] text-text">Podle terénu</h2>
+      <a href="/zavody" class="text-sm font-medium text-primary hover:text-primary-light transition-colors duration-150">
+        Všechny typy &rarr;
+      </a>
+    </div>
+    <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {topTerrains.map(([key, count]) => (
+        <a
+          href={`/zavody?teren=${key}`}
+          class="group rounded-2xl bg-surface p-5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)] transition-shadow duration-150 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+        >
+          <p class="text-base font-semibold text-text group-hover:text-primary transition-colors duration-150">{terrainLabels[key] ?? key}</p>
+          <p class="mt-1.5 text-sm text-text-secondary">{count} {count === 1 ? 'závod' : count < 5 ? 'závody' : 'závodů'}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Upcoming Races — 3 instead of 6 -->
+  <section class="mx-auto max-w-[1200px] px-8 pt-16 pb-20 max-md:px-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-[1.125rem] font-semibold tracking-[-0.01em] text-text">Nejbližší závody</h2>
+      <a href="/zavody" class="text-sm font-medium text-primary hover:text-primary-light transition-colors duration-150">
+        Zobrazit všechny &rarr;
+      </a>
+    </div>
+    <div class="mt-6 grid gap-4">
+      {upcomingRaces.map((race) => <RaceCard race={race} compact />)}
+    </div>
+  </section>
+</BaseLayout>
