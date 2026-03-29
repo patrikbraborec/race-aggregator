@@ -25,6 +25,7 @@ interface RaceRow {
     slug: string;
     name: string;
     date_start: string;
+    city: string | null;
     website: string | null;
     description: string | null;
     distances: DistanceEntry[];
@@ -177,6 +178,49 @@ function areLikelyDuplicates(raceA: RaceRow, raceB: RaceRow, nameSim: number, th
     return true;
 }
 
+/** Normalize city name for comparison. */
+function normalizeCity(city: string): string {
+    return removeDiacritics(city).toLowerCase().replace(/[^a-z]/g, '');
+}
+
+/**
+ * Check if two races match on city + compatible distances.
+ * Same city + same date + overlapping distances = very likely the same race,
+ * even if names are completely different across languages/sources.
+ */
+function cityDistanceMatch(raceA: RaceRow, raceB: RaceRow): boolean {
+    if (!raceA.city || !raceB.city) return false;
+    if (!raceA.distances?.length || !raceB.distances?.length) return false;
+
+    if (normalizeCity(raceA.city) !== normalizeCity(raceB.city)) return false;
+
+    // Check distance hints from names — if they conflict, not the same race
+    const hintA = extractDistanceHint(raceA.name);
+    const hintB = extractDistanceHint(raceB.name);
+    if (hintA && hintB && hintA !== hintB) return false;
+
+    return distancesCompatible(raceA.distances, raceB.distances);
+}
+
+/**
+ * Source priority for tiebreaking when completeness scores are equal.
+ * Lower number = higher priority (more authoritative source).
+ */
+const SOURCE_PRIORITY: Record<string, number> = {
+    runczech: 1,     // official organizer
+    behej: 2,        // large established aggregator
+    ceskybeh: 3,     // comprehensive calendar
+    bezeckyzavod: 4, // large database
+    svetbehu: 5,     // aggregator
+    behejbrno: 6,    // regional
+    finishers: 7,    // international, less Czech-specific
+    seed: 10,        // test data — lowest priority
+};
+
+function sourcePriority(source: string | null): number {
+    return SOURCE_PRIORITY[source ?? ''] ?? 8;
+}
+
 await Actor.init();
 
 const input = await Actor.getInput<{
@@ -210,7 +254,7 @@ let offset = 0;
 while (true) {
     const { data, error } = await supabase
         .from('races')
-        .select('id, slug, name, date_start, website, description, distances, price_from, cover_url, logo_url, registration_url, organizer, venue, lat, lng, elevation_gain, capacity, tags, source, created_at')
+        .select('id, slug, name, date_start, city, website, description, distances, price_from, cover_url, logo_url, registration_url, organizer, venue, lat, lng, elevation_gain, capacity, tags, source, created_at')
         .range(offset, offset + SUPABASE_PAGE_SIZE - 1)
         .order('date_start', { ascending: true });
 
@@ -282,6 +326,14 @@ for (const [date, races] of byDate) {
             const sim = similarity(keyI, keyJ);
             if (areLikelyDuplicates(races[i], races[j], sim, threshold)) {
                 union(i, j);
+                continue;
+            }
+
+            // City + distance match — catches cross-language duplicates
+            // e.g., "Prague Marathon" vs "Maraton Praha" (same city, same distances, same date)
+            if (cityDistanceMatch(races[i], races[j])) {
+                log.info(`  City+distance match: "${races[i].name}" ↔ "${races[j].name}" (${races[i].city})`);
+                union(i, j);
             }
         }
     }
@@ -299,10 +351,12 @@ for (const [date, races] of byDate) {
 
         const groupRaces = indices.map((i) => races[i]);
 
-        // Sort by completeness (descending), then by created_at (earlier = more established)
+        // Sort by completeness (descending), then source authority, then created_at (earlier = more established)
         groupRaces.sort((a, b) => {
             const scoreDiff = completenessScore(b) - completenessScore(a);
             if (scoreDiff !== 0) return scoreDiff;
+            const priorityDiff = sourcePriority(a.source) - sourcePriority(b.source);
+            if (priorityDiff !== 0) return priorityDiff;
             return a.created_at.localeCompare(b.created_at);
         });
 
