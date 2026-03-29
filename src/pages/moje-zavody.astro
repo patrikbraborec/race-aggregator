@@ -87,6 +87,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       mixed: 'Mix',
     };
 
+    /** Escape HTML special characters to prevent XSS in innerHTML. */
+    function esc(s: string): string {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    /** Escape a string for safe use inside an HTML attribute value. */
+    function escAttr(s: string): string {
+      return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
     loginBtn?.addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { intent: 'login' } }));
     });
@@ -144,7 +156,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           const dotClass = terrainDotColors[terrain] ?? terrainDotColors.mixed;
           const terrainLabel = terrainLabels[terrain] ?? terrain;
 
-          const shareUrl = `https://zavodyvcr.cz/zavod/${race.slug}?ref=${user.id}`;
+          const shareUrl = `https://zavodyvcr.cz/zavod/${encodeURIComponent(race.slug)}?ref=${encodeURIComponent(user.id)}`;
           const shareText = `Běžím ${race.name}! Přidej se!`;
 
           const card = document.createElement('div');
@@ -152,28 +164,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           card.innerHTML = `
             <div class="flex items-center gap-6 px-6 py-5 max-md:flex-col max-md:items-start max-md:gap-3 max-md:px-4">
               <!-- Race info -->
-              <a href="/zavod/${race.slug}" class="flex min-w-0 flex-1 items-center gap-3 group">
+              <a href="/zavod/${escAttr(race.slug)}" class="flex min-w-0 flex-1 items-center gap-3 group">
                 <span class="h-2 w-2 shrink-0 rounded-full ${dotClass}"></span>
                 <h3 class="truncate text-base font-semibold text-text group-hover:text-accent transition-colors duration-150">
-                  ${race.name}
+                  ${esc(race.name)}
                 </h3>
               </a>
 
               <div class="flex items-center gap-6 max-md:ml-5">
                 <span class="font-mono text-xs font-medium uppercase tracking-wide text-text-secondary">
-                  ${date}
+                  ${esc(date)}
                 </span>
                 <span class="font-mono text-xs text-text-secondary">
-                  ${race.city || ''}
+                  ${esc(race.city || '')}
                 </span>
               </div>
 
               <div class="flex items-center gap-4 max-md:ml-5">
                 <span class="font-mono text-xs font-semibold text-text">
-                  ${distances}
+                  ${esc(distances)}
                 </span>
                 <span class="font-mono text-[11px] uppercase tracking-[0.06em] text-text-secondary">
-                  ${terrainLabel}
+                  ${esc(terrainLabel)}
                 </span>
               </div>
             </div>
@@ -182,7 +194,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="flex flex-wrap items-center gap-3 border-t border-border/50 px-6 py-3 max-md:px-4">
               <span class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary">Sdílet</span>
               <a
-                href="https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}"
+                href="https://wa.me/?text=${escAttr(encodeURIComponent(`${shareText} ${shareUrl}`))}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
@@ -191,7 +203,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 WhatsApp
               </a>
               <a
-                href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}"
+                href="https://www.facebook.com/sharer/sharer.php?u=${escAttr(encodeURIComponent(shareUrl))}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
@@ -200,7 +212,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 Facebook
               </a>
               <a
-                href="https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}"
+                href="https://x.com/intent/tweet?text=${escAttr(encodeURIComponent(shareText))}&amp;url=${escAttr(encodeURIComponent(shareUrl))}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-primary transition-colors duration-150"
@@ -211,7 +223,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <button
                 type="button"
                 class="copy-link-btn inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary hover:text-accent transition-colors duration-150"
-                data-url="${shareUrl}"
+                data-url="${escAttr(shareUrl)}"
               >
                 <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />

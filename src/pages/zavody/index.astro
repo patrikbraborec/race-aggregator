@@ -13,15 +13,25 @@ const regionParam = Astro.url.searchParams.get('kraj');
 const query = Astro.url.searchParams.get('q') ?? undefined;
 const rawKm = Astro.url.searchParams.get('km');
 const kmParam = rawKm ? parseFloat(rawKm) : undefined;
+const rawMonth = Astro.url.searchParams.get('mesic');
+const monthParam = rawMonth ? parseInt(rawMonth, 10) : undefined;
+const cityParam = Astro.url.searchParams.get('mesto') ?? undefined;
 
 const [filtered, regions] = await Promise.all([
-  getRaces({ terrain: terrainParam ?? undefined, region: regionParam ?? undefined, query, km: kmParam }),
+  getRaces({
+    terrain: terrainParam ?? undefined,
+    region: regionParam ?? undefined,
+    query,
+    km: kmParam,
+    month: monthParam,
+    city: cityParam,
+  }),
   getRegions(),
 ]);
 
 const terrainTypes = Object.entries(terrainLabels);
 
-const hasFilters = !!(terrainParam || regionParam || query || kmParam);
+const hasFilters = !!(terrainParam || regionParam || query || kmParam || monthParam || cityParam);
 ---
 
 <BaseLayout

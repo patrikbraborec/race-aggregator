@@ -44,6 +44,8 @@ export async function getRaces(filters: {
   region?: string;
   query?: string;
   km?: number;
+  month?: number;
+  city?: string;
 }): Promise<Race[]> {
   let q = supabase
     .from('races')
@@ -58,8 +60,28 @@ export async function getRaces(filters: {
   if (filters.region) {
     q = q.eq('region', filters.region);
   }
+
+  // Filter by month using date_start range
+  if (filters.month && filters.month >= 1 && filters.month <= 12) {
+    const year = new Date().getFullYear();
+    const monthStr = String(filters.month).padStart(2, '0');
+    const startDate = `${year}-${monthStr}-01`;
+    // Last day of month: create date for 1st of next month, subtract 1 day
+    const lastDay = new Date(year, filters.month, 0).getDate();
+    const endDate = `${year}-${monthStr}-${String(lastDay).padStart(2, '0')}`;
+    q = q.gte('date_start', startDate).lte('date_start', endDate);
+  }
+
+  // Filter by city (case-insensitive prefix match)
+  if (filters.city) {
+    const sanitizedCity = filters.city.replace(/[%_(),.*\\{}]/g, '');
+    if (sanitizedCity.length >= 2) {
+      q = q.ilike('city', `%${sanitizedCity}%`);
+    }
+  }
+
   if (filters.query) {
-    const sanitized = filters.query.replace(/[%_(),.*\\]/g, '');
+    const sanitized = filters.query.replace(/[%_(),.*\\{}]/g, '');
     if (sanitized.length > 0) {
       // Split query into words and create prefix-based search conditions
       // to handle Czech declension (e.g., "Beskydech" → "Beskyd" matches "Beskydská")
