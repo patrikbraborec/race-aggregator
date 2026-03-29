@@ -1,5 +1,5 @@
 import { Actor, log } from 'apify';
-import { getSupabaseClient, normalizeRaceName, removeDiacritics } from '@race-aggregator/shared';
+import { getSupabaseClient, normalizeRaceName, removeDiacritics, matchCanonical } from '@race-aggregator/shared';
 import { similarity } from './similarity.js';
 
 /**
@@ -320,6 +320,17 @@ for (const [date, races] of byDate) {
                     union(i, j);
                 }
                 continue;
+            }
+
+            // Canonical name match — catches known cross-language aliases
+            const canonI = matchCanonical(keyI);
+            const canonJ = matchCanonical(keyJ);
+            if (canonI && canonJ && canonI === canonJ) {
+                if (distancesCompatible(races[i].distances, races[j].distances)) {
+                    log.info(`  Canonical match: "${races[i].name}" ↔ "${races[j].name}" → "${canonI}"`);
+                    union(i, j);
+                    continue;
+                }
             }
 
             // Fuzzy match — check name hints + distances
