@@ -1,0 +1,35 @@
+{
+    "actorSpecification": 1,
+    "name": "actor-enricher",
+    "title": "Race Enricher",
+    "description": "Crawls race websites to fill in missing data (description, price, registration URL, start time, elevation, cover image). Only targets upcoming races with low completeness scores.",
+    "version": "1.0.0",
+    "meta": {
+        "generatedBy": "Claude Code with Claude Opus 4.6"
+    },
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Enrichment Report",
+            "description": "Report of which races were enriched and what fields were updated."
+        }
+    },
+    "buildTag": "latest",
+    "environmentVariables": [
+        {
+            "name": "SUPABASE_URL",
+            "isSecret": false
+        },
+        {
+            "name": "SUPABASE_SERVICE_ROLE_KEY",
+            "isSecret": true
+        },
+        {
+            "name": "APIFY_TOKEN",
+            "isSecret": true
+        }
+    ],
+    "usesStandbyMode": false
+}

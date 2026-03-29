@@ -1,0 +1,38 @@
+{
+    "title": "Race Pipeline Orchestrator Input",
+    "description": "Configuration for the daily race pipeline orchestrator.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "scraperTimeoutSecs": {
+            "title": "Scraper Timeout (seconds)",
+            "type": "integer",
+            "description": "Maximum time to wait for all scrapers to finish. Default: 1800 (30 minutes).",
+            "default": 1800,
+            "minimum": 300,
+            "maximum": 7200
+        },
+        "dedupTimeoutSecs": {
+            "title": "Dedup Timeout (seconds)",
+            "type": "integer",
+            "description": "Maximum time to wait for deduplication to finish. Default: 600 (10 minutes).",
+            "default": 600,
+            "minimum": 120,
+            "maximum": 3600
+        },
+        "enricherTimeoutSecs": {
+            "title": "Enricher Timeout (seconds)",
+            "type": "integer",
+            "description": "Maximum time to wait for enrichment to finish. Default: 1800 (30 minutes).",
+            "default": 1800,
+            "minimum": 300,
+            "maximum": 7200
+        },
+        "skipEnricher": {
+            "title": "Skip Enricher",
+            "type": "boolean",
+            "description": "Skip the enrichment step (useful for faster runs or debugging).",
+            "default": false
+        }
+    }
+}
