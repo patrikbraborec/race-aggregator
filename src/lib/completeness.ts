@@ -17,7 +17,6 @@ const WEIGHTS: { field: keyof Race; weight: number; trailOnly?: boolean }[] = [
   { field: 'elevation_gain', weight: 5, trailOnly: true },
   { field: 'cover_url', weight: 5 },
   { field: 'organizer', weight: 5 },
-  { field: 'venue', weight: 5 },
   { field: 'capacity', weight: 5 },
 ];
 

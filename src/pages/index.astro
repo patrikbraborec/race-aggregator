@@ -23,20 +23,20 @@ const upcomingRaces = await getUpcomingRaces(6);
 
     <!-- Search -->
     <form action="/api/search" method="get" class="mt-8 max-w-2xl">
-      <div class="flex border border-border">
+      <div class="flex border border-border max-sm:flex-col">
         <TypewriterSearch
           name="q"
-          class="flex-1 bg-surface px-6 py-4 font-mono text-sm text-text placeholder:text-text-secondary/50 focus:outline-none"
+          class="min-w-0 flex-1 bg-surface px-6 py-4 font-mono text-sm text-text placeholder:text-text-secondary/50 focus:outline-none"
         />
         <button
           type="submit"
-          class="bg-accent px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+          class="shrink-0 bg-accent px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
           aria-label="Hledat"
         >
           Hledat &rarr;
         </button>
       </div>
-      <div class="mt-3 flex flex-wrap gap-3">
+      <div class="mt-3 flex flex-wrap gap-2 gap-y-1">
         <a href="/api/search?q=trail+v+Praze" class="font-mono text-xs text-text-secondary transition-colors duration-150 hover:text-accent">Trail v Praze</a>
         <span class="text-border">/</span>
         <a href="/api/search?q=p%C5%AFlmaraton" class="font-mono text-xs text-text-secondary transition-colors duration-150 hover:text-accent">Půlmaraton</a>

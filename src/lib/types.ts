@@ -21,7 +21,6 @@ export interface Race {
   country: string;
   lat: number | null;
   lng: number | null;
-  venue: string | null;
 
   distances: RaceDistance[];
   terrain: TerrainType;
@@ -43,7 +42,6 @@ export interface Race {
   source: string | null;
   source_id: string | null;
   capacity: number | null;
-  tags: string[];
 
   created_at: string;
   updated_at: string;
@@ -66,7 +64,6 @@ export type RaceCard = Pick<
   | 'price_to'
   | 'cover_url'
   | 'status'
-  | 'tags'
 >;
 
 /** Terrain labels in Czech */

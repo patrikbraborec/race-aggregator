@@ -1,10 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
+import { rankRacesByQuery } from './search';
 import type { Race } from './types';
 
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+function getTodayDateString(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
 
 /** Fetch upcoming races ordered by date, limited to `limit` results. */
 export async function getUpcomingRaces(limit: number): Promise<Race[]> {
@@ -13,7 +23,8 @@ export async function getUpcomingRaces(limit: number): Promise<Race[]> {
     .select('*')
     .eq('status', 'confirmed')
     .eq('country', 'CZ')
-    .gte('date_start', new Date().toISOString().split('T')[0])
+    .in('extraction_status', ['extracted', 'complete'])
+    .gte('date_start', getTodayDateString())
     .order('date_start', { ascending: true })
     .limit(limit);
 
@@ -27,7 +38,9 @@ export async function getTerrainCounts(): Promise<Record<string, number>> {
     .from('races')
     .select('terrain')
     .eq('status', 'confirmed')
-    .eq('country', 'CZ');
+    .eq('country', 'CZ')
+    .in('extraction_status', ['extracted', 'complete'])
+    .gte('date_start', getTodayDateString());
 
   if (error) throw error;
 
@@ -47,57 +60,53 @@ export async function getRaces(filters: {
   month?: number;
   city?: string;
 }): Promise<Race[]> {
+  const effectiveTerrain = filters.terrain;
+  const effectiveRegion = filters.region;
+  const effectiveMonth = filters.month;
+  const effectiveCity = filters.city;
+  const effectiveKm = filters.km;
+  const today = getTodayDateString();
+
   let q = supabase
     .from('races')
     .select('*')
     .eq('status', 'confirmed')
     .eq('country', 'CZ')
+    .in('extraction_status', ['extracted', 'complete'])
+    .gte('date_start', today)
     .order('date_start', { ascending: true });
 
-  if (filters.terrain) {
-    q = q.eq('terrain', filters.terrain);
+  if (effectiveTerrain) {
+    q = q.eq('terrain', effectiveTerrain);
   }
-  if (filters.region) {
-    q = q.eq('region', filters.region);
+  if (effectiveRegion) {
+    q = q.eq('region', effectiveRegion);
   }
 
   // Filter by month using date_start range
-  if (filters.month && filters.month >= 1 && filters.month <= 12) {
-    const year = new Date().getFullYear();
-    const monthStr = String(filters.month).padStart(2, '0');
+  if (effectiveMonth && effectiveMonth >= 1 && effectiveMonth <= 12) {
+    let year = new Date().getFullYear();
+    const monthStr = String(effectiveMonth).padStart(2, '0');
+    let lastDay = new Date(year, effectiveMonth, 0).getDate();
+    let endDate = `${year}-${monthStr}-${String(lastDay).padStart(2, '0')}`;
+
+    // If the month has already passed this year, use next year
+    if (endDate < today) {
+      year += 1;
+      lastDay = new Date(year, effectiveMonth, 0).getDate();
+      endDate = `${year}-${monthStr}-${String(lastDay).padStart(2, '0')}`;
+    }
+
     const startDate = `${year}-${monthStr}-01`;
-    // Last day of month: create date for 1st of next month, subtract 1 day
-    const lastDay = new Date(year, filters.month, 0).getDate();
-    const endDate = `${year}-${monthStr}-${String(lastDay).padStart(2, '0')}`;
     q = q.gte('date_start', startDate).lte('date_start', endDate);
   }
 
-  // Filter by city (case-insensitive prefix match)
-  if (filters.city) {
-    const sanitizedCity = filters.city.replace(/[%_(),.*\\{}]/g, '');
+  if (effectiveCity) {
+    const sanitizedCity = effectiveCity.replace(/[%_(),.*\\{}]/g, '');
     if (sanitizedCity.length >= 2) {
-      q = q.ilike('city', `%${sanitizedCity}%`);
-    }
-  }
-
-  if (filters.query) {
-    const sanitized = filters.query.replace(/[%_(),.*\\{}]/g, '');
-    if (sanitized.length > 0) {
-      // Split query into words and create prefix-based search conditions
-      // to handle Czech declension (e.g., "Beskydech" → "Beskyd" matches "Beskydská")
-      const words = sanitized.split(/\s+/).filter((w) => w.length >= 3);
-      if (words.length > 0) {
-        const conditions = words.flatMap((w) => {
-          // Truncate to ~60% of length (min 3 chars) to strip Czech suffixes
-          const prefixLen = Math.max(3, Math.floor(w.length * 0.6));
-          const prefix = w.slice(0, prefixLen);
-          return [`name.ilike.%${prefix}%`, `city.ilike.%${prefix}%`];
-        });
-        // Also try the full query as-is for exact-ish matches and tag search
-        conditions.push(`name.ilike.%${sanitized}%`);
-        conditions.push(`tags.cs.{${sanitized}}`);
-        q = q.or(conditions.join(','));
-      }
+      q = q.or(
+        `name.ilike.%${sanitizedCity}%,city.ilike.%${sanitizedCity}%,region.ilike.%${sanitizedCity}%`,
+      );
     }
   }
 
@@ -107,14 +116,18 @@ export async function getRaces(filters: {
   let results = data as Race[];
 
   // Filter by distance client-side (distances is a JSONB array)
-  if (filters.km) {
-    const targetKm = filters.km;
+  if (effectiveKm) {
+    const targetKm = effectiveKm;
     const tolerance = targetKm * 0.15; // 15% tolerance
     results = results.filter((race) =>
       race.distances?.some(
         (d) => Math.abs(d.km - targetKm) <= tolerance
       )
     );
+  }
+
+  if (filters.query?.trim()) {
+    results = rankRacesByQuery(results, filters.query);
   }
 
   return results;
@@ -127,6 +140,8 @@ export async function getRegions(): Promise<string[]> {
     .select('region')
     .eq('status', 'confirmed')
     .eq('country', 'CZ')
+    .in('extraction_status', ['extracted', 'complete'])
+    .gte('date_start', getTodayDateString())
     .not('region', 'is', null);
 
   if (error) throw error;
