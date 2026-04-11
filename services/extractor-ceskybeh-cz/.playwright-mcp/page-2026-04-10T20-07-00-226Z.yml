@@ -1,0 +1,304 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e6]: Český běh jsou služby Českého atletického svazu pro běžce, běhy a běhání
+  - navigation [ref=e7]:
+    - generic [ref=e8]:
+      - link "" [ref=e9] [cursor=pointer]:
+        - /url: https://www.facebook.com/ceskybeh.cz/
+        - generic [ref=e10]: 
+      - link [ref=e11] [cursor=pointer]:
+        - /url: https://ceskybeh.cz
+        - img [ref=e12]
+      - generic [ref=e13]:
+        - list [ref=e14]:
+          - list [ref=e15]:
+            - listitem [ref=e16]:
+              - link "Závody ▼" [ref=e17] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/zavody/
+            - listitem [ref=e18]:
+              - link "Běžci ▼" [ref=e19] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/bezci/
+            - listitem [ref=e20]:
+              - link "Trenér běhu ▼" [ref=e21] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/treneri/
+            - listitem [ref=e22]:
+              - link "Organizátoři ▼" [ref=e23] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/organizatori/
+            - listitem [ref=e24]:
+              - link "O nás ▼" [ref=e25] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/o-nas/
+        - generic [ref=e26]:
+          - link "" [ref=e27] [cursor=pointer]:
+            - /url: https://www.facebook.com/ceskybeh.cz/
+            - generic [ref=e28]: 
+          - link "" [ref=e29] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/CzechAthletics/
+            - generic [ref=e30]: 
+  - main [ref=e31]:
+    - list [ref=e36]:
+      - listitem [ref=e37]:
+        - link "ÚVOD" [ref=e38] [cursor=pointer]:
+          - /url: https://ceskybeh.cz/
+      - listitem [ref=e39]:
+        - text: /
+        - link "Termínovka" [ref=e40] [cursor=pointer]:
+          - /url: https://ceskybeh.cz/terminovka/
+      - listitem [ref=e41]: / Detail závodu
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - heading "Termínovka" [level=1] [ref=e46]
+        - paragraph [ref=e48]:
+          - link "+ vložit závod" [ref=e49] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/organizatori/vlozit-zavod-do-terminovky/
+          - link "Výsledky závodů" [ref=e50] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/vysledky/
+      - paragraph [ref=e53]:
+        - text: Každý rok vydáváme nejkompletnější a jedinou oficiální Termínovku.
+        - text: Zveřejňujeme
+        - link "výsledky závodů" [ref=e54] [cursor=pointer]:
+          - /url: https://ceskybeh.cz/vysledky/
+        - text: a sledujeme hodnocení běhů samotnými běžci.
+    - generic [ref=e58]:
+      - heading "Jarní běh Pávov" [level=3] [ref=e59]
+      - generic [ref=e60]:
+        - generic [ref=e62]:
+          - paragraph [ref=e63]:
+            - generic [ref=e64]: 
+            - text: 10. dubna 2026
+          - paragraph [ref=e65]:
+            - generic [ref=e66]: 
+            - text: "Start první kategorie: v 17:30"
+          - paragraph [ref=e67]:
+            - generic [ref=e68]: 
+            - text: "Jihlava, Nový Pávov, autokempink , Kraj: Vysočina"
+          - paragraph [ref=e69]:
+            - generic [ref=e70]: 
+            - text: "Délka tratí: 8,8 km"
+          - paragraph [ref=e71]:
+            - generic [ref=e72]: 
+            - text: "Typ závodu: Smíšený"
+          - paragraph [ref=e73]:
+            - generic [ref=e74]: 
+            - text: "Pořadatel: Běžec Vysočiny z.s., Bohumil Novák,"
+            - link "web" [ref=e75] [cursor=pointer]:
+              - /url: http://bezecvysociny.cz/
+            - text: ", 731 480 914, info@bezecvysociny.cz"
+          - paragraph [ref=e76]:
+            - generic [ref=e77]: 
+            - text: "Propozice:"
+            - link "Web" [ref=e78] [cursor=pointer]:
+              - /url: http://bezecvysociny.cz/
+        - paragraph [ref=e79]: Zahajovací závod Poháru Běžce Vysočiny. Obrátkový okruh, lesní cesta 45%, asfalt 55%.
+        - alert [ref=e80]:
+          - text: Neběhá vám to? Chcete se zlepšovat?
+          - link "Najděte si trenéra" [ref=e81] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/treneri-kondicniho-behu/
+          - text: .
+        - paragraph [ref=e82]:
+          - generic [ref=e83]: 
+          - text: Všechny ročníky
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]: 2026,
+            - link "duben" [ref=e87] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2026/
+          - generic [ref=e88]:
+            - generic [ref=e89]: 2025,
+            - link "duben - Výsledky" [ref=e90] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2025/
+          - generic [ref=e91]:
+            - generic [ref=e92]: 2023,
+            - link "duben" [ref=e93] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2023/
+          - generic [ref=e94]:
+            - generic [ref=e95]: 2022,
+            - link "duben - Výsledky" [ref=e96] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2022/
+          - generic [ref=e97]:
+            - generic [ref=e98]: 2021,
+            - link "duben" [ref=e99] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2021/
+          - generic [ref=e100]:
+            - generic [ref=e101]: 2020,
+            - link "červen - Výsledky" [ref=e102] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-1-2020/
+          - link "duben" [ref=e104] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2020/
+          - generic [ref=e105]:
+            - generic [ref=e106]: 2019,
+            - link "duben - Výsledky" [ref=e107] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2019/
+          - generic [ref=e108]:
+            - generic [ref=e109]: 2018,
+            - link "duben - Výsledky" [ref=e110] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2018/
+          - generic [ref=e111]:
+            - generic [ref=e112]: 2017,
+            - link "duben - Výsledky" [ref=e113] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2017/
+          - generic [ref=e114]:
+            - generic [ref=e115]: 2016,
+            - link "duben - Výsledky" [ref=e116] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2016/
+          - generic [ref=e117]:
+            - generic [ref=e118]: 2015,
+            - link "duben - Výsledky" [ref=e119] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2015/
+          - generic [ref=e120]:
+            - generic [ref=e121]: 2014,
+            - link "duben - Výsledky" [ref=e122] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/jarni-beh-pavov-2014/
+  - generic [ref=e124]:
+    - link [ref=e127] [cursor=pointer]:
+      - /url: https://pomahejpohybem.cz/?utm_source=ceskybeh.cz&utm_campaign=cez_app&utm_medium=b
+      - img [ref=e128]
+    - generic [ref=e129]:
+      - generic [ref=e130]:
+        - heading "provozovatel" [level=3] [ref=e131]: provozovatel
+        - link [ref=e132] [cursor=pointer]:
+          - /url: https://atletika.cz
+          - img [ref=e133]
+      - generic [ref=e134]:
+        - heading "generální partner ČAS" [level=3] [ref=e135]
+        - link [ref=e136] [cursor=pointer]:
+          - /url: https://cez.cz
+          - img [ref=e137]
+      - generic [ref=e138]:
+        - heading "partneři českého běžeckého klubu" [level=3] [ref=e139]:
+          - text: partneři
+          - text: českého běžeckého klubu
+        - generic [ref=e140]:
+          - link [ref=e142] [cursor=pointer]:
+            - /url: https://run-magazine.cz/
+            - img [ref=e143]
+          - link [ref=e145] [cursor=pointer]:
+            - /url: https://bechovice-praha.cz
+            - img [ref=e146]
+          - link [ref=e148] [cursor=pointer]:
+            - /url: https://enervit.cz/
+            - img [ref=e149]
+          - link [ref=e151] [cursor=pointer]:
+            - /url: https://www.vital-praha.cz/
+            - img [ref=e152]
+  - generic [ref=e153]:
+    - generic [ref=e155]:
+      - generic [ref=e156]:
+        - heading "Český běh" [level=5] [ref=e157]
+        - list [ref=e159]:
+          - listitem [ref=e160]:
+            - link "O nás" [ref=e161] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/
+          - listitem [ref=e162]:
+            - link "Český běžecký klub" [ref=e163] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/bezci/cesky-bezecky-klub/
+          - listitem [ref=e164]:
+            - link "Nabídka pro organizátory" [ref=e165] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/
+          - listitem [ref=e166]:
+            - link "GDPR" [ref=e167] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/gdpr/
+          - listitem [ref=e168]:
+            - link "Kontakty" [ref=e169] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/kontakt/
+      - generic [ref=e170]:
+        - heading "Běžci" [level=5] [ref=e171]
+        - list [ref=e173]:
+          - listitem [ref=e174]:
+            - link "Termínovka" [ref=e175] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/
+          - listitem [ref=e176]:
+            - link "Výsledky" [ref=e177] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/
+          - listitem [ref=e178]:
+            - link "Hodnotit běh" [ref=e179] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/
+          - listitem [ref=e180]:
+            - link "Český běžecký klub" [ref=e181] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/bezci/cesky-bezecky-klub/
+          - listitem [ref=e182]:
+            - link "Info ze závodů" [ref=e183] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/clanky/
+          - listitem [ref=e184]:
+            - link "Články a blogy" [ref=e185] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/clanky/
+          - listitem [ref=e186]:
+            - link "Najít si trenéra" [ref=e187] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri-kondicniho-behu/
+      - generic [ref=e188]:
+        - heading "Trenéři" [level=5] [ref=e189]
+        - list [ref=e191]:
+          - listitem [ref=e192]:
+            - link "Kurzy trenéra" [ref=e193] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri/stat-se-trenerem/
+          - listitem [ref=e194]:
+            - link "Naši lektoři" [ref=e195] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri/lektori/
+          - listitem [ref=e196]:
+            - link "Trenéři" [ref=e197] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri-kondicniho-behu/
+      - generic [ref=e198]:
+        - heading "Organizátoři" [level=5] [ref=e199]
+        - list [ref=e201]:
+          - listitem [ref=e202]:
+            - link "Certifikovat trať" [ref=e203] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-trat/
+          - listitem [ref=e204]:
+            - link "Certifikovat závod" [ref=e205] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-zavod/
+          - listitem [ref=e206]:
+            - link "Vložit závod do Termínovky" [ref=e207] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/vlozit-zavod-do-terminovky/
+          - listitem [ref=e208]:
+            - link "Pravidla" [ref=e209] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/pravidla/
+          - listitem [ref=e210]:
+            - link "Normy" [ref=e211] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/normy/
+          - listitem [ref=e212]:
+            - link "Seznam měřičů" [ref=e213] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-trat/#merici
+      - generic [ref=e214]:
+        - heading "Kontakty" [level=5] [ref=e215]
+        - list [ref=e217]:
+          - listitem [ref=e218]:
+            - link "Kontakty" [ref=e219] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/kontakt/
+          - listitem [ref=e220]:
+            - link "Český běh" [ref=e221] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/cesky-beh/
+          - listitem [ref=e222]:
+            - link "Český atletický svaz" [ref=e223] [cursor=pointer]:
+              - /url: http://atletika.cz
+          - listitem [ref=e224]:
+            - link "" [ref=e225] [cursor=pointer]:
+              - /url: https://www.facebook.com/ceskybeh.cz/
+              - generic [ref=e226]: 
+          - listitem [ref=e227]:
+            - link "" [ref=e228] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/CzechAthletics/
+              - generic [ref=e229]: 
+    - document [ref=e231]:
+      - generic [ref=e232]:
+        - link "Cookies" [ref=e233] [cursor=pointer]:
+          - /url: "#updateCookies"
+        - generic [ref=e235]:
+          - heading "Informace o cookies" [level=3] [ref=e236]
+          - generic [ref=e237]:
+            - generic [ref=e238]:
+              - paragraph [ref=e239]: Kliknutím na Souhlasím se vším budou uloženy cookies technické, analytické a marketingové - dokážeme vám tak umožnit pohodlné používání webu, měřit návštěvnost a zobrazovat relevantní reklamu.
+              - paragraph [ref=e240]:
+                - text: Souhlas můžete
+                - link "odmítnout zde" [ref=e241] [cursor=pointer]:
+                  - /url: "#declineCookies"
+                - text: .
+            - generic [ref=e242]:
+              - button "Nastavení cookies" [ref=e243] [cursor=pointer]
+              - button "Souhlasím se vším" [ref=e244] [cursor=pointer]
+  - iframe [ref=e247]:
+    - generic [ref=f17e5]:
+      - generic [ref=f17e6]:
+        - text: protected by
+        - strong [ref=f17e7]: reCAPTCHA
+      - generic [ref=f17e9]:
+        - text: reCAPTCHA is changing its terms of service.
+        - link "Take action." [ref=f17e10] [cursor=pointer]:
+          - /url: https://google.com/recaptcha/admin/migrate

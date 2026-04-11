@@ -1,0 +1,66 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["title", "date", "city", "district", "region", "distance", "surface", "cup", "startTime", "startPlace", "website", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "date": {
+                        "label": "Date",
+                        "format": "text"
+                    },
+                    "city": {
+                        "label": "City",
+                        "format": "text"
+                    },
+                    "district": {
+                        "label": "District",
+                        "format": "text"
+                    },
+                    "region": {
+                        "label": "Region",
+                        "format": "text"
+                    },
+                    "distance": {
+                        "label": "Distance",
+                        "format": "text"
+                    },
+                    "surface": {
+                        "label": "Surface",
+                        "format": "text"
+                    },
+                    "cup": {
+                        "label": "Cup / Series",
+                        "format": "text"
+                    },
+                    "startTime": {
+                        "label": "Start Time",
+                        "format": "text"
+                    },
+                    "startPlace": {
+                        "label": "Start Place",
+                        "format": "text"
+                    },
+                    "website": {
+                        "label": "Website",
+                        "format": "link"
+                    },
+                    "url": {
+                        "label": "Source URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}

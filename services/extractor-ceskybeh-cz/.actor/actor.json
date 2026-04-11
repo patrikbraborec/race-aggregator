@@ -1,0 +1,18 @@
+{
+	"$schema": "https://apify.com/schemas/v1/actor.ide.json",
+	"actorSpecification": 1,
+	"name": "extractor-ceskybeh-cz",
+	"title": "Ceskybeh.cz Race Extractor",
+	"description": "Extracts race data from ceskybeh.cz race listings and detail pages.",
+	"version": "0.0",
+	"meta": {
+		"templateId": "ts-crawlee-playwright-camoufox",
+		"generatedBy": "Claude Code with Claude Opus 4.6"
+	},
+	"input": "./input_schema.json",
+	"output": "./output_schema.json",
+	"storages": {
+		"dataset": "./dataset_schema.json"
+	},
+	"dockerfile": "../Dockerfile"
+}

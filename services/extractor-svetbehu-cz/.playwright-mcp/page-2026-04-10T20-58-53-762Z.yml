@@ -1,0 +1,673 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "HedvabnaStezka.cz" [ref=e5] [cursor=pointer]:
+      - /url: https://www.hedvabnastezka.cz/
+    - link "SvetOutdooru.cz" [ref=e7] [cursor=pointer]:
+      - /url: https://www.svetoutdooru.cz/
+    - link "SvetBehu.cz" [ref=e9] [cursor=pointer]:
+      - /url: https://www.svetbehu.cz
+    - link "TuleniPasy.cz" [ref=e11] [cursor=pointer]:
+      - /url: https://www.tulenipasy.cz
+    - link "Padler.cz" [ref=e13] [cursor=pointer]:
+      - /url: https://www.padler.cz
+    - link "KnihyNaHory.cz" [ref=e15] [cursor=pointer]:
+      - /url: https://www.knihynahory.cz
+    - link "FestivalObzory.cz" [ref=e17] [cursor=pointer]:
+      - /url: https://www.festivalobzory.cz
+    - link "SnowFilmFest.cz" [ref=e19] [cursor=pointer]:
+      - /url: https://snowfilmfest.cz/
+    - link "ExpedicniKamera.cz" [ref=e21] [cursor=pointer]:
+      - /url: https://www.expedicnikamera.cz
+  - generic [ref=e22]:
+    - banner [ref=e23]:
+      - generic [ref=e26]:
+        - link "Hlavní stránka" [ref=e27] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/
+        - generic [ref=e28]:
+          - searchbox "Hledat"
+          - button "Vyhledat" [ref=e29] [cursor=pointer]:
+            - img [ref=e30]
+      - navigation [ref=e34]:
+        - list [ref=e36]:
+          - listitem [ref=e37]:
+            - link "ČLÁNKY" [ref=e38] [cursor=pointer]:
+              - /url: https://www.svetbehu.cz/clanky/
+          - listitem [ref=e39]:
+            - link "Termínovka" [ref=e40] [cursor=pointer]:
+              - /url: /terminovka/
+          - listitem [ref=e41]:
+            - link "Běžecké trasy" [ref=e42] [cursor=pointer]:
+              - /url: /bezecke-trasy/
+          - listitem [ref=e43]:
+            - link "Trénink" [ref=e44] [cursor=pointer]:
+              - /url: https://www.svetbehu.cz/rubrika/trenink/
+          - listitem [ref=e45]:
+            - link "Vybavení / Recenze" [ref=e46] [cursor=pointer]:
+              - /url: /recenze
+          - listitem [ref=e47]:
+            - link "Diskuse" [ref=e48] [cursor=pointer]:
+              - /url: /diskuse/
+          - listitem [ref=e49]:
+            - link "Časopis Svět běhu" [ref=e50] [cursor=pointer]:
+              - /url: https://www.svetbehu.cz/casopis-svet-behu/
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - link "Homepage" [ref=e55] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz
+        - generic [ref=e56]:
+          - heading "Termínovka" [level=1] [ref=e57]
+          - link "Vložit závod" [ref=e58] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/informace-pro-poradatele-jak-pridat-zavod-do-terminovky/
+            - img [ref=e59]
+            - generic [ref=e61]: Vložit závod
+            - img [ref=e62]
+        - paragraph [ref=e65]: Termínovka je chronologický výpis běžeckých závodů na území České republiky, ale také sousedních států. Maratony, půlmaratony, 10km běhy, ultra běhy a další. Pro výběr požadovaného závodu použijte přednastavené filtry nebo mapu, kde najdete všechny závody v termínovce.
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - listbox [ref=e68]:
+              - option "Leden" [ref=e69]
+              - option "Únor" [ref=e70]
+              - option "Březen" [ref=e71]
+              - option "Duben" [ref=e72]
+              - option "Květen" [ref=e73]
+              - option "Červen" [ref=e74]
+              - option "Červenec" [ref=e75]
+              - option "Srpen" [ref=e76]
+              - option "Září" [ref=e77]
+              - option "Říjen" [ref=e78]
+              - option "Listopad" [ref=e79]
+              - option "Prosinec" [ref=e80]
+            - button "Měsíc" [ref=e82] [cursor=pointer]:
+              - generic [ref=e83]: Měsíc
+            - listbox [ref=e85]:
+              - option "2024" [ref=e86]
+              - option "2025" [ref=e87]
+              - option "2026" [ref=e88]
+              - option "2027" [ref=e89]
+              - option "2028" [ref=e90]
+            - button "Rok" [ref=e92] [cursor=pointer]:
+              - generic [ref=e93]: Rok
+            - listbox [ref=e95]:
+              - option "Praha" [ref=e96]
+              - option "Jihočeský" [ref=e97]
+              - option "Jihomoravský" [ref=e98]
+              - option "Karlovarský" [ref=e99]
+              - option "Královéhradecký" [ref=e100]
+              - option "Liberecký" [ref=e101]
+              - option "Olomoucký" [ref=e102]
+              - option "Moravskoslezský" [ref=e103]
+              - option "Pardubický" [ref=e104]
+              - option "Plzeňský" [ref=e105]
+              - option "Středočeský" [ref=e106]
+              - option "Ústecký" [ref=e107]
+              - option "Vysočina" [ref=e108]
+              - option "Zlínský" [ref=e109]
+              - option "Slovensko" [ref=e110]
+              - option "Rakousko" [ref=e111]
+              - option "Německo" [ref=e112]
+              - option "Polsko" [ref=e113]
+              - option "Ostatní" [ref=e114]
+              - option "Španělsko" [ref=e115]
+              - option "Francie" [ref=e116]
+              - option "Itálie" [ref=e117]
+              - option "Velká Británie" [ref=e118]
+              - option "Rumunsko" [ref=e119]
+              - option "Maďarsko" [ref=e120]
+              - option "Chorvatsko" [ref=e121]
+              - option "Švýcarsko" [ref=e122]
+            - button "Lokalita" [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]: Lokalita
+            - listbox [ref=e127]:
+              - option "Přírodní terén" [ref=e128]
+              - option "Převážně terénní" [ref=e129]
+              - option "Převážně asfaltový" [ref=e130]
+              - option "Silnice" [ref=e131]
+              - option "Dráha" [ref=e132]
+            - button "Povrch" [ref=e134] [cursor=pointer]:
+              - generic [ref=e135]: Povrch
+            - listbox [ref=e137]:
+              - option "do 5 km" [ref=e138]
+              - option "5 km" [ref=e139]
+              - option "5 - 10 km" [ref=e140]
+              - option "10 km" [ref=e141]
+              - option "10 km - půlmaraton" [ref=e142]
+              - option "půlmaraton" [ref=e143]
+              - option "půlmaraton - maraton" [ref=e144]
+              - option "maraton" [ref=e145]
+              - option "více jak 42 km" [ref=e146]
+              - option "běžecké kempy, přednášky apod" [ref=e147]
+            - button "Délka" [ref=e149] [cursor=pointer]:
+              - generic [ref=e150]: Délka
+            - listbox [ref=e152]:
+              - option "Agrofert Run" [ref=e153]
+              - option "ARMY RUN" [ref=e154]
+              - option "Běhej lesy" [ref=e155]
+              - option "Běhej s námi" [ref=e156]
+              - option "Trailová série VAŠÍ LIGY" [ref=e157]
+              - option "Běhy do kopců v Praze a okolí" [ref=e158]
+              - option "Běhy Zlín" [ref=e159]
+              - option "Běžec Chodska" [ref=e160]
+              - option "Běžec Podblanicka" [ref=e161]
+              - option "Běžec Tachovska" [ref=e162]
+              - option "Běžec Vysočiny" [ref=e163]
+              - option "Běžecký RM Hradecký pohár" [ref=e164]
+              - option "Běžíme na hrad" [ref=e165]
+              - option "Brdský běžecký pohár" [ref=e166]
+              - option "Brněnské běhy" [ref=e167]
+              - option "Brněnský běžecký pohár" [ref=e168]
+              - option "CUTT - Czech Ultra Trail Tour" [ref=e169]
+              - option "CZECH SKYRUNNING CUP" [ref=e170]
+              - option "Česko-Slovenský pohár v ultratrailu" [ref=e171]
+              - option "Český kros" [ref=e172]
+              - option "Český pohár v běhu do vrchu" [ref=e173]
+              - option "Frenštátský běžecký pohár" [ref=e174]
+              - option "Frýdecko-místecký běžecký pohár" [ref=e175]
+              - option "Gladiator Race" [ref=e176]
+              - option "Horský půlmaraton" [ref=e177]
+              - option "H-Triatlon Tour" [ref=e178]
+              - option "Chebská běžecká zima" [ref=e179]
+              - option "Chlapácký běh" [ref=e180]
+              - option "Iscarex pohár" [ref=e181]
+              - option "Jihočeský běžecký pohár" [ref=e182]
+              - option "Král Středohoří" [ref=e183]
+              - option "Krosový pohár" [ref=e184]
+              - option "Kunětická devítka" [ref=e185]
+              - option "Kuřimská běžecká liga" [ref=e186]
+              - option "Labská výzva" [ref=e187]
+              - option "Lašská běžecká liga" [ref=e188]
+              - option "Liga běžců Karlovarského kraje" [ref=e189]
+              - option "Lysacup" [ref=e190]
+              - option "Trail Running Cup" [ref=e191]
+              - option "Moravsko Slovenský Běžecký Pohár" [ref=e192]
+              - option "Moravskoslezský běžecký pohár" [ref=e193]
+              - option "Night Run seriál zážitkových běhů" [ref=e194]
+              - option "Noční běh" [ref=e195]
+              - option "Noční běhy Chebskem" [ref=e196]
+              - option "Noční běhy pro Světlušku" [ref=e197]
+              - option "Okresní běžecká liga Blansko" [ref=e198]
+              - option "Okresní běžecká liga České lípy" [ref=e199]
+              - option "Pilsen Trail" [ref=e200]
+              - option "Pohár běžců Kladenska a Rakovnicka" [ref=e201]
+              - option "Pohár Ladova kraje" [ref=e202]
+              - option "Pohár Monaka" [ref=e203]
+              - option "Pohár pražských běžeckých nadějí" [ref=e204]
+              - option "Prague Park Race" [ref=e205]
+              - option "Prajzsko-opavská běžecká liga" [ref=e206]
+              - option "Pražská Běžecká Tour VAŠÍ LIGY" [ref=e207]
+              - option "Mizuno Primátor Cup" [ref=e208]
+              - option "Rock Point Horská výzva" [ref=e209]
+              - option "Rozhledny v pohybu" [ref=e210]
+              - option "RunCzech" [ref=e211]
+              - option "RunTour" [ref=e212]
+              - option "SABZO seriál" [ref=e213]
+              - option "Slovak Ultra Trail" [ref=e214]
+              - option "Skyrunner® World Series" [ref=e215]
+              - option "TEMPO MAKERS RUN" [ref=e216]
+              - option "Triexpert Cup" [ref=e217]
+              - option "Ústecký krosový pohár" [ref=e218]
+              - option "Velká cena vytrvalců Olomouckého kraje" [ref=e219]
+              - option "VitaSport Liga" [ref=e220]
+              - option "Vítkovská 10" [ref=e221]
+              - option "Vyškovská běžecká tour" [ref=e222]
+              - option "Winter Run" [ref=e223]
+              - option "XRUN" [ref=e224]
+              - option "Zimní běžecká liga - O krále Jestřebích hor" [ref=e225]
+              - option "Zimní běžecký pohár Kadaň" [ref=e226]
+              - option "Zimní pohár Srchu" [ref=e227]
+              - option "Železnohorský pohár" [ref=e228]
+              - option "7 pohoří" [ref=e229]
+              - option "360° Challenge" [ref=e230]
+              - option "Běhej zámky Střední Čechy" [ref=e231]
+            - button "Pohár" [ref=e233] [cursor=pointer]:
+              - generic [ref=e234]: Pohár
+            - button "Hledat" [ref=e236] [cursor=pointer]
+          - generic [ref=e237]:
+            - generic:
+              - generic:
+                - generic [ref=e238]:
+                  - button "Zoom in" [ref=e239] [cursor=pointer]: +
+                  - button "Zoom out" [ref=e240] [cursor=pointer]: −
+                - generic [ref=e241]:
+                  - link "Leaflet" [ref=e242] [cursor=pointer]:
+                    - /url: https://leafletjs.com
+                    - img [ref=e243]
+                    - text: Leaflet
+                  - text: "| ©Seznam.cz a.s., | ©OpenStreetMap"
+                  - link:
+                    - /url: http://mapy.cz
+                    - img
+          - generic [ref=e247]:
+            - generic [ref=e248]: Přírodní terén
+            - generic [ref=e249]: Převážně terén
+            - generic [ref=e250]: Převážně asflat
+            - generic [ref=e251]: Silnice
+            - generic [ref=e252]: Dráha
+          - generic [ref=e253]:
+            - img [ref=e254]
+            - text: Našli jsme pro vás
+            - strong [ref=e256]: 470 závodů
+        - link "10/4 2026 Vysočina Jarní běh v Pávově Převážně asfaltový 8.8 km" [ref=e257] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/jarni-beh-v-pavove/
+          - time [ref=e258]:
+            - generic [ref=e259]: 10/4
+            - generic [ref=e260]: "2026"
+          - generic [ref=e261]:
+            - generic [ref=e262]: Vysočina
+            - generic [ref=e263]: Jarní běh v Pávově
+            - generic [ref=e264]:
+              - img [ref=e265]
+              - text: Převážně asfaltový
+            - generic [ref=e267]:
+              - img [ref=e268]
+              - text: 8.8 km
+        - link "11/4 2026 Olomoucký 57. Běh vítězství, 53. Hranická dvacítka a 10. Hranická desítka Převážně terénní 20 km" [ref=e270] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/beh-vitezstvi-hranicka-dvacitka-hranicka-desitka/
+          - time [ref=e271]:
+            - generic [ref=e272]: 11/4
+            - generic [ref=e273]: "2026"
+          - generic [ref=e274]:
+            - generic [ref=e275]: Olomoucký
+            - generic [ref=e276]: 57. Běh vítězství, 53. Hranická dvacítka a 10. Hranická desítka
+            - generic [ref=e277]:
+              - img [ref=e278]
+              - text: Převážně terénní
+            - generic [ref=e280]:
+              - img [ref=e281]
+              - text: 20 km
+        - link "11/4 2026 Jihomoravský Jarní běh Bílovice nad Svitavou Převážně terénní 5.4 km" [ref=e283] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/jarni-beh-bilovice-nad-svitavou/
+          - time [ref=e284]:
+            - generic [ref=e285]: 11/4
+            - generic [ref=e286]: "2026"
+          - generic [ref=e287]:
+            - generic [ref=e288]: Jihomoravský
+            - generic [ref=e289]: Jarní běh Bílovice nad Svitavou
+            - generic [ref=e290]:
+              - img [ref=e291]
+              - text: Převážně terénní
+            - generic [ref=e293]:
+              - img [ref=e294]
+              - text: 5.4 km
+        - link "11/4 2026 Pardubický Pardubický vinařský půlmaratón – Mistrovství ČR v půlmaratonu Silnice 21.1 km" [ref=e296] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/pardubicky-vinarsky-pulmaraton/
+          - time [ref=e297]:
+            - generic [ref=e298]: 11/4
+            - generic [ref=e299]: "2026"
+          - generic [ref=e300]:
+            - generic [ref=e301]: Pardubický
+            - generic [ref=e302]: Pardubický vinařský půlmaratón – Mistrovství ČR v půlmaratonu
+            - generic [ref=e303]:
+              - img [ref=e304]
+              - text: Silnice
+            - generic [ref=e306]:
+              - img [ref=e307]
+              - text: 21.1 km
+        - link "11/4 2026 Zlínský Zlínská lesní hodinovka Přírodní terén 1 km" [ref=e309] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/zlinska-lesni-hodinova/
+          - time [ref=e310]:
+            - generic [ref=e311]: 11/4
+            - generic [ref=e312]: "2026"
+          - generic [ref=e313]:
+            - generic [ref=e314]: Zlínský
+            - generic [ref=e315]: Zlínská lesní hodinovka
+            - generic [ref=e316]:
+              - img [ref=e317]
+              - text: Přírodní terén
+            - generic [ref=e319]:
+              - img [ref=e320]
+              - text: 1 km
+        - link "11/4 2026 Plzeňský Horský půlmaraton Sušice Převážně terénní 21.1 km Doporučujeme" [ref=e322] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/susicky-horsky-beh/
+          - time [ref=e323]:
+            - generic [ref=e324]: 11/4
+            - generic [ref=e325]: "2026"
+          - generic [ref=e326]:
+            - generic [ref=e327]: Plzeňský
+            - generic [ref=e328]: Horský půlmaraton Sušice
+            - generic [ref=e329]:
+              - img [ref=e330]
+              - text: Převážně terénní
+            - generic [ref=e332]:
+              - img [ref=e333]
+              - text: 21.1 km
+            - generic [ref=e335]:
+              - img [ref=e336]
+              - strong [ref=e338]: Doporučujeme
+        - link "11/4 2026 Středočeský Jarní kros Okolo Dračí studánky Převážně terénní 6 km" [ref=e339] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/jarni-kros-okolo-draci-studanky/
+          - time [ref=e340]:
+            - generic [ref=e341]: 11/4
+            - generic [ref=e342]: "2026"
+          - generic [ref=e343]:
+            - generic [ref=e344]: Středočeský
+            - generic [ref=e345]: Jarní kros Okolo Dračí studánky
+            - generic [ref=e346]:
+              - img [ref=e347]
+              - text: Převážně terénní
+            - generic [ref=e349]:
+              - img [ref=e350]
+              - text: 6 km
+        - link "11/4 2026 Plzeňský Půlmaraton Plzeňského kraje Převážně asfaltový 21 km Doporučujeme" [ref=e352] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/krajsky-pulmaraton-plzenskeho-kraje/
+          - time [ref=e353]:
+            - generic [ref=e354]: 11/4
+            - generic [ref=e355]: "2026"
+          - generic [ref=e356]:
+            - generic [ref=e357]: Plzeňský
+            - generic [ref=e358]: Půlmaraton Plzeňského kraje
+            - generic [ref=e359]:
+              - img [ref=e360]
+              - text: Převážně asfaltový
+            - generic [ref=e362]:
+              - img [ref=e363]
+              - text: 21 km
+            - generic [ref=e365]:
+              - img [ref=e366]
+              - strong [ref=e368]: Doporučujeme
+        - link "11/4 2026 Moravskoslezský Veřovská desítka Silnice 10 km" [ref=e369] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/verovska-desitka/
+          - time [ref=e370]:
+            - generic [ref=e371]: 11/4
+            - generic [ref=e372]: "2026"
+          - generic [ref=e373]:
+            - generic [ref=e374]: Moravskoslezský
+            - generic [ref=e375]: Veřovská desítka
+            - generic [ref=e376]:
+              - img [ref=e377]
+              - text: Silnice
+            - generic [ref=e379]:
+              - img [ref=e380]
+              - text: 10 km
+        - link "11/4 2026 Středočeský Běh Štěpánkou Přírodní terén 8.4 km" [ref=e382] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/beh-stepankou/
+          - time [ref=e383]:
+            - generic [ref=e384]: 11/4
+            - generic [ref=e385]: "2026"
+          - generic [ref=e386]:
+            - generic [ref=e387]: Středočeský
+            - generic [ref=e388]: Běh Štěpánkou
+            - generic [ref=e389]:
+              - img [ref=e390]
+              - text: Přírodní terén
+            - generic [ref=e392]:
+              - img [ref=e393]
+              - text: 8.4 km
+        - link "11/4 2026 Středočeský Běhej lesy Karlštejn Přírodní terén 18 km" [ref=e395] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/behej-lesy-karlstejn/
+          - time [ref=e396]:
+            - generic [ref=e397]: 11/4
+            - generic [ref=e398]: "2026"
+          - generic [ref=e399]:
+            - generic [ref=e400]: Středočeský
+            - generic [ref=e401]: Běhej lesy Karlštejn
+            - generic [ref=e402]:
+              - img [ref=e403]
+              - text: Přírodní terén
+            - generic [ref=e405]:
+              - img [ref=e406]
+              - text: 18 km
+        - link "11/4 2026 Liberecký 7 pohoří Jizerské hory Přírodní terén 20 km" [ref=e408] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/7-pohori-jizerske-hory/
+          - time [ref=e409]:
+            - generic [ref=e410]: 11/4
+            - generic [ref=e411]: "2026"
+          - generic [ref=e412]:
+            - generic [ref=e413]: Liberecký
+            - generic [ref=e414]: 7 pohoří Jizerské hory
+            - generic [ref=e415]:
+              - img [ref=e416]
+              - text: Přírodní terén
+            - generic [ref=e418]:
+              - img [ref=e419]
+              - text: 20 km
+        - link "11/4 2026 Liberecký Běh Trojzemím Převážně asfaltový 10 km" [ref=e421] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/alisy-beh-trojzemim/
+          - time [ref=e422]:
+            - generic [ref=e423]: 11/4
+            - generic [ref=e424]: "2026"
+          - generic [ref=e425]:
+            - generic [ref=e426]: Liberecký
+            - generic [ref=e427]: Běh Trojzemím
+            - generic [ref=e428]:
+              - img [ref=e429]
+              - text: Převážně asfaltový
+            - generic [ref=e431]:
+              - img [ref=e432]
+              - text: 10 km
+        - link "11/4 2026 Plzeňský Krajský půlmaraton Plzeňského kraje Převážně asfaltový 21 km" [ref=e434] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/krajsky-pulmaraton-plzenskeho-kraje-2/
+          - time [ref=e435]:
+            - generic [ref=e436]: 11/4
+            - generic [ref=e437]: "2026"
+          - generic [ref=e438]:
+            - generic [ref=e439]: Plzeňský
+            - generic [ref=e440]: Krajský půlmaraton Plzeňského kraje
+            - generic [ref=e441]:
+              - img [ref=e442]
+              - text: Převážně asfaltový
+            - generic [ref=e444]:
+              - img [ref=e445]
+              - text: 21 km
+        - link "11/4 2026 Moravskoslezský NN NIGHT RUN Ostrava Převážně asfaltový 10 km" [ref=e447] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/night-run-ostrava/
+          - time [ref=e448]:
+            - generic [ref=e449]: 11/4
+            - generic [ref=e450]: "2026"
+          - generic [ref=e451]:
+            - generic [ref=e452]: Moravskoslezský
+            - generic [ref=e453]: NN NIGHT RUN Ostrava
+            - generic [ref=e454]:
+              - img [ref=e455]
+              - text: Převážně asfaltový
+            - generic [ref=e457]:
+              - img [ref=e458]
+              - text: 10 km
+        - link "11/4 2026 Středočeský Běh Litní a zámeckým parkem Převážně terénní 7 km" [ref=e460] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/beh-litni-a-zameckym-parkem/
+          - time [ref=e461]:
+            - generic [ref=e462]: 11/4
+            - generic [ref=e463]: "2026"
+          - generic [ref=e464]:
+            - generic [ref=e465]: Středočeský
+            - generic [ref=e466]: Běh Litní a zámeckým parkem
+            - generic [ref=e467]:
+              - img [ref=e468]
+              - text: Převážně terénní
+            - generic [ref=e470]:
+              - img [ref=e471]
+              - text: 7 km
+        - link "11/4 2026 Jihomoravský Štafetová POHÁDKA Převážně terénní 60 km" [ref=e473] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/stafetova-pohadka/
+          - time [ref=e474]:
+            - generic [ref=e475]: 11/4
+            - generic [ref=e476]: "2026"
+          - generic [ref=e477]:
+            - generic [ref=e478]: Jihomoravský
+            - generic [ref=e479]: Štafetová POHÁDKA
+            - generic [ref=e480]:
+              - img [ref=e481]
+              - text: Převážně terénní
+            - generic [ref=e483]:
+              - img [ref=e484]
+              - text: 60 km
+        - link "11/4 2026 Liberecký Rozeběhni Stráž Přírodní terén 15 km" [ref=e486] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/strazsky-beh-2/
+          - time [ref=e487]:
+            - generic [ref=e488]: 11/4
+            - generic [ref=e489]: "2026"
+          - generic [ref=e490]:
+            - generic [ref=e491]: Liberecký
+            - generic [ref=e492]: Rozeběhni Stráž
+            - generic [ref=e493]:
+              - img [ref=e494]
+              - text: Přírodní terén
+            - generic [ref=e496]:
+              - img [ref=e497]
+              - text: 15 km
+        - link "11/4 2026 Středočeský Městský běh Brandýsem a Boleslaví Převážně asfaltový 10.4 km" [ref=e499] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/mestsky-beh-brandysem-a-boleslavi/
+          - time [ref=e500]:
+            - generic [ref=e501]: 11/4
+            - generic [ref=e502]: "2026"
+          - generic [ref=e503]:
+            - generic [ref=e504]: Středočeský
+            - generic [ref=e505]: Městský běh Brandýsem a Boleslaví
+            - generic [ref=e506]:
+              - img [ref=e507]
+              - text: Převážně asfaltový
+            - generic [ref=e509]:
+              - img [ref=e510]
+              - text: 10.4 km
+        - link "11/4 2026 Středočeský Radonický běh Převážně terénní 6.5 km" [ref=e512] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/terminovka/radonicky-beh-2/
+          - time [ref=e513]:
+            - generic [ref=e514]: 11/4
+            - generic [ref=e515]: "2026"
+          - generic [ref=e516]:
+            - generic [ref=e517]: Středočeský
+            - generic [ref=e518]: Radonický běh
+            - generic [ref=e519]:
+              - img [ref=e520]
+              - text: Převážně terénní
+            - generic [ref=e522]:
+              - img [ref=e523]
+              - text: 6.5 km
+        - generic [ref=e525]:
+          - generic: "1"
+          - link "2" [ref=e526] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/terminovka/strana/2/
+          - link "3" [ref=e527] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/terminovka/strana/3/
+          - generic [ref=e528]: …
+          - link "24" [ref=e529] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/terminovka/strana/24/
+          - link "Další" [ref=e530] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/terminovka/strana/2/
+            - generic [ref=e531]: Další
+      - generic [ref=e537]:
+        - generic [ref=e541]:
+          - heading "Zajímavé vybavení" [level=3] [ref=e542]
+          - link "SBALITELNÁ PEŘOVKA MAC IN SAC Dámská péřová bunda MAC IN A SAC Polar je lehká, oboustranná, sbalitelná bunda do pytlíku." [ref=e543] [cursor=pointer]:
+            - /url: https://www.bez.cz/damske-perove-bundy/mac-in-a-sac-packable-women-s-down-jacket--fuchsia-navy--xxl
+            - generic [ref=e546]:
+              - heading "SBALITELNÁ PEŘOVKA MAC IN SAC" [level=3] [ref=e547]
+              - paragraph [ref=e548]: Dámská péřová bunda MAC IN A SAC Polar je lehká, oboustranná, sbalitelná bunda do pytlíku.
+          - link "Altra TORIN 8 Silniční objemovka v novém hávu, pohodlnější a s vyšší návratností energie." [ref=e549] [cursor=pointer]:
+            - /url: https://www.bez.cz/boty/altra-torin-8-panska-cerna-oranzova/
+            - generic [ref=e552]:
+              - heading "Altra TORIN 8" [level=3] [ref=e553]
+              - paragraph [ref=e554]: Silniční objemovka v novém hávu, pohodlnější a s vyšší návratností energie.
+          - link "AKU ROCK DFS GTX Lehká, prodyšná nástupovka do každého počasí" [ref=e555] [cursor=pointer]:
+            - /url: https://www.bez.cz/boty/aku-rock-dfs-gtx-panska-oranzova
+            - generic [ref=e558]:
+              - heading "AKU ROCK DFS GTX" [level=3] [ref=e559]
+              - paragraph [ref=e560]: Lehká, prodyšná nástupovka do každého počasí
+          - link "Compressport ponožky Ultra Trail Ponožky Ultra Trail Vás podrží při pořádné porci kilometrů!" [ref=e561] [cursor=pointer]:
+            - /url: https://www.bez.cz/ponozky/compressport-ponozky-ultra-trail-cerna-cervena/
+            - generic [ref=e564]:
+              - heading "Compressport ponožky Ultra Trail" [level=3] [ref=e565]
+              - paragraph [ref=e566]: Ponožky Ultra Trail Vás podrží při pořádné porci kilometrů!
+          - link "Puma Deviate Nitro Elite 4 Bezkonkurenční boty Puma Deviate Nitro 4 pro rychlé tréninky a krátké závody." [ref=e567] [cursor=pointer]:
+            - /url: https://www.bez.cz/boty/puma-deviate-nitro-4-damska-zlutozelena/
+            - generic [ref=e570]:
+              - heading "Puma Deviate Nitro Elite 4" [level=3] [ref=e571]
+              - paragraph [ref=e572]: Bezkonkurenční boty Puma Deviate Nitro 4 pro rychlé tréninky a krátké závody.
+          - link "Altra TIMP 6 Univerzální bota na běh i chůzi smíšeným terénem přichází v novém kabátě - lehčí a lepší než kdy předtím" [ref=e573] [cursor=pointer]:
+            - /url: https://www.bez.cz/boty/altra-timp-6-damska---cerna-ruzova/
+            - generic [ref=e576]:
+              - heading "Altra TIMP 6" [level=3] [ref=e577]
+              - paragraph [ref=e578]: Univerzální bota na běh i chůzi smíšeným terénem přichází v novém kabátě - lehčí a lepší než kdy předtím
+        - 'heading "Téma měsíce: Jak vybrat běžecké boty" [level=2] [ref=e579]':
+          - text: "Téma měsíce:"
+          - link "Jak vybrat běžecké boty" [ref=e580] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/rubrika/tema-mesice/
+        - 'link "Nejlepší běžecké boty 2026: výběr testerů Světa běhu Nejlepší běžecké boty 2026: výběr testerů Světa běhu" [ref=e581] [cursor=pointer]':
+          - /url: https://www.svetbehu.cz/nejlepsi-bezecke-boty/
+          - 'img "Nejlepší běžecké boty 2026: výběr testerů Světa běhu" [ref=e584]'
+          - 'heading "Nejlepší běžecké boty 2026: výběr testerů Světa běhu" [level=3] [ref=e586]'
+        - link "E-BOOK &#8222;ZAČÍNÁM BĚHAT&#8220; KE STAŽENÍ ZDARMA E-BOOK „ZAČÍNÁM BĚHAT“ KE STAŽENÍ ZDARMA" [ref=e587] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/zacinate-behat-nebo-chcete-behat-lepe/
+          - img "E-BOOK &#8222;ZAČÍNÁM BĚHAT&#8220; KE STAŽENÍ ZDARMA" [ref=e590]
+          - heading "E-BOOK „ZAČÍNÁM BĚHAT“ KE STAŽENÍ ZDARMA" [level=3] [ref=e592]
+        - link "Diagnostika došlapu? Jen u fyzioterapeuta Diagnostika došlapu? Jen u fyzioterapeuta" [ref=e593] [cursor=pointer]:
+          - /url: https://www.svetbehu.cz/diagnostika-doslapu-jen-u-fyzioterapeuta/
+          - img "Diagnostika došlapu? Jen u fyzioterapeuta" [ref=e596]
+          - heading "Diagnostika došlapu? Jen u fyzioterapeuta" [level=3] [ref=e598]
+        - generic [ref=e599]:
+          - heading "Knižní tipy" [level=2] [ref=e600]
+          - 'link "Marian Jelínek: Svoboda bez limitů nás vlastně hubí Marian Jelínek: Svoboda bez limitů nás vlastně hubí" [ref=e601] [cursor=pointer]':
+            - /url: https://www.svetbehu.cz/marian-jelinek-svoboda-bez-limitu-nas-vlastne-hubi/
+            - 'img "Marian Jelínek: Svoboda bez limitů nás vlastně hubí" [ref=e604]'
+            - 'heading "Marian Jelínek: Svoboda bez limitů nás vlastně hubí" [level=3] [ref=e606]'
+          - link "E-book Začínám běhat ZDARMA pro čtenáře SvetBehu.cz E-book Začínám běhat ZDARMA pro čtenáře SvetBehu.cz" [ref=e607] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/zacinam-behat-poridte-si-bezeckou-prirucku-pro-zacatecniky-v-cene-1-plzne/
+            - img "E-book Začínám běhat ZDARMA pro čtenáře SvetBehu.cz" [ref=e610]
+            - heading "E-book Začínám běhat ZDARMA pro čtenáře SvetBehu.cz" [level=3] [ref=e612]
+        - generic [ref=e617]:
+          - heading "Poslední články" [level=3] [ref=e618]
+          - 'link "Zprávy z firem Největší běžecký veletrh v Česku se vrací: Marathon Expo 2026 odstartuje maratonský víkend na pražském Výstavišti Největší běžecký veletrh v Česku se vrací: Marathon Expo 2026 odstartuje maratonský víkend na pražském Výstavišti 2. 4. 2026" [ref=e619] [cursor=pointer]':
+            - /url: https://www.svetbehu.cz/nejvetsi-bezecky-veletrh-v-cesku-se-vraci-marathon-expo-2026-odstartuje-maratonsky-vikend-na-prazskem-vystavisti/
+            - generic [ref=e620]: Zprávy z firem
+            - 'img "Největší běžecký veletrh v Česku se vrací: Marathon Expo 2026 odstartuje maratonský víkend na pražském Výstavišti" [ref=e623]'
+            - generic [ref=e624]:
+              - 'heading "Největší běžecký veletrh v Česku se vrací: Marathon Expo 2026 odstartuje maratonský víkend na pražském Výstavišti" [level=3] [ref=e625]'
+              - generic [ref=e627]: 2. 4. 2026
+          - link "Tipy redakce Hory Bory &#8211; štafetový běh z Beskyd na Pálavu Hory Bory – štafetový běh z Beskyd na Pálavu 2. 4. 2026" [ref=e628] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/hory-bory-stafetovy-beh-z-beskyd-na-palavu/
+            - generic [ref=e629]: Tipy redakce
+            - img "Hory Bory &#8211; štafetový běh z Beskyd na Pálavu" [ref=e632]
+            - generic [ref=e633]:
+              - heading "Hory Bory – štafetový běh z Beskyd na Pálavu" [level=3] [ref=e634]
+              - generic [ref=e636]: 2. 4. 2026
+          - link "Soutěže VYHRAJTE LEGENDÁRNÍ „RYCHLOKOZY“! Soutěžíme o dva páry Hoka Speedgoat 7 VYHRAJTE LEGENDÁRNÍ „RYCHLOKOZY“! Soutěžíme o dva páry Hoka Speedgoat 7 1. 4. 2026" [ref=e637] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/vyhrajte-legendarni-rychlokozy-soutezime-o-dva-pary-hoka-speedgoat-7/
+            - generic [ref=e638]: Soutěže
+            - img "VYHRAJTE LEGENDÁRNÍ „RYCHLOKOZY“! Soutěžíme o dva páry Hoka Speedgoat 7" [ref=e641]
+            - generic [ref=e642]:
+              - heading "VYHRAJTE LEGENDÁRNÍ „RYCHLOKOZY“! Soutěžíme o dva páry Hoka Speedgoat 7" [level=3] [ref=e643]
+              - generic [ref=e645]: 1. 4. 2026
+        - generic [ref=e649]:
+          - heading "Trasa týdne" [level=3] [ref=e650]:
+            - img [ref=e651]
+            - text: Trasa týdne
+          - link "Běžecká trasa kolem Hostivických rybníků s výhledem na letadla Běžecká trasa kolem Hostivických rybníků s výhledem na letadla Detail trasy" [ref=e653] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/bezecke-trasy/bezecka-trasa-kolem-hostivickych-rybniku-s-vyhledem-na-letadla/
+            - img "Běžecká trasa kolem Hostivických rybníků s výhledem na letadla" [ref=e656]
+            - generic [ref=e657]:
+              - heading "Běžecká trasa kolem Hostivických rybníků s výhledem na letadla" [level=3] [ref=e658]
+              - generic [ref=e659]: Detail trasy
+  - contentinfo [ref=e663]:
+    - generic [ref=e665]:
+      - paragraph [ref=e667]:
+        - text: Copyright © SvetBehu.cz 2026
+        - text: Všechna práva vyhrazena
+      - list [ref=e670]:
+        - listitem [ref=e671]:
+          - link "Časopis Svět běhu" [ref=e672] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/casopis-svet-behu/
+        - listitem [ref=e673]:
+          - link "Přihlášení do newsletteru" [ref=e674] [cursor=pointer]:
+            - /url: https://www.subscribepage.com/svetbehu
+      - list [ref=e677]:
+        - listitem [ref=e678]:
+          - link "O nás" [ref=e679] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/o-nas/
+        - listitem [ref=e680]:
+          - link "Redakce" [ref=e681] [cursor=pointer]:
+            - /url: https://www.svetbehu.cz/redakce/
+        - listitem [ref=e682]
+      - generic [ref=e683]:
+        - list [ref=e684]:
+          - listitem [ref=e685]:
+            - link "RSS kanály" [ref=e686] [cursor=pointer]:
+              - /url: /rss-sb/
+        - generic [ref=e687]:
+          - link "Facebook" [ref=e688] [cursor=pointer]:
+            - /url: https://www.facebook.com/SvetBehu.cz/
+            - img [ref=e689]
+          - link "Instagram" [ref=e691] [cursor=pointer]:
+            - /url: https://www.instagram.com/svetbehu.cz/
+            - img [ref=e692]
+          - link "Youtube" [ref=e694] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UCp4n-l1bO5S_f19txgRtFmw
+            - img [ref=e695]

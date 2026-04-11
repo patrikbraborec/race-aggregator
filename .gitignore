@@ -38,3 +38,6 @@ services/**/storage/
 key_value_stores/
 request_queues/
 datasets/
+
+# post-processor output
+services/post-processor/output/

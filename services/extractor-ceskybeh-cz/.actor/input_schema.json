@@ -1,0 +1,15 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Ceskybeh.cz Race Extractor",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "maxRequestsPerCrawl": {
+            "title": "Max Requests per Crawl",
+            "type": "integer",
+            "description": "Maximum number of requests (0 = unlimited)",
+            "default": 0,
+            "minimum": 0
+        }
+    }
+}

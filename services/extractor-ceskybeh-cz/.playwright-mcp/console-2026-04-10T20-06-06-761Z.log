@@ -1,0 +1,9 @@
+[      76ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ https://ceskybeh.cz/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:1
+[      94ms] [WARNING] jQuery.Deferred exception: $(...).autoComplete is not a function TypeError: $(...).autoComplete is not a function
+    at HTMLDocument.<anonymous> (https://ceskybeh.cz/terminovka/:142:33)
+    at j (https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js:2:29999)
+    at k (https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js:2:30313) undefined @ https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js:1
+[      97ms] Uncaught TypeError: $(...).autoComplete is not a function
+    at <anonymous> (https://ceskybeh.cz/terminovka/:141:32)
+    at j (https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js:1:29998)
+    at k (https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js:1:30312)

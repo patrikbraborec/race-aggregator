@@ -1,0 +1,838 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e6]: Český běh jsou služby Českého atletického svazu pro běžce, běhy a běhání
+  - navigation [ref=e7]:
+    - generic [ref=e8]:
+      - link "" [ref=e9] [cursor=pointer]:
+        - /url: https://www.facebook.com/ceskybeh.cz/
+        - generic [ref=e10]: 
+      - link [ref=e11] [cursor=pointer]:
+        - /url: https://ceskybeh.cz
+        - img [ref=e12]
+      - generic [ref=e13]:
+        - list [ref=e14]:
+          - list [ref=e15]:
+            - listitem [ref=e16]:
+              - link "Závody ▼" [ref=e17] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/zavody/
+            - listitem [ref=e18]:
+              - link "Běžci ▼" [ref=e19] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/bezci/
+            - listitem [ref=e20]:
+              - link "Trenér běhu ▼" [ref=e21] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/treneri/
+            - listitem [ref=e22]:
+              - link "Organizátoři ▼" [ref=e23] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/organizatori/
+            - listitem [ref=e24]:
+              - link "O nás ▼" [ref=e25] [cursor=pointer]:
+                - /url: https://ceskybeh.cz/o-nas/
+        - generic [ref=e26]:
+          - link "" [ref=e27] [cursor=pointer]:
+            - /url: https://www.facebook.com/ceskybeh.cz/
+            - generic [ref=e28]: 
+          - link "" [ref=e29] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/CzechAthletics/
+            - generic [ref=e30]: 
+  - main [ref=e31]:
+    - list [ref=e36]:
+      - listitem [ref=e37]:
+        - link "ÚVOD" [ref=e38] [cursor=pointer]:
+          - /url: https://ceskybeh.cz/
+      - listitem [ref=e39]: / Termínovka
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - heading "Termínovka" [level=1] [ref=e44]
+        - paragraph [ref=e46]:
+          - link "+ vložit závod" [ref=e47] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/organizatori/vlozit-zavod-do-terminovky/
+          - link "Výsledky závodů" [ref=e48] [cursor=pointer]:
+            - /url: https://ceskybeh.cz/vysledky/
+      - paragraph [ref=e51]:
+        - text: Každý rok vydáváme nejkompletnější a jedinou oficiální Termínovku.
+        - text: Zveřejňujeme
+        - link "výsledky závodů" [ref=e52] [cursor=pointer]:
+          - /url: https://ceskybeh.cz/vysledky/
+        - text: a sledujeme hodnocení běhů samotnými běžci.
+    - generic [ref=e56]:
+      - heading "Hledání" [level=3] [ref=e57]
+      - tablist [ref=e58]:
+        - listitem [ref=e59]:
+          - tab "Podle jména závodu" [selected] [ref=e60] [cursor=pointer]
+        - listitem [ref=e61]:
+          - tab "Rozšířené vyhledávání" [ref=e62] [cursor=pointer]
+      - generic [ref=e63]:
+        - tabpanel "Podle jména závodu" [ref=e64]:
+          - generic [ref=e69]:
+            - textbox "Najít závod" [ref=e70]
+            - button "Vyhledat v nejbližších 365 dnech" [ref=e71] [cursor=pointer]
+        - generic [ref=e74]:
+          - generic [ref=e75] [cursor=pointer]:
+            - text: pátek 10. dubna 2026, Praha
+            - link "Urban Challenge Praha Bohnice" [ref=e77]:
+              - /url: https://ceskybeh.cz/zavody/urban-challenge-praha-bohnice-2026/?
+              - heading "Urban Challenge Praha Bohnice" [level=4] [ref=e78]
+            - paragraph [ref=e79]: Areál Psychiatrické nemocnice Bohnice je místo s nezaměnitelným duchem. Starobylé budovy, rozlehlé parky a tajemná zákoutí vytvářejí atmosféru, jakou jinde nezažiješ. Přidej k tomu nálož překážek a pořádnou výzvu – a máš zážitek, který se nezapomíná.
+            - paragraph [ref=e82]:
+              - text: 
+              - generic [ref=e83]:
+                - generic [ref=e84]: 
+                - text: "Délka tratí: 10 km / 5 km"
+              - generic [ref=e85]:
+                - generic [ref=e86]: 
+                - text: "Typ závodu: OCR závod"
+              - generic [ref=e87]:
+                - generic [ref=e88]: 
+                - text: "Pořadatel: EVENTS 4 YOU z.s."
+              - generic [ref=e89]:
+                - generic [ref=e90]: 
+                - text: "Kraj: Praha"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/urban-challenge-praha-bohnice-2026/?
+          - generic [ref=e92] [cursor=pointer]:
+            - link "pátek 10. dubna 2026, Jihlava" [ref=e93]:
+              - /url: https://ceskybeh.cz/zavody/urban-challenge-praha-bohnice-2026/?
+            - generic [ref=e94]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/urban-challenge-praha-bohnice-2026/?
+              - link "Jarní běh Pávov" [ref=e95]:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-pavov-2026/?
+                - heading "Jarní běh Pávov" [level=4] [ref=e96]
+            - paragraph [ref=e97]: Zahajovací závod Poháru Běžce Vysočiny. Obrátkový okruh, lesní cesta 45%, asfalt 55%.
+            - paragraph [ref=e100]:
+              - text: 
+              - generic [ref=e101]:
+                - generic [ref=e102]: 
+                - text: "Start: 17:30"
+              - generic [ref=e103]:
+                - generic [ref=e104]: 
+                - text: "Délka tratí: 8,8 km"
+              - generic [ref=e105]:
+                - generic [ref=e106]: 
+                - text: "Typ závodu: Smíšený"
+              - generic [ref=e107]:
+                - generic [ref=e108]: 
+                - text: "Pořadatel: Běžec Vysočiny z.s."
+              - generic [ref=e109]:
+                - generic [ref=e110]: 
+                - text: "Kraj: Vysočina"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-pavov-2026/?
+          - generic [ref=e112] [cursor=pointer]:
+            - link "pátek 10. dubna 2026, Zlín" [ref=e113]:
+              - /url: https://ceskybeh.cz/zavody/jarni-beh-pavov-2026/?
+            - generic [ref=e114]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-pavov-2026/?
+              - link "Juniorský maraton - Zlínský kraj" [ref=e115]:
+                - /url: https://ceskybeh.cz/zavody/juniorsky-maraton-zlinsky-kraj-2026/?
+                - heading "Juniorský maraton - Zlínský kraj" [level=4] [ref=e116]
+            - paragraph [ref=e117]: Závod běží vždy družstvo o 10 členech z řad studentů škol.
+            - paragraph [ref=e120]:
+              - text: 
+              - generic [ref=e121]:
+                - generic [ref=e122]: 
+                - text: "Délka tratí: 1x 6,2 km + 9x 4 km"
+              - generic [ref=e123]:
+                - generic [ref=e124]: 
+                - text: "Typ závodu: Štafetový závod"
+              - generic [ref=e125]:
+                - generic [ref=e126]: 
+                - text: "Pořadatel: Juniorský maratonský klub, z.s. (ředitel závodu Tomáš Mirovský)"
+              - generic [ref=e127]:
+                - generic [ref=e128]: 
+                - text: "Kraj: Zlínský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/juniorsky-maraton-zlinsky-kraj-2026/?
+          - generic [ref=e130] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Plzeň" [ref=e131]:
+              - /url: https://ceskybeh.cz/zavody/juniorsky-maraton-zlinsky-kraj-2026/?
+            - generic [ref=e132]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/juniorsky-maraton-zlinsky-kraj-2026/?
+              - link "Půlmaraton Plzeňského kraje" [ref=e133]:
+                - /url: https://ceskybeh.cz/zavody/pulmaraton-plzenskeho-kraje-2026/?
+                - heading "Půlmaraton Plzeňského kraje" [level=4] [ref=e134]
+            - paragraph [ref=e135]: Závod v běhu na 21,097 km se startem a cílem v areálu Škodaland v Plzni. Nedílnou součástí jsou i další doprovodné běhy – krajská desítka, krajská pětka, týmový běh a dětské závody. Velmi náročná trať půlmaratonu vedoucí přes Litice, Šlovice, Dobřany a Lhotu zpět k vodní nádrži České údolí se stala oblíbeným závodem příznivců běhu. Dokladem oblíbenosti půlmaratonu je například účast naší současné nejlepší vytrvalkyně Marcely Joglové v roce 2017, kdy vítězstvím na tomto závodě vlastně neoficiálně odstartovala svoji skvělou běžeckou kariéru.
+            - generic [ref=e136]:
+              - paragraph [ref=e138]:
+                - text: 
+                - generic [ref=e139]:
+                  - generic [ref=e140]: 
+                  - text: "Start: 10:00"
+                - generic [ref=e141]:
+                  - generic [ref=e142]: 
+                  - text: "Délka tratí: 21,097 km / 9,59 km / 5,85 km"
+                - generic [ref=e143]:
+                  - generic [ref=e144]: 
+                  - text: "Typ závodu: Silnice"
+                - generic [ref=e145]:
+                  - generic [ref=e146]: 
+                  - text: "Pořadatel: Plzeňský kraj"
+                - generic [ref=e147]:
+                  - generic [ref=e148]: 
+                  - text: "Kraj: Plzeňský"
+                - link:
+                  - /url: https://ceskybeh.cz/zavody/pulmaraton-plzenskeho-kraje-2026/?
+              - link "Certifikováno" [ref=e151]:
+                - /url: https://ceskybeh.cz/zavody/pulmaraton-plzenskeho-kraje-2026/?
+                - img "Certifikováno" [ref=e152]
+          - generic [ref=e153] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Bubovice" [ref=e154]:
+              - /url: https://ceskybeh.cz/zavody/pulmaraton-plzenskeho-kraje-2026/?
+            - generic [ref=e155]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/pulmaraton-plzenskeho-kraje-2026/?
+              - link "DOPORUČUJEME Běhej lesy Karlštejn" [ref=e156]:
+                - /url: https://ceskybeh.cz/zavody/behej-lesy-karlstejn-2026/?
+                - heading "DOPORUČUJEME Běhej lesy Karlštejn" [level=4] [ref=e157]:
+                  - generic [ref=e158]: DOPORUČUJEME
+                  - text: Běhej lesy Karlštejn
+            - paragraph [ref=e159]: Trasy v okolí Karlštejna včetně proběhnutí přímo kolem hradu nebo jinak nepřístupného lomu Velká Amerika v délce 5, 12, 18 nebo 30 kilometrů.
+            - generic [ref=e160]:
+              - paragraph [ref=e162]:
+                - text: 
+                - generic [ref=e163]:
+                  - generic [ref=e164]: 
+                  - text: "Start: 9:00"
+                - generic [ref=e165]:
+                  - generic [ref=e166]: 
+                  - text: "Délka tratí: 30 km / 18 km / 12 km / 5 km"
+                - generic [ref=e167]:
+                  - generic [ref=e168]: 
+                  - text: "Typ závodu: Kros / trail"
+                - generic [ref=e169]:
+                  - generic [ref=e170]: 
+                  - text: "Pořadatel: RAUL, s.r.o."
+                - generic [ref=e171]:
+                  - generic [ref=e172]: 
+                  - text: "Kraj: Středočeský"
+                - link:
+                  - /url: https://ceskybeh.cz/zavody/behej-lesy-karlstejn-2026/?
+              - link "TOP seriál" [ref=e175]:
+                - /url: https://ceskybeh.cz/zavody/behej-lesy-karlstejn-2026/?
+                - img "TOP seriál" [ref=e176]
+          - generic [ref=e177] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Hradec Králové" [ref=e178]:
+              - /url: https://ceskybeh.cz/zavody/behej-lesy-karlstejn-2026/?
+            - generic [ref=e179]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/behej-lesy-karlstejn-2026/?
+              - link "DOPORUČUJEME ČEZ RunTour Hradec Králové" [ref=e180]:
+                - /url: https://ceskybeh.cz/zavody/cez-runtour-hradec-kralove-2026/?
+                - heading "DOPORUČUJEME ČEZ RunTour Hradec Králové" [level=4] [ref=e181]:
+                  - generic [ref=e182]: DOPORUČUJEME
+                  - text: ČEZ RunTour Hradec Králové
+            - paragraph [ref=e183]: Nový závod v rámci běžeckého seriálu ČEZ RunTour, který probíhá na unikátních tratích v osmi městech po celé České republice. Těšit se můžete na distance pro dospělé, ale i dětské běhy na 500 a 1000 m.
+            - generic [ref=e184]:
+              - paragraph [ref=e186]:
+                - text: 
+                - generic [ref=e187]:
+                  - generic [ref=e188]: 
+                  - text: "Start: 12:15"
+                - generic [ref=e189]:
+                  - generic [ref=e190]: 
+                  - text: "Délka tratí: 10 km / 5 km / 3 km / štafety"
+                - generic [ref=e191]:
+                  - generic [ref=e192]: 
+                  - text: "Typ závodu: Smíšený"
+                - generic [ref=e193]:
+                  - generic [ref=e194]: 
+                  - text: "Pořadatel: VML Czechia s.r.o."
+                - generic [ref=e195]:
+                  - generic [ref=e196]: 
+                  - text: "Kraj: Královéhradecký"
+                - link:
+                  - /url: https://ceskybeh.cz/zavody/cez-runtour-hradec-kralove-2026/?
+              - link "CertifikovánoTOP seriál" [ref=e199]:
+                - /url: https://ceskybeh.cz/zavody/cez-runtour-hradec-kralove-2026/?
+                - img "Certifikováno" [ref=e200]
+                - img "TOP seriál" [ref=e201]
+          - generic [ref=e202] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Světlá nad Sázavou" [ref=e203]:
+              - /url: https://ceskybeh.cz/zavody/cez-runtour-hradec-kralove-2026/?
+            - generic [ref=e204]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/cez-runtour-hradec-kralove-2026/?
+              - link "Běh cyklostezkou" [ref=e205]:
+                - /url: https://ceskybeh.cz/zavody/beh-cyklostezkou-2026/?
+                - heading "Běh cyklostezkou" [level=4] [ref=e206]
+            - paragraph [ref=e207]: Běh po cyklostezce podél řeky Sázavy ke kukuřičnému mlýnu v Mrzkovicích a zpět.
+            - paragraph [ref=e210]:
+              - text: 
+              - generic [ref=e211]:
+                - generic [ref=e212]: 
+                - text: "Start: 12:00"
+              - generic [ref=e213]:
+                - generic [ref=e214]: 
+                - text: "Délka tratí: 5,2 km"
+              - generic [ref=e215]:
+                - generic [ref=e216]: 
+                - text: "Typ závodu: Silnice"
+              - generic [ref=e217]:
+                - generic [ref=e218]: 
+                - text: "Pořadatel: AZ Tým Světlá nad Sázavou"
+              - generic [ref=e219]:
+                - generic [ref=e220]: 
+                - text: "Kraj: Vysočina"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-cyklostezkou-2026/?
+          - generic [ref=e222] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Hranice" [ref=e223]:
+              - /url: https://ceskybeh.cz/zavody/beh-cyklostezkou-2026/?
+            - generic [ref=e224]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-cyklostezkou-2026/?
+              - link "Běh vítězství, Hranická dvacítka a Hranická desítka" [ref=e225]:
+                - /url: https://ceskybeh.cz/zavody/beh-vitezstvi-hranicka-dvacitka-a-hranicka-desitka-2026/?
+                - heading "Běh vítězství, Hranická dvacítka a Hranická desítka" [level=4] [ref=e226]
+            - paragraph [ref=e227]: Závod vede po zpevněných a nezpevněných lesních cestách v polesí SLŠ Hranice. Běží se z hranického stadionu pod hrad Helfštýn cestou zvanou Gabrielka a zpět. Hlavní závod je součástí Velké ceny vytrvalců Olomouckého kraje.
+            - paragraph [ref=e230]:
+              - text: 
+              - generic [ref=e231]:
+                - generic [ref=e232]: 
+                - text: "Start: 9:30"
+              - generic [ref=e233]:
+                - generic [ref=e234]: 
+                - text: "Délka tratí: 20 km / 10 km"
+              - generic [ref=e235]:
+                - generic [ref=e236]: 
+                - text: "Typ závodu: Smíšený"
+              - generic [ref=e237]:
+                - generic [ref=e238]: 
+                - text: "Pořadatel: SK Hranice, z.s. - oddíl atletiky"
+              - generic [ref=e239]:
+                - generic [ref=e240]: 
+                - text: "Kraj: Olomouc"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-vitezstvi-hranicka-dvacitka-a-hranicka-desitka-2026/?
+          - generic [ref=e242] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Heřmanův Městec" [ref=e243]:
+              - /url: https://ceskybeh.cz/zavody/beh-vitezstvi-hranicka-dvacitka-a-hranicka-desitka-2026/?
+            - generic [ref=e244]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-vitezstvi-hranicka-dvacitka-a-hranicka-desitka-2026/?
+              - link "Smrt krásných běžců" [ref=e245]:
+                - /url: https://ceskybeh.cz/zavody/smrt-krasnych-bezcu-2026/?
+                - heading "Smrt krásných běžců" [level=4] [ref=e246]
+            - paragraph [ref=e247]: Přizpůsobený princip Backyard ultra. Běží se 10 okruhů. Vždy v celou hodinu se vybíhá na další okruh - kdo nestihne za hodinu doběhnout, končí v závodě. Poslední okruh se běží na čas/pořadí! Součástí série Vládce Mrdic.
+            - paragraph [ref=e250]:
+              - text: 
+              - generic [ref=e251]:
+                - generic [ref=e252]: 
+                - text: "Start: 9:00"
+              - generic [ref=e253]:
+                - generic [ref=e254]: 
+                - text: "Délka tratí: 1 až 10 x 6,4 km"
+              - generic [ref=e255]:
+                - generic [ref=e256]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e257]:
+                - generic [ref=e258]: 
+                - text: "Pořadatel: Běžecký klub Heřmanův Městec z.s."
+              - generic [ref=e259]:
+                - generic [ref=e260]: 
+                - text: "Kraj: Pardubický"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/smrt-krasnych-bezcu-2026/?
+          - generic [ref=e262] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Liteň" [ref=e263]:
+              - /url: https://ceskybeh.cz/zavody/smrt-krasnych-bezcu-2026/?
+            - generic [ref=e264]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/smrt-krasnych-bezcu-2026/?
+              - link "Jarní běh Litní a zámeckým parkem" [ref=e265]:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-litni-a-zameckym-parkem-2026/?
+                - heading "Jarní běh Litní a zámeckým parkem" [level=4] [ref=e266]
+            - paragraph [ref=e267]: Trať vedoucí po asfaltu, nezpevněném povrchu a štěrku vedená parkem. Vložen dětský závod.
+            - paragraph [ref=e270]:
+              - text: 
+              - generic [ref=e271]:
+                - generic [ref=e272]: 
+                - text: "Start: 12:00"
+              - generic [ref=e273]:
+                - generic [ref=e274]: 
+                - text: "Délka tratí: 6,76 km"
+              - generic [ref=e275]:
+                - generic [ref=e276]: 
+                - text: "Typ závodu: Smíšený"
+              - generic [ref=e277]:
+                - generic [ref=e278]: 
+                - text: "Pořadatel: Česká tábornická unie - Záskalák Liteň, pobočný spolek"
+              - generic [ref=e279]:
+                - generic [ref=e280]: 
+                - text: "Kraj: Středočeský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-litni-a-zameckym-parkem-2026/?
+          - generic [ref=e282] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Zlín-Lesní čtvrť" [ref=e283]:
+              - /url: https://ceskybeh.cz/zavody/jarni-beh-litni-a-zameckym-parkem-2026/?
+            - generic [ref=e284]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-beh-litni-a-zameckym-parkem-2026/?
+              - link "Zlínská lesní hodinovka" [ref=e285]:
+                - /url: https://ceskybeh.cz/zavody/zlinska-lesni-hodinovka-2026/?
+                - heading "Zlínská lesní hodinovka" [level=4] [ref=e286]
+            - paragraph [ref=e287]: Jediná hodinovka v ČR, která se běhá celá v lese, na kilometrovém okruhu. Téměř rovina.
+            - paragraph [ref=e290]:
+              - text: 
+              - generic [ref=e291]:
+                - generic [ref=e292]: 
+                - text: "Start: 10:00"
+              - generic [ref=e293]:
+                - generic [ref=e294]: 
+                - text: "Délka tratí: 1 hodina"
+              - generic [ref=e295]:
+                - generic [ref=e296]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e297]:
+                - generic [ref=e298]: 
+                - text: "Pořadatel: Běhy Zlín"
+              - generic [ref=e299]:
+                - generic [ref=e300]: 
+                - text: "Kraj: Zlínský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/zlinska-lesni-hodinovka-2026/?
+          - generic [ref=e302] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Stráž pod Ralskem" [ref=e303]:
+              - /url: https://ceskybeh.cz/zavody/zlinska-lesni-hodinovka-2026/?
+            - generic [ref=e304]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/zlinska-lesni-hodinovka-2026/?
+              - link "Rozeběhni Stráž" [ref=e305]:
+                - /url: https://ceskybeh.cz/zavody/rozebehni-straz-2026/?
+                - heading "Rozeběhni Stráž" [level=4] [ref=e306]
+            - paragraph [ref=e307]: Přijeďte si zazávodit do krásné krajiny v okolí Stráže pod Ralskem. Trať bude vyznačená převážně po turistických cestách. Součástí programu budou i dětské závody.
+            - paragraph [ref=e310]:
+              - text: 
+              - generic [ref=e311]:
+                - generic [ref=e312]: 
+                - text: "Start: 12:00"
+              - generic [ref=e313]:
+                - generic [ref=e314]: 
+                - text: "Délka tratí: 15 km / 6 km"
+              - generic [ref=e315]:
+                - generic [ref=e316]: 
+                - text: "Typ závodu: Smíšený"
+              - generic [ref=e317]:
+                - generic [ref=e318]: 
+                - text: "Pořadatel: ZŠ Stráž pod Ralskem"
+              - generic [ref=e319]:
+                - generic [ref=e320]: 
+                - text: "Kraj: Liberecký"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/rozebehni-straz-2026/?
+          - generic [ref=e322] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Pardubice" [ref=e323]:
+              - /url: https://ceskybeh.cz/zavody/rozebehni-straz-2026/?
+            - generic [ref=e324]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/rozebehni-straz-2026/?
+              - link "Pardubický vinařský půlmaratón, MČR v půlmaratonu" [ref=e325]:
+                - /url: https://ceskybeh.cz/zavody/pardubicky-vinarsky-pulmaraton-mcr-v-pulmaratonu-2026/?
+                - heading "Pardubický vinařský půlmaratón, MČR v půlmaratonu" [level=4] [ref=e326]
+            - paragraph [ref=e327]: Silniční běh městem. Oficiálně změřená trať, značen každý kilometr. Veřejný běh a Mistrovství ČR.
+            - generic [ref=e328]:
+              - paragraph [ref=e330]:
+                - text: 
+                - generic [ref=e331]:
+                  - generic [ref=e332]: 
+                  - text: "Start: 9:40"
+                - generic [ref=e333]:
+                  - generic [ref=e334]: 
+                  - text: "Délka tratí: 21,097 km / 10 km / 1,7 km"
+                - generic [ref=e335]:
+                  - generic [ref=e336]: 
+                  - text: "Typ závodu: Silnice"
+                - generic [ref=e337]:
+                  - generic [ref=e338]: 
+                  - text: "Pořadatel: Oldřich Bujnoch ve spolupráci s KPA Pardubice"
+                - generic [ref=e339]:
+                  - generic [ref=e340]: 
+                  - text: "Kraj: Pardubický"
+                - link:
+                  - /url: https://ceskybeh.cz/zavody/pardubicky-vinarsky-pulmaraton-mcr-v-pulmaratonu-2026/?
+              - link "CertifikovánoTOP akce" [ref=e343]:
+                - /url: https://ceskybeh.cz/zavody/pardubicky-vinarsky-pulmaraton-mcr-v-pulmaratonu-2026/?
+                - img "Certifikováno" [ref=e344]
+                - img "TOP akce" [ref=e345]
+          - generic [ref=e346] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Mikulčice" [ref=e347]:
+              - /url: https://ceskybeh.cz/zavody/pardubicky-vinarsky-pulmaraton-mcr-v-pulmaratonu-2026/?
+            - generic [ref=e348]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/pardubicky-vinarsky-pulmaraton-mcr-v-pulmaratonu-2026/?
+              - link "Velká Morava" [ref=e349]:
+                - /url: https://ceskybeh.cz/zavody/velka-morava-2026/?
+                - heading "Velká Morava" [level=4] [ref=e350]
+            - paragraph [ref=e351]: Jubilejní 50. ročník. Na silnici v Mikulčicích je již tradiční trať Velké Moravy 10 km modře vyznačená a vy si ji tak můžete kdykoliv individuálně, s rodinou, s přáteli nebo s protivníky zaběhnout - od startu po cíl a kolikrát chcete.
+            - paragraph [ref=e354]:
+              - text: 
+              - generic [ref=e355]:
+                - generic [ref=e356]: 
+                - text: "Start: 9:00"
+              - generic [ref=e357]:
+                - generic [ref=e358]: 
+                - text: "Délka tratí: 10 km"
+              - generic [ref=e359]:
+                - generic [ref=e360]: 
+                - text: "Typ závodu: Silnice"
+              - generic [ref=e361]:
+                - generic [ref=e362]: 
+                - text: "Pořadatel: AK Mikulčice"
+              - generic [ref=e363]:
+                - generic [ref=e364]: 
+                - text: "Kraj: Jihomoravský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/velka-morava-2026/?
+          - generic [ref=e366] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Sušice" [ref=e367]:
+              - /url: https://ceskybeh.cz/zavody/velka-morava-2026/?
+            - generic [ref=e368]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/velka-morava-2026/?
+              - link "Horský půlmaraton Sušice" [ref=e369]:
+                - /url: https://ceskybeh.cz/zavody/horsky-pulmaraton-susice-2026/?
+                - heading "Horský půlmaraton Sušice" [level=4] [ref=e370]
+            - paragraph [ref=e371]: Trailový závod v srdci Šumavy se zázemím na ostrově Santos v Sušici. Trasy vedou po lesních a horských cestách přes ikonická místa jako Kalich, Sedlo, Pustý Hrádek a Kalovy. Technicky pestré tratě, krásné výhledy a silná atmosféra.
+            - paragraph [ref=e374]:
+              - text: 
+              - generic [ref=e375]:
+                - generic [ref=e376]: 
+                - text: "Start: 10:00"
+              - generic [ref=e377]:
+                - generic [ref=e378]: 
+                - text: "Délka tratí: 31 km / 21 km / 12 km / 5 km"
+              - generic [ref=e379]:
+                - generic [ref=e380]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e381]:
+                - generic [ref=e382]: 
+                - text: "Pořadatel: Luci&HPS s.r.o."
+              - generic [ref=e383]:
+                - generic [ref=e384]: 
+                - text: "Kraj: Plzeňský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/horsky-pulmaraton-susice-2026/?
+          - generic [ref=e386] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Karlovy Vary" [ref=e387]:
+              - /url: https://ceskybeh.cz/zavody/horsky-pulmaraton-susice-2026/?
+            - generic [ref=e388]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/horsky-pulmaraton-susice-2026/?
+              - link "Jarní bahno - Goethovka" [ref=e389]:
+                - /url: https://ceskybeh.cz/zavody/jarni-bahno-goethovka-2026/?
+                - heading "Jarní bahno - Goethovka" [level=4] [ref=e390]
+            - paragraph [ref=e391]: Druhý závod seriálu běžeckých závodů v terénu. Převýšení 240 m.
+            - paragraph [ref=e394]:
+              - text: 
+              - generic [ref=e395]:
+                - generic [ref=e396]: 
+                - text: "Start: 10:30"
+              - generic [ref=e397]:
+                - generic [ref=e398]: 
+                - text: "Délka tratí: 5,8 km"
+              - generic [ref=e399]:
+                - generic [ref=e400]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e401]:
+                - generic [ref=e402]: 
+                - text: "Pořadatel: A.M.bike, z.s."
+              - generic [ref=e403]:
+                - generic [ref=e404]: 
+                - text: "Kraj: Karlovarský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-bahno-goethovka-2026/?
+          - generic [ref=e406] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Hrádek nad Nisou" [ref=e407]:
+              - /url: https://ceskybeh.cz/zavody/jarni-bahno-goethovka-2026/?
+            - generic [ref=e408]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-bahno-goethovka-2026/?
+              - link "Běh Trojzemím" [ref=e409]:
+                - /url: https://ceskybeh.cz/zavody/beh-trojzemim-2026/?
+                - heading "Běh Trojzemím" [level=4] [ref=e410]
+            - paragraph [ref=e411]: Velmi rychlá trať, jejíž převážná část vede po rovinatých cyklostezkách. Součástí i dětské závody a štafeta. Běží se za plného provozu.
+            - paragraph [ref=e414]:
+              - text: 
+              - generic [ref=e415]:
+                - generic [ref=e416]: 
+                - text: "Start: 10:00"
+              - generic [ref=e417]:
+                - generic [ref=e418]: 
+                - text: "Délka tratí: 10 km / 5 km / 1,6 km"
+              - generic [ref=e419]:
+                - generic [ref=e420]: 
+                - text: "Typ závodu: Smíšený"
+              - generic [ref=e421]:
+                - generic [ref=e422]: 
+                - text: "Pořadatel: Multisport Team, z.s."
+              - generic [ref=e423]:
+                - generic [ref=e424]: 
+                - text: "Kraj: Liberecký"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-trojzemim-2026/?
+          - generic [ref=e426] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Veřovice" [ref=e427]:
+              - /url: https://ceskybeh.cz/zavody/beh-trojzemim-2026/?
+            - generic [ref=e428]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-trojzemim-2026/?
+              - link "Veřovská desítka" [ref=e429]:
+                - /url: https://ceskybeh.cz/zavody/verovska-desitka-2026/?
+                - heading "Veřovská desítka" [level=4] [ref=e430]
+            - paragraph [ref=e431]: Rovinatá trať hlavního závodu po asfaltu s minimálním převýšením. Doprovodný závod rodičů s kočárky a závody dětí.
+            - paragraph [ref=e434]:
+              - text: 
+              - generic [ref=e435]:
+                - generic [ref=e436]: 
+                - text: "Start: 9:00"
+              - generic [ref=e437]:
+                - generic [ref=e438]: 
+                - text: "Délka tratí: 10 km"
+              - generic [ref=e439]:
+                - generic [ref=e440]: 
+                - text: "Typ závodu: Silnice"
+              - generic [ref=e441]:
+                - generic [ref=e442]: 
+                - text: "Pořadatel: Orel Veřovice"
+              - generic [ref=e443]:
+                - generic [ref=e444]: 
+                - text: "Kraj: Moravskoslezský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/verovska-desitka-2026/?
+          - generic [ref=e446] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Mladá Boleslav" [ref=e447]:
+              - /url: https://ceskybeh.cz/zavody/verovska-desitka-2026/?
+            - generic [ref=e448]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/verovska-desitka-2026/?
+              - link "Běh Štěpánkou" [ref=e449]:
+                - /url: https://ceskybeh.cz/zavody/beh-stepankou-2026/?
+                - heading "Běh Štěpánkou" [level=4] [ref=e450]
+            - paragraph [ref=e451]: Nejstarší přespolní běh ve středních Čechách, který se koná na parkových cestách s převýšením v lesoparku Štěpánka.
+            - paragraph [ref=e454]:
+              - text: 
+              - generic [ref=e455]:
+                - generic [ref=e456]: 
+                - text: "Start: 9:00"
+              - generic [ref=e457]:
+                - generic [ref=e458]: 
+                - text: "Délka tratí: 6 km / 3 km"
+              - generic [ref=e459]:
+                - generic [ref=e460]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e461]:
+                - generic [ref=e462]: 
+                - text: "Pořadatel: AC Mladá Boleslav z.s."
+              - generic [ref=e463]:
+                - generic [ref=e464]: 
+                - text: "Kraj: Středočeský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-stepankou-2026/?
+          - generic [ref=e466] [cursor=pointer]:
+            - link "sobota 11. dubna 2026, Malíkovice 1" [ref=e467]:
+              - /url: https://ceskybeh.cz/zavody/beh-stepankou-2026/?
+            - generic [ref=e468]:
+              - link:
+                - /url: https://ceskybeh.cz/zavody/beh-stepankou-2026/?
+              - link "Jarní kros okolo Dračí studánky" [ref=e469]:
+                - /url: https://ceskybeh.cz/zavody/jarni-kros-okolo-draci-studanky-2026/?
+                - heading "Jarní kros okolo Dračí studánky" [level=4] [ref=e470]
+            - paragraph [ref=e471]: Závod dlouhý 6 km, který vede převážně po polních a lesních cestách.
+            - paragraph [ref=e474]:
+              - text: 
+              - generic [ref=e475]:
+                - generic [ref=e476]: 
+                - text: "Délka tratí: 6 km"
+              - generic [ref=e477]:
+                - generic [ref=e478]: 
+                - text: "Typ závodu: Kros / trail"
+              - generic [ref=e479]:
+                - generic [ref=e480]: 
+                - text: "Pořadatel: ZD Hradečno a OÚ Malíkovice ve spolupráci s MK Kladno"
+              - generic [ref=e481]:
+                - generic [ref=e482]: 
+                - text: "Kraj: Středočeský"
+              - link:
+                - /url: https://ceskybeh.cz/zavody/jarni-kros-okolo-draci-studanky-2026/?
+          - navigation "Stránkování" [ref=e485]:
+            - list [ref=e486]:
+              - listitem [ref=e487]:
+                - link "1" [ref=e488] [cursor=pointer]:
+                  - /url: "?page=0"
+              - listitem [ref=e489]:
+                - link "2" [ref=e490] [cursor=pointer]:
+                  - /url: "?page=1"
+              - listitem [ref=e491]:
+                - link "3" [ref=e492] [cursor=pointer]:
+                  - /url: "?page=2"
+              - listitem [ref=e493]:
+                - link "4" [ref=e494] [cursor=pointer]:
+                  - /url: "?page=3"
+              - listitem [ref=e495]:
+                - link "5" [ref=e496] [cursor=pointer]:
+                  - /url: "?page=4"
+              - listitem [ref=e497]:
+                - link "6" [ref=e498] [cursor=pointer]:
+                  - /url: "?page=5"
+              - listitem [ref=e499]:
+                - link "»" [ref=e500] [cursor=pointer]:
+                  - /url: "?page=1"
+              - listitem [ref=e501]:
+                - link "poslední »" [ref=e502] [cursor=pointer]:
+                  - /url: "?page=58"
+  - generic [ref=e504]:
+    - link [ref=e507] [cursor=pointer]:
+      - /url: https://pomahejpohybem.cz/?utm_source=ceskybeh.cz&utm_campaign=cez_app&utm_medium=b
+      - img [ref=e508]
+    - generic [ref=e509]:
+      - generic [ref=e510]:
+        - heading "provozovatel" [level=3] [ref=e511]: provozovatel
+        - link [ref=e512] [cursor=pointer]:
+          - /url: https://atletika.cz
+          - img [ref=e513]
+      - generic [ref=e514]:
+        - heading "generální partner ČAS" [level=3] [ref=e515]
+        - link [ref=e516] [cursor=pointer]:
+          - /url: https://cez.cz
+          - img [ref=e517]
+      - generic [ref=e518]:
+        - heading "partneři českého běžeckého klubu" [level=3] [ref=e519]:
+          - text: partneři
+          - text: českého běžeckého klubu
+        - generic [ref=e520]:
+          - link [ref=e522] [cursor=pointer]:
+            - /url: https://run-magazine.cz/
+            - img [ref=e523]
+          - link [ref=e525] [cursor=pointer]:
+            - /url: https://bechovice-praha.cz
+            - img [ref=e526]
+          - link [ref=e528] [cursor=pointer]:
+            - /url: https://enervit.cz/
+            - img [ref=e529]
+          - link [ref=e531] [cursor=pointer]:
+            - /url: https://www.vital-praha.cz/
+            - img [ref=e532]
+  - generic [ref=e533]:
+    - generic [ref=e535]:
+      - generic [ref=e536]:
+        - heading "Český běh" [level=5] [ref=e537]
+        - list [ref=e539]:
+          - listitem [ref=e540]:
+            - link "O nás" [ref=e541] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/
+          - listitem [ref=e542]:
+            - link "Český běžecký klub" [ref=e543] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/bezci/cesky-bezecky-klub/
+          - listitem [ref=e544]:
+            - link "Nabídka pro organizátory" [ref=e545] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/
+          - listitem [ref=e546]:
+            - link "GDPR" [ref=e547] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/gdpr/
+          - listitem [ref=e548]:
+            - link "Kontakty" [ref=e549] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/kontakt/
+      - generic [ref=e550]:
+        - heading "Běžci" [level=5] [ref=e551]
+        - list [ref=e553]:
+          - listitem [ref=e554]:
+            - link "Termínovka" [ref=e555] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/
+          - listitem [ref=e556]:
+            - link "Výsledky" [ref=e557] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/
+          - listitem [ref=e558]:
+            - link "Hodnotit běh" [ref=e559] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/vysledky/
+          - listitem [ref=e560]:
+            - link "Český běžecký klub" [ref=e561] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/bezci/cesky-bezecky-klub/
+          - listitem [ref=e562]:
+            - link "Info ze závodů" [ref=e563] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/clanky/
+          - listitem [ref=e564]:
+            - link "Články a blogy" [ref=e565] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/clanky/
+          - listitem [ref=e566]:
+            - link "Najít si trenéra" [ref=e567] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri-kondicniho-behu/
+      - generic [ref=e568]:
+        - heading "Trenéři" [level=5] [ref=e569]
+        - list [ref=e571]:
+          - listitem [ref=e572]:
+            - link "Kurzy trenéra" [ref=e573] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri/stat-se-trenerem/
+          - listitem [ref=e574]:
+            - link "Naši lektoři" [ref=e575] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri/lektori/
+          - listitem [ref=e576]:
+            - link "Trenéři" [ref=e577] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/treneri-kondicniho-behu/
+      - generic [ref=e578]:
+        - heading "Organizátoři" [level=5] [ref=e579]
+        - list [ref=e581]:
+          - listitem [ref=e582]:
+            - link "Certifikovat trať" [ref=e583] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-trat/
+          - listitem [ref=e584]:
+            - link "Certifikovat závod" [ref=e585] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-zavod/
+          - listitem [ref=e586]:
+            - link "Vložit závod do Termínovky" [ref=e587] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/vlozit-zavod-do-terminovky/
+          - listitem [ref=e588]:
+            - link "Pravidla" [ref=e589] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/pravidla/
+          - listitem [ref=e590]:
+            - link "Normy" [ref=e591] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/normy/
+          - listitem [ref=e592]:
+            - link "Seznam měřičů" [ref=e593] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/organizatori/certifikovat-trat/#merici
+      - generic [ref=e594]:
+        - heading "Kontakty" [level=5] [ref=e595]
+        - list [ref=e597]:
+          - listitem [ref=e598]:
+            - link "Kontakty" [ref=e599] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/kontakt/
+          - listitem [ref=e600]:
+            - link "Český běh" [ref=e601] [cursor=pointer]:
+              - /url: https://ceskybeh.cz/o-nas/cesky-beh/
+          - listitem [ref=e602]:
+            - link "Český atletický svaz" [ref=e603] [cursor=pointer]:
+              - /url: http://atletika.cz
+          - listitem [ref=e604]:
+            - link "" [ref=e605] [cursor=pointer]:
+              - /url: https://www.facebook.com/ceskybeh.cz/
+              - generic [ref=e606]: 
+          - listitem [ref=e607]:
+            - link "" [ref=e608] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/CzechAthletics/
+              - generic [ref=e609]: 
+    - document [ref=e611]:
+      - generic [ref=e612]:
+        - link "Cookies" [ref=e613] [cursor=pointer]:
+          - /url: "#updateCookies"
+        - generic [ref=e615]:
+          - heading "Informace o cookies" [level=3] [ref=e616]
+          - generic [ref=e617]:
+            - generic [ref=e618]:
+              - paragraph [ref=e619]: Kliknutím na Souhlasím se vším budou uloženy cookies technické, analytické a marketingové - dokážeme vám tak umožnit pohodlné používání webu, měřit návštěvnost a zobrazovat relevantní reklamu.
+              - paragraph [ref=e620]:
+                - text: Souhlas můžete
+                - link "odmítnout zde" [ref=e621] [cursor=pointer]:
+                  - /url: "#declineCookies"
+                - text: .
+            - generic [ref=e622]:
+              - button "Nastavení cookies" [ref=e623] [cursor=pointer]
+              - button "Souhlasím se vším" [ref=e624] [cursor=pointer]
+  - iframe [ref=e627]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]:
+        - text: protected by
+        - strong [ref=f1e7]: reCAPTCHA
+      - generic [ref=f1e9]:
+        - text: reCAPTCHA is changing its terms of service.
+        - link "Take action." [ref=f1e10] [cursor=pointer]:
+          - /url: https://google.com/recaptcha/admin/migrate
