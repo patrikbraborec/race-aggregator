@@ -293,7 +293,7 @@ const completeness = getCompleteness(race);
         <p class="mt-2 text-sm text-text-secondary">Něco nesedí? Dejte nám vědět.</p>
 
         <form id="report-form" class="mt-6 space-y-4">
-          <fieldset>
+          <fieldset id="report-reasons-fieldset">
             <legend class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary mb-3">Co je špatně?</legend>
             <div class="space-y-2">
               {['Špatné datum', 'Špatný popis', 'Závod zrušen', 'Špatná cena', 'Špatná lokace', 'Jiné'].map((reason) => (
@@ -303,9 +303,10 @@ const completeness = getCompleteness(race);
                 </label>
               ))}
             </div>
+            <p class="field-error-msg" id="report-reasons-error">&nbsp;</p>
           </fieldset>
 
-          <div>
+          <div id="report-message-field">
             <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="report-message">
               Zpráva (volitelné)
             </label>
@@ -321,7 +322,8 @@ const completeness = getCompleteness(race);
           <div class="flex items-center gap-3 pt-2">
             <button
               type="submit"
-              class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+              id="report-submit"
+              class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F] disabled:opacity-50"
             >
               Odeslat
             </button>
@@ -379,12 +381,37 @@ const completeness = getCompleteness(race);
       if (e.target === modal) closeModal();
     });
 
+    const reasonsFieldset = document.getElementById('report-reasons-fieldset') as HTMLElement;
+    const reasonsError = document.getElementById('report-reasons-error') as HTMLElement;
+    const submitBtnReport = document.getElementById('report-submit') as HTMLButtonElement;
+
+    // Clear fieldset error when a checkbox is checked
+    form?.querySelectorAll('input[name="reasons"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        reasonsFieldset.classList.remove('fieldset-error');
+        statusEl.classList.add('hidden');
+      });
+    });
+
+    // Clear fieldset error when message is typed
+    document.getElementById('report-message')?.addEventListener('input', () => {
+      reasonsFieldset.classList.remove('fieldset-error');
+      statusEl.classList.add('hidden');
+    });
+
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // Clear previous errors
+      reasonsFieldset.classList.remove('fieldset-error');
+      statusEl.classList.add('hidden');
+
+      // Rate limit check
       const lastSubmitted = Number(localStorage.getItem(COOLDOWN_KEY) || 0);
-      if (Date.now() - lastSubmitted < COOLDOWN_MS) {
-        statusEl.textContent = 'Nahlášení je možné jednou za minutu. Zkuste to později.';
+      const elapsed = Date.now() - lastSubmitted;
+      if (elapsed < COOLDOWN_MS) {
+        const remaining = Math.ceil((COOLDOWN_MS - elapsed) / 1000);
+        statusEl.textContent = `Nahlášení je možné jednou za minutu. Počkejte prosím ${remaining} sekund.`;
         statusEl.className = 'font-mono text-xs text-error';
         statusEl.classList.remove('hidden');
         return;
@@ -395,11 +422,12 @@ const completeness = getCompleteness(race);
       const message = formData.get('message');
 
       if (reasons.length === 0 && !message) {
-        statusEl.textContent = 'Vyberte alespoň jeden důvod nebo napište zprávu.';
-        statusEl.className = 'font-mono text-xs text-error';
-        statusEl.classList.remove('hidden');
+        reasonsFieldset.classList.add('fieldset-error');
+        reasonsError.textContent = 'Vyberte alespoň jeden důvod, nebo napište zprávu do textového pole níže.';
         return;
       }
+
+      submitBtnReport.disabled = true;
 
       try {
         const supabase = getClient();
@@ -412,14 +440,16 @@ const completeness = getCompleteness(race);
         if (error) throw error;
 
         localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
-        statusEl.textContent = 'Děkujeme za nahlášení!';
+        statusEl.textContent = 'Děkujeme za nahlášení! Chybu opravíme co nejdříve.';
         statusEl.className = 'font-mono text-xs text-success';
         statusEl.classList.remove('hidden');
         setTimeout(closeModal, 1500);
       } catch {
-        statusEl.textContent = 'Chyba při odesílání. Zkuste to znovu.';
+        statusEl.textContent = 'Nepodařilo se odeslat. Zkontrolujte připojení k internetu a zkuste to znovu.';
         statusEl.className = 'font-mono text-xs text-error';
         statusEl.classList.remove('hidden');
+      } finally {
+        submitBtnReport.disabled = false;
       }
     });
 

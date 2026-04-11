@@ -8,7 +8,6 @@ const TERRAIN_PRIORITY: Record<TerrainType, number> = {
   cross: 2,
   trail: 3,
   obstacle: 4,
-  ultra: 5,
 };
 
 /**

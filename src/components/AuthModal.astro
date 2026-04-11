@@ -31,7 +31,7 @@
 
     <!-- Form -->
     <form id="auth-form" class="mt-6 space-y-4">
-      <div>
+      <div id="auth-email-field">
         <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="auth-email">
           Email
         </label>
@@ -39,11 +39,11 @@
           type="email"
           id="auth-email"
           name="email"
-          required
           autocomplete="email"
           class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
           placeholder="vas@email.cz"
         />
+        <p class="field-error-msg" id="auth-email-error">&nbsp;</p>
       </div>
 
       <div id="auth-password-field">
@@ -54,11 +54,11 @@
           type="password"
           id="auth-password"
           name="password"
-          minlength="6"
           autocomplete="current-password"
           class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
           placeholder="Alespoň 6 znaků"
         />
+        <p class="field-error-msg" id="auth-password-error">&nbsp;</p>
       </div>
 
       <div id="auth-password-confirm-field" class="hidden">
@@ -69,11 +69,11 @@
           type="password"
           id="auth-password-confirm"
           name="password_confirm"
-          minlength="6"
           autocomplete="new-password"
           class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
           placeholder="Zopakujte heslo"
         />
+        <p class="field-error-msg" id="auth-password-confirm-error">&nbsp;</p>
       </div>
 
       <div class="flex items-center gap-3 pt-2">
@@ -121,9 +121,15 @@
 
   const tabLogin = document.getElementById('auth-tab-login') as HTMLElement;
   const tabRegister = document.getElementById('auth-tab-register') as HTMLElement;
-  const passwordConfirmField = document.getElementById('auth-password-confirm-field') as HTMLElement;
+  const emailField = document.getElementById('auth-email-field') as HTMLElement;
+  const emailInput = document.getElementById('auth-email') as HTMLInputElement;
+  const emailError = document.getElementById('auth-email-error') as HTMLElement;
+  const passwordField = document.getElementById('auth-password-field') as HTMLElement;
   const passwordInput = document.getElementById('auth-password') as HTMLInputElement;
+  const passwordError = document.getElementById('auth-password-error') as HTMLElement;
+  const passwordConfirmField = document.getElementById('auth-password-confirm-field') as HTMLElement;
   const passwordConfirmInput = document.getElementById('auth-password-confirm') as HTMLInputElement;
+  const passwordConfirmError = document.getElementById('auth-password-confirm-error') as HTMLElement;
   const subtitle = document.getElementById('auth-subtitle') as HTMLElement;
 
   const activeTabClasses = 'text-primary underline underline-offset-4 decoration-accent decoration-2';
@@ -132,15 +138,80 @@
   let currentTab: 'login' | 'register' = 'login';
   let pendingIntent: { intent: string; raceId?: string } | null = null;
 
+  // --- Field-level validation helpers ---
+  function setFieldError(field: HTMLElement, errorEl: HTMLElement, message: string) {
+    field.classList.add('field-error');
+    errorEl.textContent = message;
+  }
+
+  function clearFieldError(field: HTMLElement) {
+    field.classList.remove('field-error');
+  }
+
+  function clearAllFieldErrors() {
+    [emailField, passwordField, passwordConfirmField].forEach(f => f.classList.remove('field-error'));
+    statusEl.classList.add('hidden');
+  }
+
+  // Clear field error on input
+  emailInput.addEventListener('input', () => clearFieldError(emailField));
+  passwordInput.addEventListener('input', () => clearFieldError(passwordField));
+  passwordConfirmInput.addEventListener('input', () => clearFieldError(passwordConfirmField));
+
+  function validateEmail(email: string): string | null {
+    if (!email.trim()) return 'Zadejte emailovou adresu.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Zadejte platný email (např. vas@email.cz).';
+    return null;
+  }
+
+  function validatePassword(password: string): string | null {
+    if (!password) return 'Zadejte heslo.';
+    if (password.length < 6) return 'Heslo musí mít alespoň 6 znaků.';
+    return null;
+  }
+
+  function validateForm(): boolean {
+    clearAllFieldErrors();
+    let valid = true;
+
+    const emailErr = validateEmail(emailInput.value);
+    if (emailErr) {
+      setFieldError(emailField, emailError, emailErr);
+      if (valid) emailInput.focus();
+      valid = false;
+    }
+
+    const passErr = validatePassword(passwordInput.value);
+    if (passErr) {
+      setFieldError(passwordField, passwordError, passErr);
+      if (valid) passwordInput.focus();
+      valid = false;
+    }
+
+    if (currentTab === 'register') {
+      const confirmVal = passwordConfirmInput.value;
+      if (!confirmVal) {
+        setFieldError(passwordConfirmField, passwordConfirmError, 'Zopakujte heslo pro potvrzení.');
+        if (valid) passwordConfirmInput.focus();
+        valid = false;
+      } else if (confirmVal !== passwordInput.value) {
+        setFieldError(passwordConfirmField, passwordConfirmError, 'Hesla se neshodují. Zkontrolujte, že jste zadali stejné heslo.');
+        if (valid) passwordConfirmInput.focus();
+        valid = false;
+      }
+    }
+
+    return valid;
+  }
+
   function setTab(tab: 'login' | 'register') {
     currentTab = tab;
-    statusEl.classList.add('hidden');
+    clearAllFieldErrors();
 
     if (tab === 'login') {
       tabLogin.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${activeTabClasses} transition-colors duration-150`;
       tabRegister.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${inactiveTabClasses} transition-colors duration-150`;
       passwordConfirmField.classList.add('hidden');
-      passwordConfirmInput.required = false;
       passwordInput.autocomplete = 'current-password';
       submitBtn.textContent = 'Přihlásit se';
       subtitle.textContent = 'Přihlas se a sleduj své závody.';
@@ -148,7 +219,6 @@
       tabRegister.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${activeTabClasses} transition-colors duration-150`;
       tabLogin.className = `pb-3 font-mono text-xs font-medium uppercase tracking-[0.06em] ${inactiveTabClasses} transition-colors duration-150`;
       passwordConfirmField.classList.remove('hidden');
-      passwordConfirmInput.required = true;
       passwordInput.autocomplete = 'new-password';
       submitBtn.textContent = 'Registrovat';
       subtitle.textContent = 'Vytvoř si účet a sleduj své závody.';
@@ -162,7 +232,7 @@
     modal.classList.remove('hidden');
     modal.classList.add('flex');
     form.reset();
-    statusEl.classList.add('hidden');
+    clearAllFieldErrors();
     setTab('login');
   }
 
@@ -218,10 +288,13 @@
   // Form submission
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     submitBtn.disabled = true;
 
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
 
     try {
       if (currentTab === 'login') {
@@ -229,12 +302,6 @@
         showStatus('Přihlášení úspěšné!', 'success');
         await handlePostAuth();
       } else {
-        const confirmPassword = (form.elements.namedItem('password_confirm') as HTMLInputElement).value;
-        if (password !== confirmPassword) {
-          showStatus('Hesla se neshodují.', 'error');
-          submitBtn.disabled = false;
-          return;
-        }
         await signUp(email, password);
         showStatus('Registrace úspěšná! Zkontrolujte svůj email.', 'success');
         // For signUp, Supabase may require email confirmation.
@@ -248,14 +315,21 @@
         }
       }
     } catch (err: any) {
-      const message = err?.message || 'Něco se pokazilo.';
+      const message = err?.message || '';
       if (message.includes('Invalid login credentials')) {
-        showStatus('Nesprávný email nebo heslo.', 'error');
+        showStatus('Nesprávný email nebo heslo. Zkontrolujte přihlašovací údaje a zkuste to znovu.', 'error');
       } else if (message.includes('already registered') || message.includes('already been registered')) {
-        showStatus('Tento email je již registrován. Přihlaste se.', 'error');
+        setFieldError(emailField, emailError, 'Tento email je již registrován.');
+        showStatus('Účet s tímto emailem již existuje. Přepněte na přihlášení.', 'error');
         setTab('login');
+        // Preserve the email field error after tab switch
+        setFieldError(emailField, emailError, 'Tento email je již registrován. Přihlaste se.');
+      } else if (message.includes('rate limit') || message.includes('too many requests')) {
+        showStatus('Příliš mnoho pokusů. Počkejte chvíli a zkuste to znovu.', 'error');
+      } else if (message.includes('network') || message.includes('fetch')) {
+        showStatus('Nepodařilo se připojit k serveru. Zkontrolujte připojení k internetu.', 'error');
       } else {
-        showStatus(message, 'error');
+        showStatus('Něco se pokazilo. Zkuste to prosím znovu.', 'error');
       }
     } finally {
       submitBtn.disabled = false;
@@ -264,19 +338,29 @@
 
   // Magic link
   magicLinkBtn?.addEventListener('click', async () => {
-    const emailInput = form.elements.namedItem('email') as HTMLInputElement;
-    const email = emailInput.value;
-    if (!email) {
-      showStatus('Zadejte svůj email.', 'error');
+    clearAllFieldErrors();
+    const email = emailInput.value.trim();
+
+    const emailErr = validateEmail(email);
+    if (emailErr) {
+      setFieldError(emailField, emailError, emailErr);
       emailInput.focus();
       return;
     }
 
+    magicLinkBtn.classList.add('opacity-50', 'pointer-events-none');
     try {
       await signInWithMagicLink(email);
-      showStatus('Odkaz odeslán! Zkontrolujte svůj email.', 'success');
+      showStatus('Odkaz odeslán na ' + email + '. Zkontrolujte svou emailovou schránku (i spam).', 'success');
     } catch (err: any) {
-      showStatus(err?.message || 'Chyba při odesílání odkazu.', 'error');
+      const message = err?.message || '';
+      if (message.includes('rate limit') || message.includes('too many requests')) {
+        showStatus('Příliš mnoho pokusů. Počkejte chvíli a zkuste to znovu.', 'error');
+      } else {
+        showStatus('Nepodařilo se odeslat přihlašovací odkaz. Zkuste to znovu.', 'error');
+      }
+    } finally {
+      magicLinkBtn.classList.remove('opacity-50', 'pointer-events-none');
     }
   });
 </script>

@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types",
-    "seed": "npx tsx services/seed/seed-races.ts"
+    "seed": "npx tsx services/seed/seed-races.ts",
+    "test": "vitest run src/"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
@@ -36,5 +37,8 @@
   },
   "overrides": {
     "vite": "^7"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.4"
   }
 }

@@ -107,7 +107,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     <p class="mt-2 text-sm text-text-secondary">Pošli nám odkaz na závod, který v seznamu chybí.</p>
 
     <form id="missing-race-form" class="mt-6 space-y-4">
-      <div>
+      <div id="missing-race-url-field">
         <label class="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary" for="missing-race-url">
           Odkaz na závod
         </label>
@@ -115,10 +115,10 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
           type="url"
           id="missing-race-url"
           name="url"
-          required
           class="mt-2 w-full border border-border bg-bg p-3 text-sm text-text placeholder:text-text-secondary/60 focus:border-accent focus:outline-none"
           placeholder="https://example.com/zavod"
         />
+        <p class="field-error-msg" id="missing-race-url-error">&nbsp;</p>
       </div>
 
       <div>
@@ -137,7 +137,8 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
       <div class="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F]"
+          id="missing-race-submit"
+          class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-150 hover:bg-[#D4552F] disabled:opacity-50"
         >
           Odeslat
         </button>
@@ -230,18 +231,48 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
     if (e.target === modal) closeModal();
   });
 
+  const urlField = document.getElementById('missing-race-url-field') as HTMLElement;
+  const urlInput = document.getElementById('missing-race-url') as HTMLInputElement;
+  const urlError = document.getElementById('missing-race-url-error') as HTMLElement;
+  const submitBtnMissing = document.getElementById('missing-race-submit') as HTMLButtonElement;
+
+  // Clear field error on input
+  urlInput?.addEventListener('input', () => {
+    urlField.classList.remove('field-error');
+    statusEl.classList.add('hidden');
+  });
+
+  function validateUrl(url: string): string | null {
+    if (!url.trim()) return 'Zadejte odkaz na závod (např. https://example.com/zavod).';
+    try {
+      const parsed = new URL(url.trim());
+      if (!parsed.protocol.startsWith('http')) return 'Odkaz musí začínat http:// nebo https://.';
+    } catch {
+      return 'Zadejte platný odkaz (např. https://example.com/zavod).';
+    }
+    return null;
+  }
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
-    const url = formData.get('url') as string;
+    const url = (formData.get('url') as string).trim();
     const message = formData.get('message') as string;
 
-    if (!url) {
-      statusEl.textContent = 'Zadej odkaz na závod.';
-      statusEl.className = 'font-mono text-xs text-error';
-      statusEl.classList.remove('hidden');
+    // Clear previous errors
+    urlField.classList.remove('field-error');
+    statusEl.classList.add('hidden');
+
+    // Validate URL
+    const urlErr = validateUrl(url);
+    if (urlErr) {
+      urlField.classList.add('field-error');
+      urlError.textContent = urlErr;
+      urlInput.focus();
       return;
     }
+
+    submitBtnMissing.disabled = true;
 
     try {
       const res = await fetch(`${supabaseUrl}/rest/v1/missing_race_reports`, {
@@ -258,7 +289,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
       });
 
       if (res.ok || res.status === 201) {
-        statusEl.textContent = 'Děkujeme! Závod prověříme.';
+        statusEl.textContent = 'Děkujeme! Závod prověříme a přidáme do seznamu.';
         statusEl.className = 'font-mono text-xs text-success';
         statusEl.classList.remove('hidden');
         form.reset();
@@ -267,9 +298,11 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
         throw new Error('Failed');
       }
     } catch {
-      statusEl.textContent = 'Chyba při odesílání. Zkuste to znovu.';
+      statusEl.textContent = 'Nepodařilo se odeslat. Zkontrolujte připojení k internetu a zkuste to znovu.';
       statusEl.className = 'font-mono text-xs text-error';
       statusEl.classList.remove('hidden');
+    } finally {
+      submitBtnMissing.disabled = false;
     }
   });
 </script>

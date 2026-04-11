@@ -25,7 +25,11 @@ export const GET: APIRoute = async ({ url, redirect }) => {
       if (llmResult.month) params.set('mesic', String(llmResult.month));
       if (llmResult.km) params.set('km', String(llmResult.km));
       if (llmResult.city) params.set('mesto', llmResult.city);
-      if (llmResult.searchText) params.set('qt', llmResult.searchText);
+      if (llmResult.proximity) params.set('proximity', '1');
+      // Always set qt — the LLM returns "" when the entire query was consumed
+      // by structural filters, and we need that to prevent the page from
+      // falling back to the raw query for text-ranking.
+      params.set('qt', llmResult.searchText);
 
       return redirect(`/zavody?${params.toString()}`, 302);
     }
@@ -37,6 +41,12 @@ export const GET: APIRoute = async ({ url, redirect }) => {
   if (parsed.month) params.set('mesic', String(parsed.month));
   if (parsed.km) params.set('km', String(parsed.km));
   if (parsed.city) params.set('mesto', parsed.city);
+  if (parsed.proximity) params.set('proximity', '1');
+  // Always set qt when structural tokens were extracted, so the page doesn't
+  // fall back to the raw query for text-ranking (which contains locative forms
+  // like "praze" that won't match the canonical "Praha" in the DB).
+  const hasStructural = parsed.terrain || parsed.month || parsed.km || parsed.city;
+  if (hasStructural) params.set('qt', parsed.searchText ?? '');
 
   return redirect(`/zavody?${params.toString()}`, 302);
 };

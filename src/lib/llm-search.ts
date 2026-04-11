@@ -7,6 +7,7 @@ export interface LLMParsedQuery {
   city?: string;
   month?: number;
   km?: number;
+  proximity?: boolean;
   searchText: string;
 }
 
@@ -18,9 +19,9 @@ const SEARCH_TOOL: Anthropic.Messages.Tool = {
     properties: {
       terrain: {
         type: 'string',
-        enum: ['road', 'trail', 'ultra', 'cross', 'obstacle', 'mixed'],
+        enum: ['road', 'trail', 'cross', 'obstacle', 'mixed'],
         description:
-          'Race terrain type. road = silniční/asfalt/městský, trail = trailový/terénní/horský, ultra = ultra, cross = kros/přespolní, obstacle = překážkový/spartan, mixed = kombinace.',
+          'Race terrain type. road = silniční/asfalt/městský, trail = trailový/terénní/horský, cross = kros/přespolní, obstacle = překážkový/spartan, mixed = kombinace. IMPORTANT: "ultra" is NOT a terrain — it is a distance category. If the user mentions "ultra", set km to 50 instead.',
       },
       city: {
         type: 'string',
@@ -36,7 +37,12 @@ const SEARCH_TOOL: Anthropic.Messages.Tool = {
       km: {
         type: 'number',
         description:
-          'Target distance in km. "půlmaraton/půlka" = 21, "maraton" = 42, "desítka" = 10, "pětka" = 5. Only extract when clearly a distance filter, not part of a race name like "Jizerská 50".',
+          'Target distance in km. "půlmaraton/půlka" = 21, "maraton" = 42, "desítka" = 10, "pětka" = 5, "ultra" = 50. Only extract when clearly a distance filter, not part of a race name like "Jizerská 50".',
+      },
+      proximity: {
+        type: 'boolean',
+        description:
+          'True when the user wants races AROUND a city, not just IN that city. Trigger words: "okolo", "v okolí", "poblíž", "blízko", "nedaleko". Example: "závody okolo Brna" → proximity=true, city="Brno". "závody v Brně" → proximity=false, city="Brno".',
       },
       searchText: {
         type: 'string',
@@ -53,10 +59,11 @@ const SYSTEM_PROMPT = `Jsi parser vyhledávacích dotazů pro český běžecký
 Pravidla:
 - Rozpoznej české názvy měsíců ve všech pádech (leden/lednu/ledna, únor/února, březen/března, duben/dubna, květen/května, červen/června, červenec/července, srpen/srpna, září, říjen/října, listopad/listopadu, prosinec/prosince)
 - Rozpoznej české města a regiony ve všech pádech a převeď na 1. pád (v Praze → Praha, v Brně → Brno, v Beskydech → Beskydy, na Šumavě → Šumava, v Jizerských horách → Jizerské hory)
-- Rozpoznej typ terénu z českých i anglických výrazů
+- Rozpoznej typ terénu z českých i anglických výrazů. POZOR: "ultra" NENÍ terén — je to vzdálenostní kategorie. Pokud uživatel zmíní "ultra", nastav km na 50
 - "na podzim" = měsíce 9-11, "na jaře" = měsíce 3-5, "v létě" = měsíce 6-8, "v zimě" = měsíce 12-2 → vyber prostřední měsíc sezóny (podzim→10, jaro→4, léto→7, zima→1)
 - Pokud dotaz vypadá jako název závodu (např. "Jizerská 50", "Běchovice", "Pražský maraton"), vlož ho celý do searchText a NEEXTRAHUJ vzdálenost ani město
-- Čísla jako "50" extrahuj jako vzdálenost POUZE když je jasně filtr (např. "závod na 50 km", "běh kolem 10 km"), NE když je součástí názvu závodu`;
+- Čísla jako "50" extrahuj jako vzdálenost POUZE když je jasně filtr (např. "závod na 50 km", "běh kolem 10 km"), NE když je součástí názvu závodu
+- Nastav proximity=true pokud uživatel hledá závody OKOLO/V OKOLÍ/POBLÍŽ/BLÍZKO/NEDALEKO města. Příklady: "závody okolo Brna" → proximity=true, "závody v Brně" → proximity=false`;
 
 const LLM_TIMEOUT_MS = 5000;
 
@@ -104,11 +111,14 @@ export async function parseSearchQueryWithLLM(
       ? input.km
       : undefined;
 
+    const proximity = input.proximity === true ? true : undefined;
+
     const searchText = typeof input.searchText === 'string'
       ? input.searchText.trim()
       : '';
 
-    return { terrain, city, month, km, searchText };
+    console.log('[llm-search] Parsed query:', { terrain, city, month, km, proximity, searchText });
+    return { terrain, city, month, km, proximity, searchText };
   } catch (err) {
     console.error('[llm-search] Failed to parse query with LLM:', err);
     return null;

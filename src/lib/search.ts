@@ -20,78 +20,122 @@ const MONTH_PATTERNS: [RegExp, number][] = [
 ];
 
 const CITY_PATTERNS: [RegExp, string][] = [
-  [/\bpraze\b/i, 'Praha'],
-  [/\bbrne\b/i, 'Brno'],
-  [/\bostrave\b/i, 'Ostrava'],
-  [/\bplzni\b/i, 'Plzeň'],
-  [/\bliberci\b/i, 'Liberec'],
-  [/\bolomouci\b/i, 'Olomouc'],
-  [/\bceskych budejovicich\b/i, 'České Budějovice'],
-  [/\bhradci kralove\b/i, 'Hradec Králové'],
-  [/\bpardubicich\b/i, 'Pardubice'],
-  [/\busti nad labem\b/i, 'Ústí nad Labem'],
-  [/\bkarlovych varech\b/i, 'Karlovy Vary'],
-  [/\bzline\b/i, 'Zlín'],
-  [/\bjihlave\b/i, 'Jihlava'],
-  [/\bkladne\b/i, 'Kladno'],
-  [/\bopave\b/i, 'Opava'],
-  [/\bfrydku mistku\b/i, 'Frýdek-Místek'],
-  [/\bkarvine\b/i, 'Karviná'],
-  [/\btrebici\b/i, 'Třebíč'],
-  [/\bprostejove\b/i, 'Prostějov'],
-  [/\bpribrami\b/i, 'Příbram'],
+  [/\b(?:praha|prahy|prahu|praze)\b/i, 'Praha'],
+  [/\b(?:brno|brna|brnu|brne)\b/i, 'Brno'],
+  [/\b(?:ostrava|ostravy|ostravu|ostrave)\b/i, 'Ostrava'],
+  [/\b(?:plzen|plzne|plzni)\b/i, 'Plzeň'],
+  [/\b(?:liberec|liberce|liberci)\b/i, 'Liberec'],
+  [/\b(?:olomouc|olomouce|olomouci)\b/i, 'Olomouc'],
+  [/\b(?:ceske budejovice|ceskych budejovic|ceskych budejovicich)\b/i, 'České Budějovice'],
+  [/\b(?:hradec kralove|hradce kralove|hradci kralove)\b/i, 'Hradec Králové'],
+  [/\b(?:pardubice|pardubic|pardubicich)\b/i, 'Pardubice'],
+  [/\b(?:usti nad labem)\b/i, 'Ústí nad Labem'],
+  [/\b(?:karlovy vary|karlovych var|karlovych varech)\b/i, 'Karlovy Vary'],
+  [/\b(?:zlin|zlina|zlinu|zline)\b/i, 'Zlín'],
+  [/\b(?:jihlava|jihlavy|jihlavu|jihlave)\b/i, 'Jihlava'],
+  [/\b(?:kladno|kladna|kladnu|kladne)\b/i, 'Kladno'],
+  [/\b(?:opava|opavy|opavu|opave)\b/i, 'Opava'],
+  [/\b(?:frydek mistek|frydku mistku)\b/i, 'Frýdek-Místek'],
+  [/\b(?:karvina|karvine)\b/i, 'Karviná'],
+  [/\b(?:trebic|trebice|trebici)\b/i, 'Třebíč'],
+  [/\b(?:prostejov|prostejova|prostejovu|prostejove)\b/i, 'Prostějov'],
+  [/\b(?:pribram|pribrami)\b/i, 'Příbram'],
 ];
 
 const TERRAIN_PATTERNS: [RegExp, TerrainType][] = [
-  [/\bultra\b/i, 'ultra'],
   [/\b(?:trail|traily|trialy|trailovy|trailove|trailových|trailovych|teren|terén)\b/i, 'trail'],
   [/\b(?:cross|kros|prespolni|přespolní)\b/i, 'cross'],
   [/\b(?:prekazk|překážk|obstacle|spartan)\b/i, 'obstacle'],
   [/\b(?:silnic|asfalt|road|mestsk|městsk)\b/i, 'road'],
 ];
 
+const ULTRA_PATTERN = /\bultra\b/i;
+
+const PROXIMITY_PATTERN = /\b(?:okolo|okoli|pobliz|blizko|nedaleko)\b/i;
+
 export interface ParsedSearchQuery {
   displayQuery: string;
+  /** Query text with recognised structural tokens (terrain, city, month, km) stripped out. */
+  searchText?: string;
   terrain?: TerrainType;
   city?: string;
   month?: number;
   km?: number;
+  /** Whether the user wants races *around* a city (okolo, blízko, nedaleko, poblíž, v okolí). */
+  proximity?: boolean;
 }
 
 export function parseSearchQuery(rawQuery: string): ParsedSearchQuery {
   const displayQuery = rawQuery.trim().slice(0, MAX_QUERY_LENGTH);
 
+  // We'll collect regex patterns that matched so we can strip them from the
+  // query to produce a clean searchText for text-ranking.
+  const consumedPatterns: RegExp[] = [];
+
   let terrain: TerrainType | undefined;
   for (const [pattern, t] of TERRAIN_PATTERNS) {
-    if (pattern.test(displayQuery)) { terrain = t; break; }
+    if (pattern.test(displayQuery)) { terrain = t; consumedPatterns.push(pattern); break; }
+  }
+
+  // "ultra" → distance filter (50+ km), not terrain
+  let ultraMatch = false;
+  if (ULTRA_PATTERN.test(displayQuery)) {
+    ultraMatch = true;
+    consumedPatterns.push(ULTRA_PATTERN);
   }
 
   let month: number | undefined;
   for (const [pattern, m] of MONTH_PATTERNS) {
-    if (pattern.test(displayQuery)) { month = m; break; }
+    if (pattern.test(displayQuery)) { month = m; consumedPatterns.push(pattern); break; }
   }
 
   const normalized = normalizeSearchText(displayQuery);
   let city: string | undefined;
   for (const [pattern, c] of CITY_PATTERNS) {
-    if (pattern.test(normalized)) { city = c; break; }
+    if (pattern.test(normalized)) { city = c; consumedPatterns.push(pattern); break; }
   }
 
+  // Proximity detection: only meaningful when a city was found
+  const proximity = city !== undefined && PROXIMITY_PATTERN.test(normalized);
+  if (proximity) consumedPatterns.push(PROXIMITY_PATTERN);
+
   let km: number | undefined;
+  const kmPatterns: RegExp[] = [
+    /\b\d{1,3}\s*(?:km|k)\b/i,
+    /\bpulmaraton|pulmaratonu|pulku|pulka\b/,
+    /\bmaraton|maratonu\b/,
+    /\bdesitka|desitku|desitce\b/,
+    /\bpetka|petku|petce\b/,
+  ];
   const numericMatch = normalized.match(/\b(\d{1,3})\s*(?:km|k)\b/);
   if (numericMatch) {
     km = Number.parseInt(numericMatch[1], 10);
+    consumedPatterns.push(kmPatterns[0]);
   } else if (/\bpulmaraton|pulmaratonu|pulku|pulka\b/.test(normalized)) {
-    km = 21;
+    km = 21; consumedPatterns.push(kmPatterns[1]);
   } else if (/\bmaraton|maratonu\b/.test(normalized)) {
-    km = 42;
+    km = 42; consumedPatterns.push(kmPatterns[2]);
   } else if (/\bdesitka|desitku|desitce\b/.test(normalized)) {
-    km = 10;
+    km = 10; consumedPatterns.push(kmPatterns[3]);
   } else if (/\bpetka|petku|petce\b/.test(normalized)) {
-    km = 5;
+    km = 5; consumedPatterns.push(kmPatterns[4]);
   }
 
-  return { displayQuery, terrain, city, month, km };
+  // "ultra" sets km=50 (ultra distance filter) when no explicit distance was parsed
+  if (ultraMatch && km === undefined) {
+    km = 50;
+  }
+
+  // Build searchText by stripping consumed structural tokens and filler words
+  let searchText = normalized;
+  for (const pattern of consumedPatterns) {
+    searchText = searchText.replace(pattern, ' ');
+  }
+  // Remove common Czech prepositions left orphaned after stripping
+  searchText = searchText.replace(/\b(?:[vksuoz]|okoli|blizko|nedaleko|pobliz)\b/gi, ' ').replace(/\s+/g, ' ').trim();
+  const cleanedSearchText = searchText || undefined;
+
+  return { displayQuery, searchText: cleanedSearchText, terrain, city, month, km, proximity: proximity || undefined };
 }
 
 // --- Text ranking (used after structured filters are applied) ---
@@ -117,6 +161,12 @@ function getRaceText(race: Race): string {
   );
 }
 
+/** Word-boundary match — "maraton" must NOT match inside "pulmaraton". */
+function wordMatch(haystack: string, needle: string): boolean {
+  const re = new RegExp(`(?:^|\\s)${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s|$)`);
+  return re.test(haystack);
+}
+
 function compareByDate(a: Race, b: Race): number {
   return a.date_start.localeCompare(b.date_start);
 }
@@ -134,21 +184,30 @@ export function rankRacesByQuery(races: Race[], query: string): Race[] {
     const raceText = getRaceText(race);
     const raceName = normalizeSearchText(race.name);
     let score = 0;
+    let matchedTokens = 0;
 
-    // Full phrase match in race name — strongest signal
+    // Full phrase match — bonus scales with how early the phrase appears
     if (normalizedQuery.length >= 3 && raceName.includes(normalizedQuery)) {
-      score += 10;
+      const pos = raceName.indexOf(normalizedQuery);
+      score += 10 + Math.max(0, 5 - Math.floor(pos / 3));
     } else if (normalizedQuery.length >= 3 && raceText.includes(normalizedQuery)) {
       score += 6;
     }
 
-    // Per-token scoring
+    // Per-token scoring with word-boundary matching
     for (const token of queryTokens) {
-      if (raceName.includes(token)) {
+      if (wordMatch(raceName, token)) {
         score += 4;
-      } else if (raceText.includes(token)) {
+        matchedTokens++;
+      } else if (wordMatch(raceText, token)) {
         score += 2;
+        matchedTokens++;
       }
+    }
+
+    // Require all query tokens to match somewhere
+    if (matchedTokens < queryTokens.length) {
+      score = 0;
     }
 
     return { race, score };

@@ -117,10 +117,6 @@ const TERRAIN_KEYWORDS: [RegExp, TerrainType][] = [
 export function normalizeSurface(raw: string, distances: RaceDistance[]): TerrainType {
   const s = raw.trim();
 
-  // Check if ultra (by distance — strictly above marathon distance)
-  const maxKm = distances.length > 0 ? Math.max(...distances.map(d => d.km)) : 0;
-  if (maxKm > 44) return 'ultra';
-
   if (!s) return 'road';
 
   // Mixed surfaces: "silnice/asfalt, terén" has both road and trail → mixed

@@ -1,4 +1,4 @@
-export type TerrainType = 'road' | 'trail' | 'ultra' | 'cross' | 'obstacle' | 'mixed';
+export type TerrainType = 'road' | 'trail' | 'cross' | 'obstacle' | 'mixed';
 
 export type SourceName = 'behej' | 'ceskybeh' | 'svetbehu';
 

@@ -29,7 +29,7 @@ function isFilled(race: Race, field: keyof Race): boolean {
 }
 
 export function getCompleteness(race: Race): CompletenessResult {
-  const isTrail = race.terrain === 'trail' || race.terrain === 'ultra';
+  const isTrail = race.terrain === 'trail';
 
   let maxScore = 0;
   let earned = 0;

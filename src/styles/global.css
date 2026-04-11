@@ -26,9 +26,47 @@
     overflow-x: hidden;
   }
 
+  /* Interactive elements */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  summary {
+    cursor: pointer;
+  }
+
   /* Selection color */
   ::selection {
     background-color: var(--color-accent-light);
     color: var(--color-accent);
+  }
+
+  /* Validation: field error state */
+  .field-error input,
+  .field-error textarea {
+    border-color: var(--color-error) !important;
+  }
+
+  /* Validation: inline error message under a field – always reserve space to prevent layout shift */
+  .field-error-msg {
+    margin-top: 0.375rem;
+    min-height: calc(11px * 1.4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--color-error);
+    visibility: hidden;
+  }
+  .field-error .field-error-msg {
+    visibility: visible;
+  }
+
+  /* Validation: fieldset error state (checkboxes) */
+  .fieldset-error legend {
+    color: var(--color-error) !important;
+  }
+  .fieldset-error .field-error-msg {
+    visibility: visible;
   }
 }
